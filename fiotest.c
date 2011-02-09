@@ -9,6 +9,9 @@
 #include <fcntl.h>
 #include <string.h>
 
+#include <stdint.h>
+#include <linux/limits.h>
+
 typedef uint64_t max_size_t;
 
 max_size_t totallen;		/* totally received data length */
@@ -70,6 +73,7 @@ main(int argc, char **argv)
 	FILE *fp;
 	int fd;
 	char *buf;
+/* 	void *obuf;	used for odirect */
 	max_size_t bufsiz = 0;
 	max_size_t filesize = 0;
 	
@@ -121,7 +125,7 @@ main(int argc, char **argv)
 		/* memory size should be devided to pagesize ?? */
 		bufsiz = (bufsiz / ps) * ps;
 		printf("O_DIRECT: new pagesize is: %d\n", bufsiz);
-		if( (ret = posix_memalign(&buf, ps, bufsiz)) != 0 ) {
+		if( (ret = posix_memalign(&(void *)buf, ps, bufsiz)) != 0 ) {
 			perror("Memalign failed");
 			exit(ret);
 		}
@@ -277,21 +281,21 @@ prtinfo(long datalen)
 	printf("%d sec\t", interval);
 	
 	/* Transfer */
-	if (trans < KSIZE)	
+	if (trans < kKilo_to_Unit)	
 		printf("\t%.2f Bytes", trans);
-	else if (trans < MSIZE)
+	else if (trans < kMega_to_Unit)
 		printf("\t%.2f KBytes", trans / kKilo_to_Unit);
-	else if (trans < GSIZE)
+	else if (trans < kGiga_to_Unit)
 		printf("\t%.2f MBytes", trans / kMega_to_Unit);
 	else
 		printf("\t%.2f GBytes", trans / kGiga_to_Unit);
 	
 	/* Bandwidth */
-	if (bw < KSIZE)
+	if (bw < kKilo_to_Unit)
 		printf("\t%.2f Bytes/sec\n", bw);
-	else if (bw < MSIZE)
+	else if (bw < kMega_to_Unit)
 		printf("\t%.2f KBytes/sec\n", bw / kKilo_to_Unit);
-	else if (bw < GSIZE)
+	else if (bw < kGiga_to_Unit)
 		printf("\t%.2f MBytes/sec\n", bw / kMega_to_Unit);
 	else
 		printf("\t%.2f GBytes/sec\n", bw / kGiga_to_Unit);

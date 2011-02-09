@@ -8,7 +8,7 @@ all: fiotest
 %.o: %.c
 	$(CC) $(CFLAGS) $< -c $(EXTRALIBS)
 
-fiotest: $@.c
+fiotest: fiotest.c
 	$(CC) $(CFLAGS) -o $@ $@.c $(EXTRALIBS)
 
 odirectread: calspd.c calspd.h
