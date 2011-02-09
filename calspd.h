@@ -12,10 +12,6 @@
 #ifndef CALSPD_H
 #define CALSPD_H
 
-const long KSIZE = 1024;
-const long MSIZE = 1024 * 1024;
-const long GSIZE = 1024 * 1024 * 1024;
-
 struct colbwmesg {
 	long	msgtype;
 	char	datainfo[32];

@@ -13,6 +13,12 @@
 
 #include "calspd.h"
 
+
+const long KSIZE = 1024;
+const long MSIZE = 1024 * 1024;
+const long GSIZE = 1024 * 1024 * 1024;
+
+
 void *
 anabw(void *arg)
 {
