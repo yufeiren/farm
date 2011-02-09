@@ -42,7 +42,7 @@ main(int argc, char **argv)
 	}
 	
 	while ( (cl = fread(buf, 4096, 1, fp)) > 0)
-		tl += cl;
+		tl += cl * 4096;
 	
 	printf("%s: finish read, total len [%ld].\n", argv[0], tl);
 	fclose(fp);

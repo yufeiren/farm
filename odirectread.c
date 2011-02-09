@@ -8,14 +8,17 @@
 #include <fcntl.h>
 #include <string.h>
 
+#include "calspd.h"
+
 int
 main(int argc, char **argv)
 {
 
 	void *buf;
 	int ret = 0;
-	long tl = 0;
 	int cl = 0;
+	
+	interval = 2;
 	
 	int ps = getpagesize();
 	printf("pagesize is: %d\n", ps);
@@ -30,13 +33,19 @@ main(int argc, char **argv)
 	
 	memset(buf, 0x00, ps*256);
 	
+	ret = pthread_create(NULL, NULL, anabw, NULL);
+	if (ret != 0) {
+		printf("Can't create thread: %s\n", strerror(ret));
+		exit(EXIT_FAILURE);
+	}
+	
 	if( (fd = open(argv[1], O_RDONLY | O_DIRECT) ) < 0 ) {
 		perror("Open failed");
 		exit(ret);
 	}
 	
 	while ( (cl = read(fd, buf, ps*256)) > 0)
-		tl += cl;
+		totallen += cl;
 	
 	printf("%s: finish read, total len [%ld].\n", argv[0], tl);
 	close(fd);
