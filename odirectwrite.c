@@ -51,7 +51,7 @@ main(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	}
 	
-	if( (fd = open(argv[1], O_RDONLY | O_DIRECT) ) < 0 ) {
+	if( (fd = open(argv[1], O_CREAT | O_WRONLY | O_DIRECT) ) < 0 ) {
 		perror("Open failed");
 		exit(ret);
 	}
