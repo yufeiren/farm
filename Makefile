@@ -18,4 +18,4 @@ ffileread: calspd.c calspd.h
 	$(CC) $(CFLAGS) -o $@ $(EXTRALIBS) $@.c calspd.c
 
 clean:
-	rm -rf $(all)
+	rm -rf odirectread fileread ffileread

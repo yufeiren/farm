@@ -19,6 +19,9 @@ main(int argc, char **argv)
 	int cl = 0;
 	int fd;
 	
+	pthread_t tid;
+	interval = 2;
+	
 /*	int ps = getpagesize();
 	printf("pagesize is: %d\n", ps);
 	
