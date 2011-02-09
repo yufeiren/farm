@@ -41,7 +41,7 @@ main(int argc, char **argv)
 	
 	memset(buf, 0x00, 4096);
 	
-	ret = pthread_create(NULL, NULL, anabw, NULL);
+	ret = pthread_create(&tid, NULL, anabw, NULL);
 	if (ret != 0) {
 		printf("Can't create thread: %s\n", strerror(ret));
 		exit(EXIT_FAILURE);
