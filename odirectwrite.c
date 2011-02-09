@@ -30,7 +30,7 @@ main(int argc, char **argv)
 	}
 		
 	
-	ofilesize = atoi(argv[2]);
+	ofilesize = atol(argv[2]);
 	
 	int ps = getpagesize();
 	printf("pagesize is: %d\n", ps);
