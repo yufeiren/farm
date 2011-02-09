@@ -5,6 +5,8 @@ EXTRALIBS=-lpthread
 all: fiotest
 # odirectread fileread ffileread odirectwrite filewrite ffilewrite
 
+# ./fiotest -r -o -f /data/100Gtestfile -m 5MB -i 1
+
 %.o: %.c
 	$(CC) $(CFLAGS) $< -c $(EXTRALIBS)
 

@@ -8,7 +8,7 @@
 #define __USE_GNU
 #include <fcntl.h>
 #include <string.h>
-
+#include <assert.h>
 #include <stdint.h>
 #include <linux/limits.h>
 
@@ -44,13 +44,13 @@ usage(const char *msg)
 "         -s \t\t\tstream fread/fwrite or not\n"
 "         -f <file name>\n"
 "         -m <r/w memory buffer/block size>\n"
-"         -t <filesize totally>\n"
+"         -t <filesize totally, for write operation>\n"
 "         -i <statistical interval time, default 2 sec>\n"
 );
 
 	if (msg[0] != 0)
 		fprintf(stderr, "%s\n", msg);
-	fexit(EXIT_FAILURE);
+	exit(EXIT_FAILURE);
 }
 
 max_size_t byte_atoi(const char *);
@@ -168,7 +168,7 @@ main(int argc, char **argv)
 		}
 	} else {
 		if (isodirect == 1) {
-			if( (fd = open(filename, O_WRONLY | O_DIRECT) ) < 0 ) {
+			if( (fd = open(filename, O_CREAT |O_WRONLY | O_DIRECT) ) < 0 ) {
 				perror("Open failed");
 				exit(ret);
 			}
@@ -178,7 +178,7 @@ main(int argc, char **argv)
 				exit(ret);
 			}
 		} else {
-			if( (fd = open(filename, O_WRONLY) ) < 0 ) {
+			if( (fd = open(filename, O_CREAT | O_WRONLY) ) < 0 ) {
 				perror("Open failed");
 				exit(ret);
 			}
