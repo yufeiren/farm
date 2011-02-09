@@ -47,7 +47,7 @@ main(int argc, char **argv)
 	while ( (cl = read(fd, buf, ps*256)) > 0)
 		totallen += cl;
 	
-	printf("%s: finish read, total len [%ld].\n", argv[0], tl);
+	printf("%s: finish read, total len [%ld].\n", argv[0], totallen);
 	close(fd);
 	free(buf);
 
