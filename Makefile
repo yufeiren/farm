@@ -2,7 +2,7 @@ CC=gcc
 CFLAGS=-g -O2
 EXTRALIBS=-lpthread
 
-all: odirectread fileread ffileread
+all: odirectread fileread ffileread odirectwrite
 # odirectwrite filewrite ffilewrite
 
 %.o: %.c
@@ -15,6 +15,9 @@ fileread: calspd.c calspd.h
 	$(CC) $(CFLAGS) -o $@ $(EXTRALIBS) $@.c calspd.c
 
 ffileread: calspd.c calspd.h
+	$(CC) $(CFLAGS) -o $@ $(EXTRALIBS) $@.c calspd.c
+
+odirectwrite: calspd.c calspd.h
 	$(CC) $(CFLAGS) -o $@ $(EXTRALIBS) $@.c calspd.c
 
 clean:
