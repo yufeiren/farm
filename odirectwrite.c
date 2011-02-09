@@ -36,7 +36,7 @@ main(int argc, char **argv)
 	}
 	
 	while ( (cl = write(fd, buf, ps*256)) > 0)
-		tl += cl;
+		totallen += cl;
 	
 	printf("%s: finish write, total len [%ld].\n", argv[0], tl);
 	close(fd);

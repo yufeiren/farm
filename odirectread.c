@@ -1,4 +1,5 @@
 #define _XOPEN_SOURCE 600
+#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -18,6 +19,7 @@ main(int argc, char **argv)
 	int ret = 0;
 	int cl = 0;
 	
+	pthread_t tid;
 	interval = 2;
 	
 	int ps = getpagesize();

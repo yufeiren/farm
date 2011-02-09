@@ -1,3 +1,4 @@
+#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -6,6 +7,7 @@
 #define __USE_GNU
 #include <fcntl.h>
 #include <string.h>
+#include "calspd.h"
 
 int
 main(int argc, char **argv)
@@ -16,6 +18,9 @@ main(int argc, char **argv)
 	long tl = 0;
 	int cl = 0;
 	FILE *fp;
+	
+	pthread_t tid;
+	interval = 2;
 	
 /*	int ps = getpagesize();
 	printf("pagesize is: %d\n", ps);
@@ -36,15 +41,21 @@ main(int argc, char **argv)
 	
 	memset(buf, 0x00, 4096);
 	
+	ret = pthread_create(NULL, NULL, anabw, NULL);
+	if (ret != 0) {
+		printf("Can't create thread: %s\n", strerror(ret));
+		exit(EXIT_FAILURE);
+	}
+	
 	if( (fp = fopen(argv[1], "r") ) < 0 ) {
 		perror("Open failed");
 		exit(ret);
 	}
 	
 	while ( (cl = fread(buf, 4096, 1, fp)) > 0)
-		tl += cl * 4096;
+		totallen += cl * 4096;
 	
-	printf("%s: finish read, total len [%ld].\n", argv[0], tl);
+	printf("%s: finish read, total len [%ld].\n", argv[0], totallen);
 	fclose(fp);
 	free(buf);
 }

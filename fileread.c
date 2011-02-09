@@ -1,3 +1,4 @@
+#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -6,6 +7,7 @@
 #define __USE_GNU
 #include <fcntl.h>
 #include <string.h>
+#include "calspd.h"
 
 int
 main(int argc, char **argv)
@@ -36,15 +38,21 @@ main(int argc, char **argv)
 	
 	memset(buf, 0x00, 4096);
 	
+	ret = pthread_create(NULL, NULL, anabw, NULL);
+	if (ret != 0) {
+		printf("Can't create thread: %s\n", strerror(ret));
+		exit(EXIT_FAILURE);
+	}
+	
 	if( (fd = open(argv[1], O_RDONLY) ) < 0 ) {
 		perror("Open failed");
 		exit(ret);
 	}
 	
 	while ( (cl = read(fd, buf, 4096)) > 0)
-		tl += cl;
+		totallen += cl;
 	
-	printf("%s: finish read, total len [%ld].\n", argv[0], tl);
+	printf("%s: finish read, total len [%ld].\n", argv[0], totallen);
 	close(fd);
 	free(buf);
 }
