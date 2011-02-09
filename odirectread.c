@@ -38,7 +38,7 @@ main(int argc, char **argv)
 	while ( (cl = read(fd, buf, ps*256)) > 0)
 		tl += cl;
 	
-	printf("%s: finish read.\n", argv[0]);
+	printf("%s: finish read, total len [%ld].\n", argv[0], tl);
 	close(fd);
 	free(buf);
 
