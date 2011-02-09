@@ -21,4 +21,4 @@ odirectwrite: calspd.c calspd.h
 	$(CC) $(CFLAGS) -o $@ $(EXTRALIBS) $@.c calspd.c
 
 clean:
-	rm -rf odirectread fileread ffileread
+	rm -rf odirectread fileread ffileread odirectwrite
