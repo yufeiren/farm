@@ -5,6 +5,3 @@ all: odirectread
 
 %.o: %.c
 	$(CC) $(CFLAGS) $< -c
-	
-odirectread:
-	$(CC) $(CFLAGS) -o $@ $@.o

@@ -14,6 +14,8 @@ main(int argc, char **argv)
 
 	void *buf;
 	int ret = 0;
+	long tl = 0;
+	int cl = 0;
 	
 	int ps = getpagesize();
 	printf("pagesize is: %d\n", ps);
@@ -33,10 +35,10 @@ main(int argc, char **argv)
 		exit(ret);
 	}
 	
-	while (read(fd, buf, ps*256) > 0)
-		continue;
+	while ( (cl = read(fd, buf, ps*256)) > 0)
+		tl += cl;
 	
-	printf("%s: finish read.", argv[0]);
+	printf("%s: finish read.\n", argv[0]);
 	close(fd);
 	free(buf);
 
