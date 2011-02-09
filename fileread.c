@@ -15,12 +15,13 @@ main(int argc, char **argv)
 	int ret = 0;
 	long tl = 0;
 	int cl = 0;
+	int fd;
 	
 /*	int ps = getpagesize();
 	printf("pagesize is: %d\n", ps);
 	
 	unsigned long long int bytes_written = 0;
-	int fd;
+	
 	
 	if( (ret = posix_memalign(&buf, ps, ps*256)) != 0 ) {
 		perror("Memalign failed");
@@ -33,14 +34,14 @@ main(int argc, char **argv)
 		exit(1);
 	}
 	
-	memset(buf, 0x00, ps*256);
+	memset(buf, 0x00, 4096);
 	
 	if( (fd = open(argv[1], O_RDONLY) ) < 0 ) {
 		perror("Open failed");
 		exit(ret);
 	}
 	
-	while ( (cl = read(fd, buf, ps*256)) > 0)
+	while ( (cl = read(fd, buf, 4096)) > 0)
 		tl += cl;
 	
 	printf("%s: finish read, total len [%ld].\n", argv[0], tl);
