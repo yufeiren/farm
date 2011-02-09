@@ -45,6 +45,6 @@ main(int argc, char **argv)
 		tl += cl;
 	
 	printf("%s: finish read, total len [%ld].\n", argv[0], tl);
-	close(fd);
+	fclose(fp);
 	free(buf);
 }
