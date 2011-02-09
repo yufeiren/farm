@@ -9,6 +9,9 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
+#ifndef CALSPD_H
+#define CALSPD_H
+
 const long KSIZE = 1024;
 const long MSIZE = 1024 * 1024;
 const long GSIZE = 1024 * 1024 * 1024;
@@ -30,3 +33,5 @@ int fd;			/* log file */
 void *anabw(void *);
 
 void prtinfo(long);
+
+#endif
