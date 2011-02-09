@@ -125,7 +125,7 @@ main(int argc, char **argv)
 		/* memory size should be devided to pagesize ?? */
 		bufsiz = (bufsiz / ps) * ps;
 		printf("O_DIRECT: new pagesize is: %d\n", bufsiz);
-		if( (ret = posix_memalign(&(void *)buf, ps, bufsiz)) != 0 ) {
+		if( (ret = posix_memalign(&buf, ps, bufsiz)) != 0 ) {
 			perror("Memalign failed");
 			exit(ret);
 		}
