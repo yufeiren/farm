@@ -8,7 +8,7 @@ all: odirectread fileread ffileread odirectwrite filewrite ffilewrite
 	$(CC) $(CFLAGS) $< -c $(EXTRALIBS)
 
 odirectread: calspd.o calspd.h
-	$(CC) $(CFLAGS) $< -c $(EXTRALIBS)
+	$(CC) $(CFLAGS) $@ $(EXTRALIBS) $@.o calspd.o
 	
 calspd.o: calspd.c calspd.h
-	$(CC) $(CFLAGS) $< -c
+	$(CC) $(CFLAGS) $@ -c calspd.c
