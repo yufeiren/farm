@@ -16,23 +16,23 @@ do
 # local
 	sleep 5;
 	sync; echo 3 > /proc/sys/vm/drop_caches
-	$Fiotool -r -f $LocalDiskFileIn -m $bufsiz -i 2 > $Logdir/Local_M$bufsiz_RD.txt 2>&1
+	$Fiotool -r -f $LocalDiskFileIn -m $bufsiz -i 2 > $Logdir/RD_Local_M$bufsiz.txt 2>&1
 	sleep 5;
 	sync; echo 3 > /proc/sys/vm/drop_caches
-	$Fiotool -r -s -f $LocalDiskFileIn -m $bufsiz -i 2 > $Logdir/Local_M$bufsiz_RD_Stream.txt 2>&1
+	$Fiotool -r -s -f $LocalDiskFileIn -m $bufsiz -i 2 > $Logdir/RD_Stream_Local_M$bufsiz.txt 2>&1
 	sleep 5;
 	sync; echo 3 > /proc/sys/vm/drop_caches
-	$Fiotool -r -o -f $LocalDiskFileIn -m $bufsiz -i 2 > $Logdir/Local_M$bufsiz_RD_O_Direct.txt 2>&1
+	$Fiotool -r -o -f $LocalDiskFileIn -m $bufsiz -i 2 > $Logdir/RD_O_Direct_Local_M$bufsiz.txt 2>&1
 # lustre
 	sleep 5;
 	sync; echo 3 > /proc/sys/vm/drop_caches
-	$Fiotool -r -f $LustreDiskFileIn -m $bufsiz -i 2 > $Logdir/Lustre_M$bufsiz_RD.txt 2>&1
+	$Fiotool -r -f $LustreDiskFileIn -m $bufsiz -i 2 > $Logdir/RD_Lustre_M$bufsiz.txt 2>&1
 	sleep 5;
 	sync; echo 3 > /proc/sys/vm/drop_caches
-	$Fiotool -r -s -f $LustreDiskFileIn -m $bufsiz -i 2 > $Logdir/Lustre_M$bufsiz_RD_Stream.txt 2>&1
+	$Fiotool -r -s -f $LustreDiskFileIn -m $bufsiz -i 2 > $Logdir/RD_Stream_Lustre_M$bufsiz.txt 2>&1
 	sleep 5;
 	sync; echo 3 > /proc/sys/vm/drop_caches
-	$Fiotool -r -o -f $LustreDiskFileIn -m $bufsiz -i 2 > $Logdir/Lustre_M$bufsiz_RD_O_Direct.txt 2>&1
+	$Fiotool -r -o -f $LustreDiskFileIn -m $bufsiz -i 2 > $Logdir/RD_O_Direct_Lustre_M$bufsiz.txt 2>&1
 done
 
 # write file
@@ -42,26 +42,26 @@ do
 	sleep 5;
 	rm -rf $LocalDiskFileOut
 	sync; echo 3 > /proc/sys/vm/drop_caches
-	$Fiotool -w -f $LocalDiskFileOut -m $bufsiz -t FileoutSize -i 2 > $Logdir/Local_M$bufsiz_WR.txt 2>&1
+	$Fiotool -w -f $LocalDiskFileOut -m $bufsiz -t $FileoutSize -i 2 > $Logdir/WR_Local_M$bufsiz.txt 2>&1
 	sleep 5;
 	rm -rf $LocalDiskFileOut
 	sync; echo 3 > /proc/sys/vm/drop_caches
-	$Fiotool -r -s -f $LocalDiskFileOut -m $bufsiz -t FileoutSize -i 2 > $Logdir/Local_M$bufsiz_WR_Stream.txt 2>&1
+	$Fiotool -r -s -f $LocalDiskFileOut -m $bufsiz -t $FileoutSize -i 2 > $Logdir/WR_Stream_Local_M$bufsiz.txt 2>&1
 	sleep 5;
 	rm -rf $LocalDiskFileOut
 	sync; echo 3 > /proc/sys/vm/drop_caches
-	$Fiotool -r -o -f $LocalDiskFileOut -m $bufsiz -t FileoutSize -i 2 > $Logdir/Local_M$bufsiz_WR_O_Direct.txt 2>&1
+	$Fiotool -r -o -f $LocalDiskFileOut -m $bufsiz -t $FileoutSize -i 2 > $Logdir/WR_O_Direct_Local_M$bufsiz_WR.txt 2>&1
 # lustre
 	sleep 5;
 	rm -rf $LustreDiskFileOut
 	sync; echo 3 > /proc/sys/vm/drop_caches
-	$Fiotool -r -f $LustreDiskFileOut -m $bufsiz -t FileoutSize -i 2 > $Logdir/Lustre_M$bufsiz_WR.txt 2>&1
+	$Fiotool -r -f $LustreDiskFileOut -m $bufsiz -t $FileoutSize -i 2 > $Logdir/WR_Lustre_M$bufsiz.txt 2>&1
 	sleep 5;
 	rm -rf $LustreDiskFileOut
 	sync; echo 3 > /proc/sys/vm/drop_caches
-	$Fiotool -r -s -f $LustreDiskFileOut -m $bufsiz -t FileoutSize -i 2 > $Logdir/Lustre_M$bufsiz_WR_Stream.txt 2>&1
+	$Fiotool -r -s -f $LustreDiskFileOut -m $bufsiz -t $FileoutSize -i 2 > $Logdir/WR_Stream_Lustre_M$bufsiz.txt 2>&1
 	sleep 5;
 	rm -rf $LustreDiskFileOut
 	sync; echo 3 > /proc/sys/vm/drop_caches
-	$Fiotool -r -o -f $LustreDiskFileOut -m $bufsiz -t FileoutSize -i 2 > $Logdir/Lustre_M$bufsiz_WR_O_Direct.txt 2>&1
+	$Fiotool -r -o -f $LustreDiskFileOut -m $bufsiz -t $FileoutSize -i 2 > $Logdir/WR_O_Direct_Lustre_M$bufsiz.txt 2>&1
 done
