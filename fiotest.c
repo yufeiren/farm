@@ -86,25 +86,32 @@ main(int argc, char **argv)
 		switch (c) {
 		case 'r':
 			isread = 1;
+			printf("init: read file\n");
 			break;
 		case 'w':
 			iswrite = 1;
+			printf("init: write file\n");
 			break;
 		case 'o':
+			printf("init: odirect is open\n");
 			isodirect = 1;
 			break;
 		case 's':
+			printf("init: use stream io\n");
 			isstream = 1;
 			break;
 		case 'f':
 			memset(filename, '\0', 128);
 			strcpy(filename, optarg);
+			printf("init: file name is %s\n", filename);
 			break;
 		case 'm':
 			bufsiz = byte_atoi(optarg);
+			printf("init: buffer size is %ld\n", bufsiz);
 			break;
 		case 't':
 			filesize = byte_atoi(optarg);
+			printf("init: file size is %ld\n", filesize);
 			break;
 		case 'i':
 			interval = atoi(optarg);
@@ -197,17 +204,18 @@ main(int argc, char **argv)
 		
 		printf("finish read, total len [%ld].\n", totallen);
 	} else {
-		int tail = 0;
+		max_size_t tail = 0;
 		while ( totallen < filesize ) {
 			tail = filesize - totallen;
 			if (tail < bufsiz)
 				bufsiz = tail;
-			if (isstream == 1)
+			if (isstream == 1) {
 				if ( (cl = fwrite(buf, bufsiz, 1, fp)) > 0)
 					totallen += cl * bufsiz;
-			else
+			} else {
 				if ( (cl = write(fd, buf, bufsiz)) > 0)
 					totallen += cl;
+			}
 		}
 		printf("finish write, total len [%ld].\n", totallen);
 	}
