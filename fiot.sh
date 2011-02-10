@@ -3,8 +3,8 @@
 Fiotool=/home/ren/git/farm/fiotest
 LocalDiskFileIn=/data/fiot/hundredin
 LocalDiskFileOut=/data/fiot/hundredout
-LustreDiskFileIn=/mnt/lustre/hundredin
-LustreDiskFileOut=/mnt/lustre/hundredout
+LustreDiskFileIn=/mnt/lustre/fiot/hundredin
+LustreDiskFileOut=/mnt/lustre/fiot/hundredout
 FileoutSize=100G
 Logdir=/home/ren/fiotest
 
