@@ -349,7 +349,7 @@ calspeed(time_t inter, max_size_t len)
 {
 	double speed = (double) len / inter;
 	
-	printf("SUM:")
+	printf("[SUM]: %ld Bytes in %d sec: ", len, inter);
 	if (speed < kKilo_to_Unit)
 		printf("\t%.2f Bytes/sec\n", speed);
 	else if (speed < kMega_to_Unit)
