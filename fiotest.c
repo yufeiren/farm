@@ -19,11 +19,13 @@ max_size_t totallen;		/* totally received data length */
 long timestamp;
 
 int interval;
+int last;
 
 void *anabw(void *);
 
 void prtinfo(long);
 
+void calspeed(time_t, max_size_t);
 
 const long kKilo_to_Unit = 1024;
 const long kMega_to_Unit = 1024 * 1024;
@@ -65,6 +67,8 @@ main(int argc, char **argv)
 	pthread_t tid;
 	interval = 2;
 	
+	time_t startt, finisht;
+	
 	int isread = 0;
 	int iswrite = 0;
 	int isodirect = 0;
@@ -76,6 +80,8 @@ main(int argc, char **argv)
 /* 	void *obuf;	used for odirect */
 	max_size_t bufsiz = 0;
 	max_size_t filesize = 0;
+	
+	last = 0;
 	
 	strcpy(filename, "./out"); /* default write file name */
 	
@@ -192,6 +198,8 @@ main(int argc, char **argv)
 		}
 	}
 	
+	
+	time(&startt);
 	/* file operation */
 	if (isread == 1) {
 		if (isstream == 1) {
@@ -219,7 +227,9 @@ main(int argc, char **argv)
 		}
 		printf("finish write, total len [%ld].\n", totallen);
 	}
+	time(&finisht);
 	
+	calspeed(finisht - startt, totallen);
 	if (isstream == 1)
 		fclose(fp);
 	else
@@ -258,7 +268,12 @@ anabw(void *arg)
 {
 	long currlen, datalen;
 	
+	printf("Interval\tTransfer\tBandwidth\n");
 	for ( ; ; ) {
+		
+		if ( ++last % 10 == 0)
+			printf("Interval\tTransfer\tBandwidth\n");
+		
 		currlen = totallen;
 		
 		sleep(interval);
@@ -274,7 +289,6 @@ anabw(void *arg)
 void
 prtinfo(long datalen)
 {
-	printf("Interval\tTransfer\tBandwidth\n");
 	
 	double trans, bw;
 	char buf[128];
@@ -326,6 +340,24 @@ prtinfo(long datalen)
 		asctime(localtime(&tloc)), (double) bw / GSIZE);
 	
 	write(fd, buf, strlen(buf)); */
+	
+	return;
+}
+
+void
+calspeed(time_t inter, max_size_t len)
+{
+	double speed = (double) len / inter;
+	
+	printf("SUM:")
+	if (speed < kKilo_to_Unit)
+		printf("\t%.2f Bytes/sec\n", speed);
+	else if (speed < kMega_to_Unit)
+		printf("\t%.2f KBytes/sec\n", speed / kKilo_to_Unit);
+	else if (speed < kGiga_to_Unit)
+		printf("\t%.2f MBytes/sec\n", speed / kMega_to_Unit);
+	else
+		printf("\t%.2f GBytes/sec\n", speed / kGiga_to_Unit);
 	
 	return;
 }
