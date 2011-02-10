@@ -25,7 +25,7 @@ do
 	sleep 5;
 	rm -rf $LocalDiskFileOut
 	sync; echo 3 > /proc/sys/vm/drop_caches
-	$Fiotool -w -o -f $LocalDiskFileOut -m $bufsiz -t $FileoutSize -i 2 > $Logdir/WR_O_Direct_Local_M$bufsiz_WR.txt 2>&1
+	$Fiotool -w -o -f $LocalDiskFileOut -m $bufsiz -t $FileoutSize -i 2 > $Logdir/WR_O_Direct_Local_M$bufsiz.txt 2>&1
 # lustre
 	sleep 5;
 	rm -rf $LustreDiskFileOut
