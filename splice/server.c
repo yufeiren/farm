@@ -17,6 +17,12 @@ int main()
     struct sockaddr_in server_address;
     struct sockaddr_in client_address;
 
+    int filefd;
+    if( (filefd = open("out", O_CREAT |O_WRONLY) ) < 0 ) {
+        perror("open");
+        exit(EXIT_FAILURE);
+    }
+    
 /*  Remove any old socket and create an unnamed socket for the server.  */
 
     server_sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -45,9 +51,18 @@ int main()
 
 /*  We can now read/write to client on client_sockfd.  */
 
-        read(client_sockfd, &ch, 1);
-        ch++;
-        write(client_sockfd, &ch, 1);
+        /* splice from socket to disk */
+        
+        off_t offset;
+	offset = 0;
+	
+	ssize_t bytes;
+	bytes = 0;
+	
+	bytes = sf_splice(client_sockfd, filefd, offset, 0);
+
+	printf("bytes recv via splice: %ld\n", bytes);
+        
         close(client_sockfd);
     }
 }

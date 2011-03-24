@@ -16,7 +16,12 @@ int main()
     int len;
     struct sockaddr_in address;
     int result;
-    char ch = 'A';
+
+    int filefd;
+    if( (filefd = open("in", O_RDONLY) ) < 0 ) {
+        perror("open");
+        exit(EXIT_FAILURE);
+    }
 
 /*  Create a socket for the client.  */
 
@@ -38,11 +43,21 @@ int main()
         exit(1);
     }
 
-/*  We can now read/write via sockfd.  */
+/* splice from disk to socket */
+	off_t offset;
+	offset = 0;
+	
+	struct stat st;
+	fstat(filefd, &st);
+	
+	ssize_t bytes;
+	bytes = 0;
+	
+	bytes = fs_splice(sockfd, filefd, offset, count);
 
-    write(sockfd, &ch, 1);
-    read(sockfd, &ch, 1);
-    printf("char from server = %c\n", ch);
+	printf("bytes send via splice: %ld\n", bytes);
+
     close(sockfd);
+    close(filefd);
     exit(0);
 }

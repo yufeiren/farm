@@ -6,7 +6,7 @@ all: client server
 
 
 %.o: %.c
-	$(CC) $(CFLAGS) $< -c $(EXTRALIBS)
+	$(CC) $(CFLAGS) $< -c
 
 client: client.c mysplice.o
 	$(CC) $(CFLAGS) -o $@ $@.c mysplice.o $(EXTRALIBS)
