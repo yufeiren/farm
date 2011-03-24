@@ -8,6 +8,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+#include "mysplice.h"
+
 int main()
 {
     int server_sockfd, client_sockfd;

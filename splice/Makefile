@@ -8,11 +8,11 @@ all: client server
 %.o: %.c
 	$(CC) $(CFLAGS) $< -c $(EXTRALIBS)
 
-client: client.c
-	$(CC) $(CFLAGS) -o $@ $@.c $(EXTRALIBS)
+client: client.c mysplice.o
+	$(CC) $(CFLAGS) -o $@ $@.c mysplice.o $(EXTRALIBS)
 
-server: server.c
-	$(CC) $(CFLAGS) -o $@ $@.c $(EXTRALIBS)
+server: server.c mysplice.o
+	$(CC) $(CFLAGS) -o $@ $@.c mysplice.o $(EXTRALIBS)
 
 
 clean:
