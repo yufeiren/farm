@@ -59,7 +59,7 @@ int main()
 	ssize_t bytes;
 	bytes = 0;
 	
-	bytes = sf_splice(client_sockfd, filefd, offset, 0);
+	bytes = sf_splice(filefd, client_sockfd, offset, 0);
 
 	printf("bytes recv via splice: %ld\n", bytes);
         
