@@ -55,7 +55,7 @@ int main()
 	ssize_t bytes;
 	bytes = 0;
 	
-	bytes = fs_splice(sockfd, filefd, offset, count);
+	bytes = fs_splice(sockfd, filefd, offset, st.st_size);
 
 	printf("bytes send via splice: %ld\n", bytes);
 
