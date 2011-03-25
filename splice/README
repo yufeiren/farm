@@ -1,0 +1,17 @@
+
+http://stackoverflow.com/questions/884934/does-linuxs-splice2-work-when-splicing-from-a-tcp-socket
+
+Linux has had support for splicing from a TCP socket since 2.6.25
+
+so if you're using an earlier version, you're out of luck
+
+our servers' version is 2.6.18, so we could not splicing from TCP socket now.
+
+
+
+splice
+
+10K is ok
+
+100K is not ok
+
