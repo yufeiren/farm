@@ -67,8 +67,10 @@ main(int argc, char **argv)
 static Room *
 check_next(Room *r)
 {
-	/* if */
-	if ()
+	Room *next;
+	if ((next = get_upper(r) != NULL) {
+		
+	}
 
 	if (r->isin == 1)
 		return NULL;
@@ -85,17 +87,49 @@ check_next(Room *r)
 static Room *
 get_upper(Room *r)
 {
-	if (Room == NULL)
+	if (r == NULL)
 		return NULL;
 	
-	if (r->y == 0)
+	if ((r->y == 0) || (r->isin == 1) || (r->value != 
 		return NULL;
 	
 	return (static Room *) addr[m * (r->y - 1) + r->x];
 }
 
 
+static Room *
+get_lower(Room *r)
+{
+	if (r == NULL)
+		return NULL;
 
-static Room * get_lower(Room *);
-static Room * get_left(Room *);
+	if (r->y == n - 1)
+		return NULL;
+
+	return (static Room *) addr[m * (r->y + 1) + r->x];
+}
+
+
+static Room * get_left(Room *r);
+{
+	if (r == NULL)
+		return NULL;
+
+	if (r->x == 0)
+		return NULL;
+
+	return (static Room *) addr[m * r->y + r->x - 1];
+}
+
+
 static Room * get_right(Room *);
+{
+	if (r == NULL)
+		return NULL;
+
+	if (r->y == m - 1)
+		return NULL;
+
+	return (static Room *) addr[m * r->y + r->x + 1];
+}
+
