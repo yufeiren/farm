@@ -3,6 +3,9 @@
  * http://www.quora.com/about/challenges
  */
 
+/*
+ * my first solution showed the number solution is 301716.
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -71,6 +74,8 @@ static int n;
 
 static int inlist;
 
+static int solution_num;
+
 int
 main(int argc, char **argv)
 {
@@ -83,6 +88,7 @@ main(int argc, char **argv)
 	fgets(line, 1024, stdin);
 
 	TAILQ_INIT(&room_tqh);
+	solution_num = 0;
 
 	Room *r;
 	for (i = 0; i < n; i++) {
@@ -225,10 +231,11 @@ check_path()
 	Room *r;
 
 	if (inlist == room_owned_num) {
-		TAILQ_FOREACH(r, &room_tqh, entries)
+		printf("%d\n", ++ solution_num);
+/*		TAILQ_FOREACH(r, &room_tqh, entries)
 			printf("(%d, %d) -> ", r->x, r->y);
 		printf("\n");
-	}
+*/	}
 		
 	return;
 }
