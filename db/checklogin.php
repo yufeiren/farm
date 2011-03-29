@@ -2,7 +2,7 @@
 ob_start();
 $host="localhost"; // Host name
 $username="root"; // Mysql username
-$password="774ever"; // Mysql password
+$password="Cewit365"; // Mysql password
 $db_name="menagerie"; // Database name
 $tbl_name="members"; // Table name
 
