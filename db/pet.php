@@ -24,7 +24,7 @@ $sex=mysql_result($result,$i,"sex");
 $birth=mysql_result($result,$i,"birth");
 $death=mysql_result($result,$i,"death");
 
-echo "<b>$name</b><br>owner $owner<br>species: $species<br>sex: $sex<br>birth: $birth<br>death: $death<br><hr><br>";
+echo "<b>$name</b><br>owner: $owner<br>species: $species<br>sex: $sex<br>birth: $birth<br>death: $death<br><hr><br>";
 
 $i++;
 }
