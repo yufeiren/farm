@@ -54,6 +54,17 @@ struct rdma_context {
 	char               msg[1024];
 };
 
+/* qp related attr */
+struct dest {
+	int lid;
+	int out_reads;
+	int qpn;
+	int psn;  
+	unsigned rkey;
+	unsigned long long vaddr;
+	union ibv_gid gid;
+};
+
 static const char *portStates[] = {"Nop","Down","Init","Armed","","Active Defer"};
 
 static int isserver;
@@ -61,6 +72,9 @@ static char servaddr[16];
 static int port;
 static char devname[32];
 static int qpnum;
+
+static struct dest *loc_dest;
+static struct dest *rem_dest;
 
 static void runserver();
 static void runclient();
@@ -346,6 +360,13 @@ static struct rdma_context *create_ctx(char *ib_devname)
 		exit(EXIT_FAILURE);
 	}
 	
+	loc_dest = (struct dest *) malloc(sizeof(struct dest) * qpnum);
+	rem_dest = (struct dest *) malloc(sizeof(struct dest) * qpnum);
+	if (!loc_dest || !rem_dest) {
+		printf("malloc fail\n");
+		exit(EXIT_FAILURE);
+	}
+	
 	/* modify qp */
 	for (i = 0; i < qpnum; i++) {
 		memset(&attr, 0, sizeof(struct ibv_qp_init_attr));
@@ -358,17 +379,22 @@ static struct rdma_context *create_ctx(char *ib_devname)
 		attr.cap.max_inline_data = 0;
 		
 		attr.qp_type = IBV_QPT_RC;
-	
+		
 		ctx->qp[i] = ibv_create_qp(ctx->pd, &attr);
 		if (!ctx->qp[i])  {
 			fprintf(stderr, "Couldn't create QP\n");
 			exit(EXIT_FAILURE);
 		}
 		
+		(loc_dest + i)->lid = port_attr.lid;
+		(loc_dest + i)->out_reads = 4;
+		(loc_dest + i)->qpn = ctx->qp[i]->qp_num;
+		(loc_dest + i)->psn = lrand48() & 0xffffff;
+		
 		memset(buf, '\0', 1024);
 		sprintf(buf, "%04x:%04x:%06x:%06x", \
-			port_attr.lid, 4, \
-			ctx->qp[i]->qp_num, lrand48() & 0xffffff);
+			(loc_dest + i)->lid, (loc_dest + i)->out_reads, \
+			(loc_dest + i)->qpn, (loc_dest + i)->psn);
 		
 		memcpy(ctx->msg + 47 + i * 23, buf, 23);
 		ctx->msglen += 47;
@@ -388,6 +414,90 @@ static struct rdma_context *create_ctx(char *ib_devname)
 	}
 	
 	return ctx;
+}
+
+
+void
+setup_ctx_qp(struct rdma_context *ctx)
+{
+	struct ibv_qp_attr attr;
+	memset(&attr, '\0', sizeof attr);
+	
+	char buf[1024];
+	int num = (ctx->msglen - 47) / 23;
+	union ibv_gid remote_gid;
+	
+	int i;
+	char a[3];
+	for (i = 0; i < 16; i ++) {
+		memset(a, '\0', 3);
+		memcpy(a, ctx->msg + i * 3, 2);
+		remote_gid.raw[i] = (unsigned char)strtoll(a, NULL, 16);
+	}
+	
+	int rem_lid;
+	int rem_out_reads;
+	int rem_qpn;
+	int rem_psn;
+	
+	for (i = 0; i < num; i ++) {
+		memset(buf, '\0', 1024);
+		memcpy(buf, ctx->msg + 47 + i * 23, 23);
+		
+		sscanf(buf, "%04x:%04x:%06x:%06x", \
+			&rem_lid, &rem_out_reads, &rem_qpn, &rem_psn);
+	
+		attr.qp_state 		= IBV_QPS_RTR;
+		attr.path_mtu           = 1024; /* user_parm->curr_mtu; */
+		attr.dest_qp_num 	= rem_qpn;
+		attr.rq_psn 		= rem_psn;
+		attr.ah_attr.dlid  	= rem_lid;
+
+		attr.max_dest_rd_atomic     = 1;
+		attr.min_rnr_timer          = 12;
+
+		attr.ah_attr.is_global  = 1;
+		attr.ah_attr.grh.dgid   = remote_gid;
+		attr.ah_attr.grh.sgid_index = -1; /* user_parm->gid_index; */
+		attr.ah_attr.grh.hop_limit = 1;
+		attr.ah_attr.sl         = 0;
+
+		attr.ah_attr.src_path_bits = 0;
+		attr.ah_attr.port_num   = 1;
+		
+		if (ibv_modify_qp(ctx->qp[i], &attr,
+				  IBV_QP_STATE              |
+				  IBV_QP_AV                 |
+				  IBV_QP_PATH_MTU           |
+				  IBV_QP_DEST_QPN           |
+				  IBV_QP_RQ_PSN             |
+				  IBV_QP_MIN_RNR_TIMER      |
+				  IBV_QP_MAX_DEST_RD_ATOMIC)) {
+			fprintf(stderr, "Failed to modify RC QP to RTR\n");
+			return 1;
+		}
+		attr.timeout            = 14; /* user_parm->qp_timeout; */
+		attr.retry_cnt          = 7;
+		attr.rnr_retry          = 7;
+
+		attr.qp_state 	    = IBV_QPS_RTS;
+		attr.sq_psn 	    = (loc_dest + i)->psn;
+		attr.max_rd_atomic  = 1;
+		
+		attr.max_rd_atomic  = 1;
+		if (ibv_modify_qp(ctx->qp[i], &attr,
+				  IBV_QP_STATE              |
+				  IBV_QP_SQ_PSN             |
+				  IBV_QP_TIMEOUT            |
+				  IBV_QP_RETRY_CNT          |
+				  IBV_QP_RNR_RETRY          |
+				  IBV_QP_MAX_QP_RD_ATOMIC)) {
+			fprintf(stderr, "Failed to modify RC QP to RTS\n");
+			exit(EXIT_FAILURE);
+		}
+	}
+
+	return;
 }
 
 
@@ -421,6 +531,9 @@ runserver()
 	printf("recved data:\n");
 	printf("%s\n", ctx->msg);
 	
+	/* setup qp */
+	setup_ctx_qp(ctx);
+	
 	return;
 }
 
@@ -453,6 +566,8 @@ runclient()
 	
 	printf("recved data:\n");
 	printf("%s\n", ctx->msg);
+	
+	setup_ctx_qp(ctx);
 	
 	return;
 }
