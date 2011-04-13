@@ -32,8 +32,12 @@
 #include <malloc.h>
 #include <getopt.h>
 #include <time.h>
-#include <infiniband/verbs.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 
+#include <infiniband/verbs.h>
 
 struct rdma_context {
 	struct ibv_context *context;
