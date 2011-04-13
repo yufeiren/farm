@@ -226,13 +226,13 @@ static struct rdma_context *create_ctx(char *ib_devname)
 	struct rdma_context *ctx;
 	struct ibv_device *ib_dev = NULL;
 	
-	int ib_port = 1;
 	struct ibv_context *context;
-	struct ibv_device  *ib_dev = NULL;
 	
 	int num_of_device;
 	struct ibv_device **dev_list;
 	int ib_port = 1;
+	
+	struct ibv_port_attr port_attr;
 	
 	char buf[1024];
 	
@@ -296,13 +296,13 @@ static struct rdma_context *create_ctx(char *ib_devname)
 	
 /*	if (ibv_query_port(context, port, &port_attr) != 0) { */
 	if (ibv_query_port(ctx->context, 1, &port_attr) != 0) {
-		syslog(LOG_ERR, "ibv_query_port: %m");
+		fprintf(stderr, "ibv_query_port: %m");
 		exit(EXIT_FAILURE);
 	}
 	
 	if (port_attr.state != IBV_PORT_ACTIVE) {
-		fprintf(stderr," Port number %d state is %s\n", \
-			params->ib_port, portStates[port_attr.state]);
+		fprintf(stderr, " Port number %d state is %s\n", \
+			ib_port, portStates[port_attr.state]);
 		exit(EXIT_FAILURE);
 	}
 	
@@ -322,7 +322,7 @@ static struct rdma_context *create_ctx(char *ib_devname)
 	}
 	
 	/* create cq */
-	ctx->cq = ibv_create_cq(ctx->context, cq_depth, NULL, NULL, 0);
+	ctx->cq = ibv_create_cq(ctx->context, 100, NULL, NULL, 0);
 	if (!ctx->cq) {
 		fprintf(stderr, "Couldn't create CQ\n");
 		exit(EXIT_FAILURE);
