@@ -204,7 +204,7 @@ main(int argc, char **argv)
 			qpnum = atoi(optarg);
 			break;
 		default:
-			usage("wrong parameter\n");
+			printf("wrong parameter\n");
 			break;
 		}
 	}
