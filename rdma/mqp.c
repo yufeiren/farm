@@ -458,7 +458,7 @@ setup_ctx_qp(struct rdma_context *ctx)
 
 		attr.ah_attr.is_global  = 1;
 		attr.ah_attr.grh.dgid   = remote_gid;
-		attr.ah_attr.grh.sgid_index = -1; /* user_parm->gid_index; */
+		attr.ah_attr.grh.sgid_index = 0;/* -1; user_parm->gid_index; */
 		attr.ah_attr.grh.hop_limit = 1;
 		attr.ah_attr.sl         = 0;
 
