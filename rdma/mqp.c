@@ -448,7 +448,7 @@ setup_ctx_qp(struct rdma_context *ctx)
 			&rem_lid, &rem_out_reads, &rem_qpn, &rem_psn);
 	
 		attr.qp_state 		= IBV_QPS_RTR;
-		attr.path_mtu           = 1024; /* user_parm->curr_mtu; */
+		attr.path_mtu         = IBV_MTU_1024;/* user_parm->curr_mtu; */
 		attr.dest_qp_num 	= rem_qpn;
 		attr.rq_psn 		= rem_psn;
 		attr.ah_attr.dlid  	= rem_lid;
