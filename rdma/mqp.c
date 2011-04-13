@@ -314,6 +314,12 @@ static struct rdma_context *create_ctx(char *ib_devname)
 	}
 	
 	/* create memory region */
+	ctx->buf = (char *) malloc(1024);
+	if (!ctx->buf) {
+		fprintf(stderr, "Couldn't malloc buf\n");
+		exit(EXIT_FAILURE);
+	}
+	
 	ctx->mr = ibv_reg_mr(ctx->pd, ctx->buf, 1024, \
 			IBV_ACCESS_REMOTE_WRITE | IBV_ACCESS_LOCAL_WRITE);
 	if (!ctx->mr) {
