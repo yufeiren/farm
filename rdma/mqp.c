@@ -474,8 +474,9 @@ setup_ctx_qp(struct rdma_context *ctx)
 				  IBV_QP_MIN_RNR_TIMER      |
 				  IBV_QP_MAX_DEST_RD_ATOMIC)) {
 			fprintf(stderr, "Failed to modify RC QP to RTR\n");
-			return 1;
+			exit(EXIT_FAILURE);
 		}
+		printf("RC QP to RTR success\n");
 		attr.timeout            = 14; /* user_parm->qp_timeout; */
 		attr.retry_cnt          = 7;
 		attr.rnr_retry          = 7;
@@ -495,6 +496,7 @@ setup_ctx_qp(struct rdma_context *ctx)
 			fprintf(stderr, "Failed to modify RC QP to RTS\n");
 			exit(EXIT_FAILURE);
 		}
+		printf("RC QP to RTS success\n");
 	}
 
 	return;
