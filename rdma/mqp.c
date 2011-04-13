@@ -409,11 +409,17 @@ runserver()
 		exit(EXIT_FAILURE);	
 	}
 	
+	printf("prepare to send:\n");
+	printf("%s\n", ctx->msg);
+	
 	/* write ctx->msg */
 	writen(connfd, ctx->msg, ctx->msglen);
 	
 	/* read remote side msg */
 	readn(connfd, ctx->msg, ctx->msglen);
+	
+	printf("recved data:\n");
+	printf("%s\n", ctx->msg);
 	
 	return;
 }
@@ -437,11 +443,16 @@ runclient()
 		exit(EXIT_FAILURE);	
 	}
 	
+	printf("prepare to send:\n");
+	printf("%s\n", ctx->msg);
 	/* write ctx->msg */
 	writen(connfd, ctx->msg, ctx->msglen);
 	
 	/* read remote side msg */
 	readn(connfd, ctx->msg, ctx->msglen);
+	
+	printf("recved data:\n");
+	printf("%s\n", ctx->msg);
 	
 	return;
 }
