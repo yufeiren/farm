@@ -391,7 +391,7 @@ runserver()
 	struct rdma_context *ctx;
 	/* accept a new connection */
 	int connfd;
-	if ((connfd = acptconn(short(port))) < 0) {
+	if ((connfd = acptconn((short) port)) < 0) {
 		printf("accept fail\n");
 		exit(EXIT_FAILURE);
 	}
@@ -419,7 +419,7 @@ runclient()
 	struct rdma_context *ctx;
 	
 	int connfd;
-	if ((connfd = connserv(servaddr, short(port))) < 0) {
+	if ((connfd = connserv(servaddr, (short) port)) < 0) {
 		printf("connect fail\n");
 		exit(EXIT_FAILURE);
 	}
