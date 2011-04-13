@@ -370,14 +370,14 @@ static struct rdma_context *create_ctx(char *ib_devname)
 		memset(&qp_attr, 0, sizeof(struct ibv_qp_attr));
 		qp_attr.qp_state        = IBV_QPS_INIT;
 		qp_attr.pkey_index      = 0;
-		qp_attr.port_num        = param->ib_port;
+		qp_attr.port_num        = ib_port;
 		qp_attr.qp_access_flags = IBV_ACCESS_REMOTE_WRITE;
 
 		flags |= IBV_QP_ACCESS_FLAGS;
 
 		if (ibv_modify_qp(ctx->qp[i], &qp_attr, flags))  {
 			fprintf(stderr, "Failed to modify QP to INIT\n");
-			return 1;
+			exit(EXIT_FAILURE);
 		}
 	}
 	
