@@ -179,7 +179,7 @@ main(int argc, char **argv)
 	/* get parameter */
 	int c;
 	port = 8301;
-	isserver = 1;
+	isserver = 0;
 	qpnum = 1;
 
 	while ((c = getopt(argc, argv, "c:sd:p:q:")) != -1) {
