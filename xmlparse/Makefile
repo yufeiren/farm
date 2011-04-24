@@ -1,5 +1,8 @@
+#xml2-config --cflags
+#xml2-config --libs
+
 CC=gcc
-CFLAGS=-g -O2
+CFLAGS=-g -O2 -I/usr/include/libxml2
 EXTRALIBS=-lxml2
 
 all: parsesample
