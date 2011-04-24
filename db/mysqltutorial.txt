@@ -1,0 +1,38 @@
+
+http://dev.mysql.com/doc/refman/5.5/en/creating-database.html
+
+mysql> CREATE USER ren IDENTIFIED BY 'ren';
+
+
+mysql> CREATE DATABASE menagerie;
+
+mysql> GRANT ALL PRIVILEGES ON menagerie.* TO ren;
+
+mysql> show TABLES;
+
+mysql> CREATE TABLE pet (name VARCHAR(20), owner VARCHAR(20),
+species VARCHAR(20), sex CHAR(1), birth DATE, death DATE);
+
+mysql> DESCRIBE pet;
+
+mysql> LOAD DATA LOCAL INFILE '/home/ren/tmp/pet.txt' INTO TABLE pet;
+
+mysql> INSERT INTO pet
+VALUES ('Puffball','Diane','hamster','f','1999-03-30',NULL);
+
+UPDATE pet SET birth = '1989-08-31' WHERE name = 'Bowser';
+
+
+
+== login ==
+
+CREATE TABLE `members` (
+`id` int(4) NOT NULL auto_increment,
+`username` varchar(65) NOT NULL default '',
+`password` varchar(65) NOT NULL default '',
+PRIMARY KEY (`id`)
+) TYPE=MyISAM AUTO_INCREMENT=2 ;
+
+INSERT INTO `members` VALUES (1, 'ren', '1234');
+
+
