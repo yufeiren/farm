@@ -26,7 +26,8 @@ write_data(void *ptr, size_t size, size_t nmeb, void *stream)
 	return fwrite(ptr, size, nmeb, stream);
 }
 
-int main()
+int
+main(int argc, char **argv)
 {
 	char url[1024];
 	char out[1024];
