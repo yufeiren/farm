@@ -23,9 +23,9 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 			printf("link: %s\n", link);
 			xmlFree(link);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"description")) {
-			description = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
-			printf("description: %s\n", description);
-			xmlFree(description);
+			desp = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
+			printf("description: %s\n", desp);
+			xmlFree(desp);
 		}
 		
 		cur = cur->next;
