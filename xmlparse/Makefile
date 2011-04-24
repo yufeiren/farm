@@ -19,4 +19,4 @@ parserss: parserss.c
 	$(CC) $(CFLAGS) -o $@ $@.c $(EXTRALIBS)
 
 clean:
-	rm -rf $(all)
+	rm -rf parsesample parserss

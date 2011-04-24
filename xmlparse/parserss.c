@@ -6,17 +6,49 @@
 #include <libxml/parser.h>
 
 void
+parseitem(xmlDocPtr doc, xmlNodePtr cur)
+{
+	xmlChar *title;
+	xmlChar *link;
+	xmlChar *desp;
+	cur = cur->xmlChildrenNode;
+	
+	while (cur != NULL) {
+		if (!xmlStrcmp(cur->name, (const xmlChar *)"title")) {
+			title = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
+			printf("title: %s\n", title);
+			xmlFree(title);
+		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"link")) {
+			link = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
+			printf("link: %s\n", link);
+			xmlFree(link);
+		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"description")) {
+			description = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
+			printf("description: %s\n", description);
+			xmlFree(description);
+		}
+		
+		cur = cur->next;
+	}
+	return;
+}
+
+void
 parseStory (xmlDocPtr doc, xmlNodePtr cur) {
 
 	xmlChar *key;
 	cur = cur->xmlChildrenNode;
 	
 	while (cur != NULL) {
-	    if ((!xmlStrcmp(cur->name, (const xmlChar *)"link"))) {
-		    key = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
-		    printf("link: %s\n", key);
-		    xmlFree(key);
- 	    }
+		if ((!xmlStrcmp(cur->name, (const xmlChar *)"link"))) {
+			key = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
+			printf("link: %s\n", key);
+			xmlFree(key);
+		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"item")) {
+	 	    	key = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
+			parseitem(doc, cur);
+		}
+		
 		cur = cur->next;
 	}
 	
