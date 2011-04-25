@@ -13,10 +13,12 @@ removetags(xmlChar *content)
 	int intag = 0;
 	int cur = 0;
 	int cur2 = 0;
+	int tagstart = 0;
+	int tagend = 0;
 	
 	char buf[4096];
-	int c;
 	
+	int c;
 	memset(buf, '\0', 4096);
 	
 	while ((c = *(content + cur++)) != '\0') {
@@ -24,9 +26,18 @@ removetags(xmlChar *content)
 			intag = 1;
 		} else if (c == '>') {
 			intag = 0;
+		} else if (c == '&') {
+			if (memcpy(content + cur, "lt;", 3) == 0)
+				intag = 1;
+			else if (memcpy(content + cur, "gt;", 3) == 0)
+				intag = 0;
+			else if (memcpy(content + cur, "nbsp;", 5) == 0)
+				cur += 2;
+			cur += 3;
 		} else {
 			if (intag == 0)
 				*(buf + cur2++) = c;
+							
 		}
 	}
 	*(buf + cur2) == '\0';		
@@ -106,7 +117,8 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"description")) {
 			desp = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 			/* printf("description: %s\n", desp); */
-			myparsehtml(desp);
+			/* myparsehtml(desp); */
+			removetags(desp);
 			xmlFree(desp);
 		}
 		
