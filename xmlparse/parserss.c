@@ -56,7 +56,7 @@ myparsehtml(const xmlChar *content)
 	
 	htmlCtxtUseOptions(parser, HTML_PARSE_NOBLANKS | HTML_PARSE_NOERROR | HTML_PARSE_NOWARNING | HTML_PARSE_NONET);
 	
-	char *content2 = "&lt;p style=\"MARGIN: 0in 0in 0pt\" class=MsoNormal&gt;"
+	char *content2 = "&lt;p style=\"MARGIN: 0in 0in 0pt\" class=MsoNormal&gt;";
 
 	int ret;
 	
