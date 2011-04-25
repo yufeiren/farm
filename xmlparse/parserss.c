@@ -43,7 +43,7 @@ void walkTree(xmlNode * a_node)
      // do something with that node information, like… printing the tag’s name and attributes
     printf("Got tag : %s\n", cur_node->name);
     for (cur_attr = cur_node->properties; cur_attr; cur_attr = cur_attr->next) {
-      printf("  -> with attribute : %s\n", cur_attre->name);
+      printf("  -> with attribute : %s\n", cur_attr->name);
     }
     walkTree(cur_node->children);
   }
