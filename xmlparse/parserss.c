@@ -25,7 +25,7 @@ removetags(xmlChar *content)
 		switch (c) {
 		case '<':
 			intag = 1;
-			if (*(context + cur) == 'p')
+			if (*(content + cur) == 'p')
 				*(buf + cur2++) = '\n';
 			break;
 		case '>':
