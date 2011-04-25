@@ -60,13 +60,13 @@ myparsehtml(const xmlChar *content)
 	
 	ret = htmlParseChunk(parser, content, strlen(content), 0);
 	if (ret != 0) {
-		fprintf(stderr, "htmlParseChunk failure: %d\n");
+		fprintf(stderr, "htmlParseChunk failure: %d\n", ret);
 		exit(1);
 	}
 	
 	ret = htmlParseChunk(parser, NULL, 0, 1);
 	if (ret != 0) {
-		fprintf(stderr, "htmlParseChunk failure: %d\n");
+		fprintf(stderr, "htmlParseChunk failure: %d\n", ret);
 		exit(1);
 	}
 	
