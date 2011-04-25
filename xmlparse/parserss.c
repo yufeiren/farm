@@ -34,6 +34,7 @@ removetags(xmlChar *content)
 				intag = 0;
 				cur += 3;
 			} else if (memcpy(content + cur, "amp;nbsp;", 9) == 0) {
+				printf("get amp;nbsp;\n");
 				cur += 9;
 			}
 		} else {
