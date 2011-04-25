@@ -35,7 +35,6 @@ recheck:
 				intag = 0;
 				cur += 3;
 			} else if (memcpy(content + cur, "amp;", 4) == 0) {
-				intag = 0;
 				cur += 4;
 				goto recheck;
 			} else if (memcpy(content + cur, "nbsp;", 5) == 0) {
