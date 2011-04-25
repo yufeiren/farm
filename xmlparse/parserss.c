@@ -41,6 +41,8 @@ removetags(xmlChar *content)
 			}
 			break;
 		case '\n':
+			if (intag == 0)
+				*(buf + cur2++) = ' ';
 			break;
 		default:
 			if (intag == 0)
