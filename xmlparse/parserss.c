@@ -56,8 +56,17 @@ myparsehtml(const xmlChar *content)
 	
 	htmlCtxtUseOptions(parser, HTML_PARSE_NOBLANKS | HTML_PARSE_NOERROR | HTML_PARSE_NOWARNING | HTML_PARSE_NONET);
 	
-	if (htmlParseChunk(parser, content, strlen(content), 0) != 0) {
-		fprintf(stderr, "htmlParseChunk failure");
+	int ret;
+	
+	ret = htmlParseChunk(parser, content, strlen(content), 0);
+	if (ret != 0) {
+		fprintf(stderr, "htmlParseChunk failure: %d\n");
+		exit(1);
+	}
+	
+	ret = htmlParseChunk(parser, NULL, 0, 1);
+	if (ret != 0) {
+		fprintf(stderr, "htmlParseChunk failure: %d\n");
 		exit(1);
 	}
 	
@@ -86,7 +95,7 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 			xmlFree(link);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"description")) {
 			desp = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
-			printf("description: %s\n", desp);
+			/* printf("description: %s\n", desp); */
 			myparsehtml(desp);
 			xmlFree(desp);
 		}
