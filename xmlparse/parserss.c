@@ -6,6 +6,34 @@
 #include <libxml/parser.h>
 
 void
+removetags(xmlChar *content)
+{
+	int intag = 0;
+	int cur = 0;
+	int cur2 = 0;
+	
+	char buf[4096];
+	int c;
+	
+	memset(buf, '\0', 4096);
+	
+	while ((c = *(content + cur++)) != '\0') {
+		if (c == '<') {
+			intag = 1;
+		} else if (c == '>') {
+			intag = 0;
+		} else {
+			if (intag == 0)
+				*(buf + cur2++) = c;
+		}
+	}
+	*(buf + cur2) == '\0';		
+
+	printf("pure txt:\n:%s\n", buf);
+	return;
+}
+
+void
 parseitem(xmlDocPtr doc, xmlNodePtr cur)
 {
 	xmlChar *title;
@@ -22,11 +50,12 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 			link = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 			printf("link: %s\n", link);
 			xmlFree(link);
-		} /*else if (!xmlStrcmp(cur->name, (const xmlChar *)"description")) {
+		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"description")) {
 			desp = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 			printf("description: %s\n", desp);
+			removetags(desp);
 			xmlFree(desp);
-		}*/
+		}
 		
 		cur = cur->next;
 	}
