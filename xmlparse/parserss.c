@@ -56,15 +56,15 @@ myparsehtml(const xmlChar *content)
 	
 	htmlCtxtUseOptions(parser, HTML_PARSE_NOBLANKS | HTML_PARSE_NOERROR | HTML_PARSE_NOWARNING | HTML_PARSE_NONET);
 	
-	char *content2 = "<html> \
-<body> \
+	char *content2 = "<html>\
+<body>\
 \
-<h1>My First Heading</h1> \
+<h1>My First Heading</h1>\
 \
-<p>My first paragraph.</p> \
+<p>My first paragraph.</p>\
 \
-</body> \
-</html> ";
+</body>\
+</html>";
 
 	int ret;
 	
