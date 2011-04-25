@@ -5,6 +5,8 @@
 #include <libxml/xmlmemory.h>
 #include <libxml/parser.h>
 
+#include <libxml/HTMLparser.h>
+
 void
 removetags(xmlChar *content)
 {
@@ -33,6 +35,38 @@ removetags(xmlChar *content)
 	return;
 }
 
+void walkTree(xmlNode * a_node)
+{
+  xmlNode *cur_node = NULL;
+  xmlAttr *cur_attr = NULL;
+  for (cur_node = a_node; cur_node; cur_node = cur_node->next) {
+     // do something with that node information, like… printing the tag’s name and attributes
+    printf(“Got tag : %s\n”, cur_node->name);
+    for (cur_attr = cur_node->properties; cur_attr; cur_attr = cur_attr->next) {
+      printf(“  -> with attribute : %s\n”, cur_attre->name);
+    }
+    walkTree(cur_node->children);
+  }
+}
+
+void
+myparsehtml(const xmlChar *content)
+{
+	htmlParserCtxtPtr parser = htmlCreatePushParserCtxt(NULL, NULL, NULL, 0, NULL, 0);
+	
+	htmlCtxtUseOptions(parser, HTML_PARSE_NOBLANKS | HTML_PARSE_NOERROR | HTML_PARSE_NOWARNING | HTML_PARSE_NONET);
+	
+	if (htmlParseChunk(parser, content, strlen(content), 0) != 0) {
+		fprintf(stderr, "htmlParseChunk failure");
+		exit(1);
+	}
+	
+	walkTree(xmlDocGetRootElement(parser->myDoc));
+	
+	return;
+}
+
+
 void
 parseitem(xmlDocPtr doc, xmlNodePtr cur)
 {
@@ -53,7 +87,7 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"description")) {
 			desp = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 			printf("description: %s\n", desp);
-			removetags(desp);
+			myparsehtml(desp);
 			xmlFree(desp);
 		}
 		
