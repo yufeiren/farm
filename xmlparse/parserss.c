@@ -22,11 +22,14 @@ removetags(xmlChar *content)
 	memset(buf, '\0', 4096);
 	
 	while ((c = *(content + cur++)) != '\0') {
-		if (c == '<') {
+		switch (c) {
+		case '<':
 			intag = 1;
-		} else if (c == '>') {
+			break;
+		case '>':
 			intag = 0;
-		} else if (c == '&') {
+			break;
+		case '&':
 			if (memcmp(content + cur, "lt;", 3) == 0) {
 				intag = 1;
 				cur += 3;
@@ -36,10 +39,10 @@ removetags(xmlChar *content)
 			} else if (memcmp(content + cur, "nbsp;", 5) == 0) {
 				cur += 5;
 			}
-		} else {
+			break;
+		default:
 			if (intag == 0)
-				*(buf + cur2++) = c;
-							
+				*(buf + cur2++) = c;					
 		}
 	}
 	*(buf + cur2) == '\0';		
