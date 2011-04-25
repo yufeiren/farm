@@ -56,16 +56,8 @@ myparsehtml(const xmlChar *content)
 	
 	htmlCtxtUseOptions(parser, HTML_PARSE_NOBLANKS | HTML_PARSE_NOERROR | HTML_PARSE_NOWARNING | HTML_PARSE_NONET);
 	
-	char *content2 = "&lt;p style="MARGIN: 0in 0in 0pt" class=MsoNormal&gt;
-&lt;font color=#000000 size=3 face=Calibri&gt;Last Thursday Facebook announced the &lt;/font&gt;&lt;a href="http://perspectives.mvdirona.com/2011/04/07/OpenComputeProject.aspx"&gt;&lt;font color=#0000ff size=3 face=Calibri&gt;Open
-Compute Project&lt;/font&gt;&lt;/a&gt;&lt;font color=#000000 size=3 face=Calibri&gt; where they released
-pictures and &lt;/font&gt;&lt;a href="http://opencompute.org/"&gt;&lt;font color=#0000ff size=3 face=Calibri&gt;specifications&lt;/font&gt;&lt;/a&gt;&lt;font color=#000000 size=3 face=Calibri&gt; for
-their Prineville Oregon datacenter and the servers and infrastructure that will populate
-that facility. In my last blog, &lt;/font&gt;&lt;a href="http://perspectives.mvdirona.com/2011/04/09/OpenComputeMechanicalSystemDesign.aspx"&gt;&lt;font color=#0000ff size=3 face=Calibri&gt;Open
-Compute Mechanical System Design&lt;/font&gt;&lt;/a&gt;&lt;font size=3&gt;&lt;font color=#000000&gt;&lt;font face=Calibri&gt;&lt;?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /&gt; I
-walked through the mechanical system in some detail. In this posting, we’ll have a
-closer look at the Facebook Freedom Server design.&lt;o:p&gt;&lt;/o:p&gt;
-&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;"
+	char *content2 = "&lt;p style=\"MARGIN: 0in 0in 0pt\" class=MsoNormal&gt;"
+
 	int ret;
 	
 	ret = htmlParseChunk(parser, content2, strlen(content2), 0);
