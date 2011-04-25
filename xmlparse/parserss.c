@@ -27,15 +27,14 @@ removetags(xmlChar *content)
 		} else if (c == '>') {
 			intag = 0;
 		} else if (c == '&') {
-			if (memcpy(content + cur, "lt;", 3) == 0) {
+			if (memcmp(content + cur, "lt;", 3) == 0) {
 				intag = 1;
 				cur += 3;
-			} else if (memcpy(content + cur, "gt;", 3) == 0) {
+			} else if (memcmp(content + cur, "gt;", 3) == 0) {
 				intag = 0;
 				cur += 3;
-			} else if (memcpy(content + cur, "amp;nbsp;", 9) == 0) {
-				printf("get amp;nbsp;\n");
-				cur += 9;
+			} else if (memcmp(content + cur, "nbsp;", 5) == 0) {
+				cur += 5;
 			}
 		} else {
 			if (intag == 0)
