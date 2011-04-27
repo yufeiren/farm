@@ -206,10 +206,10 @@ parseBody(xmlDocPtr doc, xmlNodePtr cur)
 			xmlurl = xmlGetProp(cur, "xmlUrl");
 			type = xmlGetProp(cur, "type");
 		
-			fprintf(fp, "title: %s; text: %s; type: %s\n", \
+			fprintf(fp, "title: %s\r\ntext: %s\r\ntype: %s\r\n\r\n", \
 				title, text, type);
-			fprintf(fp, "htmlurl: %s\n", htmlurl);
-			fprintf(fp, "xmlurl: %s\n", xmlurl);
+/*			fprintf(fp, "htmlurl: %s\n", htmlurl);
+			fprintf(fp, "xmlurl: %s\n", xmlurl); */
 			
 			xmlFree(title);
 			xmlFree(text);
