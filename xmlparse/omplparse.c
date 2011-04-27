@@ -296,11 +296,13 @@ main(int argc, char **argv)
 	fprintf(fp, "\\usepackage {amsmath ,amsthm , amssymb}\n");
 	fprintf(fp, "\\usepackage {graphicx}\n");
 	fprintf(fp, "\\usepackage {hyperref}\n");
+	fprintf(fp, "\\usepackage[utf8]{inputenc}\n");
 	
+
 	fprintf(fp, "\\begin {document}\n");
 	
 	parseDoc (docname);
-
+	fprintf(fp, "\n");
 	fprintf(fp, "\\end {document}\n");
 
 	fclose(fp);
