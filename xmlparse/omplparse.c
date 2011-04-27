@@ -185,6 +185,10 @@ parseBody(xmlDocPtr doc, xmlNodePtr cur)
 {
 	xmlChar *title;
 	xmlChar *text;
+	xmlChar *htmlurl;
+	xmlChar *xmlurl;
+	xmlChar *type;
+	
 	cur = cur->xmlChildrenNode;
 	
 	while (cur != NULL) {
@@ -195,9 +199,20 @@ parseBody(xmlDocPtr doc, xmlNodePtr cur)
 		if ((!xmlStrcmp(cur->name, (const xmlChar *)"outline"))) {
 			title = xmlGetProp(cur, "title");
 			text = xmlGetProp(cur, "text");
-			printf("title: %s; text %s\n", title, text);
+			htmlurl = xmlGetProp(cur, "htmlUrl");
+			xmlurl = xmlGetProp(cur, "xmlUrl");
+			type = xmlGetProp(cur, "type");
+			
+			printf("title: %s; text: %s; type: %s\n", \
+				title, text, type);
+			printf("htmlurl: %s\n", htmlurl);
+			printf("xmlurl: %s\n", xmlurl);
+			
 			xmlFree(title);
 			xmlFree(text);
+			xmlFree(htmlurl);
+			xmlFree(xmlurl);
+			xmlFree(type);
 		}
 		
 		cur = cur->next;
