@@ -183,7 +183,8 @@ parseHead(xmlDocPtr doc, xmlNodePtr cur)
 void
 parseBody(xmlDocPtr doc, xmlNodePtr cur)
 {
-	xmlChar *key;
+	xmlChar *title;
+	xmlChar *text;
 	cur = cur->xmlChildrenNode;
 	
 	while (cur != NULL) {
@@ -192,9 +193,11 @@ parseBody(xmlDocPtr doc, xmlNodePtr cur)
 		}
 		
 		if ((!xmlStrcmp(cur->name, (const xmlChar *)"outline"))) {
-			key = xmlNodeListGetString(doc, cur->xmlChildrenNode,1);
-			printf("outline: %s\n", key);
+			title = xmlGetProp(cur, "title");
+			text = xmlGetProp(cur, "text");
+			printf("title: %s; text %s\n", title, text);
 			xmlFree(key);
+			xmlFree(text);
 		}
 		
 		cur = cur->next;
