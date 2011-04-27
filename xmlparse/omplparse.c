@@ -188,7 +188,7 @@ parseBody(xmlDocPtr doc, xmlNodePtr cur)
 	
 	while (cur != NULL) {
 		if (cur->xmlChildrenNode != NULL) {
-			parseBody(doc, cur->xmlChildrenNode);
+			parseBody(doc, cur);
 		}
 		
 		if ((!xmlStrcmp(cur->name, (const xmlChar *)"outline"))) {
