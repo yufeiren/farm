@@ -290,7 +290,20 @@ main(int argc, char **argv)
 		exit(1);
 	}
 	
+	fprintf(fp, "\\documentclass {article}\n");
+	fprintf(fp, "\\usepackage {geometry}\n");
+	fprintf(fp, "\\usepackage {fancyhdr}\n");
+	fprintf(fp, "\\usepackage {amsmath ,amsthm , amssymb}\n");
+	fprintf(fp, "\\usepackage {graphicx}\n");
+	fprintf(fp, "\\usepackage {hyperref}\n");
+	
+	fprintf(fp, "\\begin {document}\n");
+	
 	parseDoc (docname);
 
+	fprintf(fp, "\\end {document}\n");
+
+	fclose(fp);
+	
 	return (1);
 }
