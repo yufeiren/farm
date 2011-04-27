@@ -196,7 +196,7 @@ parseBody(xmlDocPtr doc, xmlNodePtr cur)
 			title = xmlGetProp(cur, "title");
 			text = xmlGetProp(cur, "text");
 			printf("title: %s; text %s\n", title, text);
-			xmlFree(key);
+			xmlFree(title);
 			xmlFree(text);
 		}
 		
