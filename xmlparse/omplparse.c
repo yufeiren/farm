@@ -7,6 +7,9 @@
 
 #include <libxml/HTMLparser.h>
 
+static int fd;
+static FILE *fp;
+
 void
 removetags(xmlChar *content)
 {
@@ -202,11 +205,11 @@ parseBody(xmlDocPtr doc, xmlNodePtr cur)
 			htmlurl = xmlGetProp(cur, "htmlUrl");
 			xmlurl = xmlGetProp(cur, "xmlUrl");
 			type = xmlGetProp(cur, "type");
-			
-			printf("title: %s; text: %s; type: %s\n", \
+		
+			fprintf(fp, "title: %s; text: %s; type: %s\n", \
 				title, text, type);
-			printf("htmlurl: %s\n", htmlurl);
-			printf("xmlurl: %s\n", xmlurl);
+			fprintf(fp, "htmlurl: %s\n", htmlurl);
+			fprintf(fp, "xmlurl: %s\n", xmlurl);
 			
 			xmlFree(title);
 			xmlFree(text);
@@ -271,13 +274,22 @@ main(int argc, char **argv)
 {
 
 	char *docname;
+	char *outfile;
 		
-	if (argc <= 1) {
-		printf("Usage: %s docname\n", argv[0]);
+	if (argc <= 2) {
+		printf("Usage: %s docname outputfile\n", argv[0]);
 		return(0);
 	}
 
 	docname = argv[1];
+	outfile = argv[2];
+
+	fp = fopen(argv[2], "w+");
+	if (fp == NULL) {
+		printf("cannot open output file: %s\n", outfile);
+		exit(1);
+	}
+	
 	parseDoc (docname);
 
 	return (1);
