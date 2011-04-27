@@ -300,7 +300,7 @@ main(int argc, char **argv)
 /*	fprintf(fp, "\\usepackage [utf8x]{inputenc}\n"); */
 
 	fprintf(fp, "\\begin {document}\n");
-	fprintf(fp, "\\begin {CJK}{UTF8}{c70bkai}\n");
+	fprintf(fp, "\\begin {CJK}{UTF8}{gkai}\n");
 	
 	parseDoc (docname);
 	
