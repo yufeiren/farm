@@ -296,13 +296,16 @@ main(int argc, char **argv)
 	fprintf(fp, "\\usepackage {amsmath ,amsthm , amssymb}\n");
 	fprintf(fp, "\\usepackage {graphicx}\n");
 	fprintf(fp, "\\usepackage {hyperref}\n");
-	fprintf(fp, "\\usepackage[utf8x]{inputenc}\n");
-	
+	fprintf(fp, "\\usepackage {CJK}\n");
+/*	fprintf(fp, "\\usepackage [utf8x]{inputenc}\n"); */
 
 	fprintf(fp, "\\begin {document}\n");
+	fprintf(fp, "\\begin {CJK}{UTF8}{song}\n");
 	
 	parseDoc (docname);
+	
 	fprintf(fp, "\n");
+	fprintf(fp, "\\end {CJK}\n");
 	fprintf(fp, "\\end {document}\n");
 
 	fclose(fp);
