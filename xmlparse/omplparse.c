@@ -205,9 +205,11 @@ parseBody(xmlDocPtr doc, xmlNodePtr cur)
 			htmlurl = xmlGetProp(cur, "htmlUrl");
 			xmlurl = xmlGetProp(cur, "xmlUrl");
 			type = xmlGetProp(cur, "type");
-		
-			fprintf(fp, "title: %s\r\ntext: %s\r\ntype: %s\r\n\r\n", \
-				title, text, type);
+			
+			fprintf(fp, "\\section {%s}\n", title);
+			fprintf(fp, "\r\n");
+			fprintf(fp, "text: %s\r\ntype: %s\r\n\r\n", \
+				text, type);
 /*			fprintf(fp, "htmlurl: %s\n", htmlurl);
 			fprintf(fp, "xmlurl: %s\n", xmlurl); */
 			
