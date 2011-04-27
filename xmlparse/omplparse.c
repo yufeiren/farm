@@ -296,7 +296,7 @@ main(int argc, char **argv)
 	fprintf(fp, "\\usepackage {amsmath ,amsthm , amssymb}\n");
 	fprintf(fp, "\\usepackage {graphicx}\n");
 	fprintf(fp, "\\usepackage {hyperref}\n");
-	fprintf(fp, "\\usepackage[utf8]{inputenc}\n");
+	fprintf(fp, "\\usepackage[utf8x]{inputenc}\n");
 	
 
 	fprintf(fp, "\\begin {document}\n");
