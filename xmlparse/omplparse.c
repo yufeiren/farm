@@ -206,8 +206,8 @@ parseBody(xmlDocPtr doc, xmlNodePtr cur)
 			xmlurl = xmlGetProp(cur, "xmlUrl");
 			type = xmlGetProp(cur, "type");
 			
-			fprintf(fp, "\\section {%s}\r\n", title);
-			fprintf(fp, "\r\n");
+/*			fprintf(fp, "\\section {%s}\r\n", title); */
+			fprintf(fp, "title: %s\r\n", title);
 			fprintf(fp, "text: %s\r\ntype: %s\r\n\r\n", \
 				text, type);
 /*			fprintf(fp, "htmlurl: %s\n", htmlurl);
@@ -292,7 +292,7 @@ main(int argc, char **argv)
 		exit(1);
 	}
 	
-	fprintf(fp, "\\documentclass {article}\n");
+	fprintf(fp, "\\documentclass [16pt]{article}\n");
 	fprintf(fp, "\\usepackage {geometry}\n");
 	fprintf(fp, "\\usepackage {fancyhdr}\n");
 	fprintf(fp, "\\usepackage {amsmath ,amsthm , amssymb}\n");
