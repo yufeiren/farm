@@ -5,7 +5,7 @@ CC=gcc
 CFLAGS=-g -O2 -I/usr/include/libxml2
 EXTRALIBS=-lxml2
 
-all: parsesample parserss
+all: parsesample parserss omplparse
 
 #
 
@@ -16,6 +16,9 @@ parsesample: parsesample.c
 	$(CC) $(CFLAGS) -o $@ $@.c $(EXTRALIBS)
 
 parserss: parserss.c
+	$(CC) $(CFLAGS) -o $@ $@.c $(EXTRALIBS)
+
+omplparse: omplparse.c
 	$(CC) $(CFLAGS) -o $@ $@.c $(EXTRALIBS)
 
 clean:
