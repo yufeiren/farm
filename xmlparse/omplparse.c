@@ -179,9 +179,26 @@ parseHead(xmlDocPtr doc, xmlNodePtr cur)
 	return;
 }
 
+
 void
 parseBody(xmlDocPtr doc, xmlNodePtr cur)
 {
+	xmlChar *key;
+	cur = cur->xmlChildrenNode;
+	
+	while (cur != NULL) {
+		if (cur->xmlChildrenNode != NULL) {
+			parseBody(doc, cur->xmlChildrenNode);
+		}
+		
+		if ((!xmlStrcmp(cur->name, (const xmlChar *)"outline"))) {
+			key = xmlNodeListGetString(doc, cur->xmlChildrenNode,1);
+			printf("outline: %s\n", key);
+			xmlFree(key);
+		}
+		
+		cur = cur->next;
+	}
 	
 	return;
 }
