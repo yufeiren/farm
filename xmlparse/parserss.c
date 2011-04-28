@@ -246,8 +246,6 @@ main(int argc, char **argv)
 	docname = argv[1];
 	outfile = argv[2];
 
-myparsehtml(NULL);
-
 	fp = fopen(argv[2], "w+");
 	if (fp == NULL) {
 		printf("cannot open output file: %s\n", outfile);
