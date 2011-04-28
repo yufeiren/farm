@@ -76,7 +76,7 @@ void walkTree(xmlNode * a_node)
 /*    printf("Got tag : %s; Content: %s\n", cur_node->name, cur_node->content);
 */
 	if (!xmlStrcmp(cur_node->name, (const xmlChar *)"text")) {
-		fprintf("\\Huge{%s}\r\n\r\n", cur_node->content);
+		fprintf(fp, "\\Huge{%s}\r\n\r\n", cur_node->content);
 	}
 	printf("Got tag : %s; Content: %s\n", cur_node->name, cur_node->content);
     for (cur_attr = cur_node->properties; cur_attr; cur_attr = cur_attr->next) {
