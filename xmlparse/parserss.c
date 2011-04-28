@@ -153,9 +153,10 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 			xmlFree(link);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"description")) {
 			desp = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
-			newcont = removetags(desp);
-			fprintf(fp, "\\Huge{description: %s}\r\n\r\n", newcont);
-			fprintf(fp, "\r\n\r\n");
+/*			newcont = removetags(desp); */
+			myparsehtml(desp);
+/*			fprintf(fp, "\\Huge{description: %s}\r\n\r\n", newcont);
+*/			fprintf(fp, "\r\n\r\n");
 			/* myparsehtml(desp); */
 			/* removetags(desp); */
 			xmlFree(desp);
