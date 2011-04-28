@@ -78,8 +78,8 @@ void walkTree(xmlDocPtr doc, xmlNode * a_node)
 /*    printf("Got tag : %s; Content: %s\n", cur_node->name, cur_node->content);
 */
 	if (!xmlStrcmp(cur_node->name, (const xmlChar *)"text")) {
-		content = xmlNodeListGetString(doc, cur_node->xmlChildrenNode, 1);
-		fprintf(fp, "\\Huge{title: %s}\r\n\r\n", content);
+		content = xmlNodeListGetString(doc, cur_node, 1);/*->xmlChildrenNode*/
+		fprintf(fp, "\\Huge{content: %s}\r\n\r\n", content);
 		xmlFree(content);
 /*		fprintf(fp, "\\Huge{%s}\r\n\r\n", cur_node->content); */
 	}
