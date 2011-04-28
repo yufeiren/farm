@@ -168,7 +168,7 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 			/* printf("get content:encoded\n"); */
 			content = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 /*			myparsehtml(content); */
-			newcont = removetags(content); */
+			newcont = removetags(content);
 			fprintf(fp, "\\Huge{content: %s}\r\n\r\n", newcont);
 			fprintf(fp, "\r\n\r\n");
 			xmlFree(content);
