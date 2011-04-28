@@ -104,7 +104,9 @@ myparsehtml(const xmlChar *content)
 
 	int ret;
 	
-	ret = htmlParseChunk(parser, content, strlen(content), 0);
+	printf("content len: %d\n", xmlStrlen(content));
+	
+	ret = htmlParseChunk(parser, content, xmlStrlen(content), 0);
 	if (ret != 0) {
 		fprintf(stderr, "htmlParseChunk failure: %d\n", ret);
 		exit(1);
