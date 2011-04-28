@@ -97,7 +97,7 @@ myparsehtml(const xmlChar *content)
 
 	htmlParserCtxtPtr parser = htmlCreatePushParserCtxt(NULL, NULL, NULL, 0, NULL, 0);
 	
-	htmlCtxtUseOptions(parser, HTML_PARSE_RECOVER | HTML_PARSE_NOBLANKS | HTML_PARSE_NOERROR | HTML_PARSE_NOWARNING | HTML_PARSE_NONET);
+	htmlCtxtUseOptions(parser, HTML_PARSE_NOBLANKS | HTML_PARSE_NOERROR | HTML_PARSE_NOWARNING | HTML_PARSE_NONET);
 	
 	char *content2 = "<html>\
 <body>\
@@ -157,19 +157,19 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 			xmlFree(link);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"description")) {
 			desp = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
-/*			newcont = removetags(desp); */
-			myparsehtml(desp);
-/*			fprintf(fp, "\\Huge{description: %s}\r\n\r\n", newcont);
-*/			fprintf(fp, "\r\n\r\n");
+			newcont = removetags(desp);
+/*			myparsehtml(desp); */
+			fprintf(fp, "\\Huge{description: %s}\r\n\r\n", newcont);
+			fprintf(fp, "\r\n\r\n");
 			/* myparsehtml(desp); */
 			/* removetags(desp); */
 			xmlFree(desp);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"encoded")) {
 			/* printf("get content:encoded\n"); */
 			content = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
-			myparsehtml(content);
-/*			newcont = removetags(content);
-			fprintf(fp, "\\Huge{content: %s}\r\n\r\n", newcont);*/
+/*			myparsehtml(content); */
+			newcont = removetags(content); */
+			fprintf(fp, "\\Huge{content: %s}\r\n\r\n", newcont);
 			fprintf(fp, "\r\n\r\n");
 			xmlFree(content);
 			free(newcont);
