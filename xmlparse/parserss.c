@@ -93,6 +93,8 @@ void walkTree(xmlDocPtr doc, xmlNode * a_node)
 void
 myparsehtml(const xmlChar *content)
 {
+	xmlErrorPtr err;
+
 	htmlParserCtxtPtr parser = htmlCreatePushParserCtxt(NULL, NULL, NULL, 0, NULL, 0);
 	
 	htmlCtxtUseOptions(parser, HTML_PARSE_NOBLANKS | HTML_PARSE_NOERROR | HTML_PARSE_NOWARNING | HTML_PARSE_NONET);
@@ -114,7 +116,9 @@ myparsehtml(const xmlChar *content)
 	
 	ret = htmlParseChunk(parser, content, xmlStrlen(content), 0);
 	if (ret != 0) {
-		fprintf(stderr, "htmlParseChunk failure: %d\n", ret);
+		err = xmlCtxtGetLastError(parser);
+		fprintf(stderr, "htmlParseChunk failure: %d(%s)\n", \
+			ret, err->message);
 		return;
 	}
 	
