@@ -153,6 +153,8 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 			free(newcont);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"content")) {
 			printf("get content\n");
+		} else {
+			printf("cur name: %s\n", cur->name);
 		}
 		
 		cur = cur->next;
