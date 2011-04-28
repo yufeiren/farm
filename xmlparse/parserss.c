@@ -7,6 +7,9 @@
 
 #include <libxml/HTMLparser.h>
 
+static int fd;
+static FILE *fp;
+
 void
 removetags(xmlChar *content)
 {
@@ -119,15 +122,16 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 	while (cur != NULL) {
 		if (!xmlStrcmp(cur->name, (const xmlChar *)"title")) {
 			title = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
-			printf("title: %s\n", title);
+			fprintf(fp, "\\Huge{title: %s}\r\n\r\n", title);
 			xmlFree(title);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"link")) {
 			link = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
-			printf("link: %s\n", link);
+			fprintf(fp, "link: %s\n", link);
 			xmlFree(link);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"description")) {
 			desp = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
-			/* printf("description: %s\n", desp); */
+			fprintf(fp, "\\Huge{description: %s}\r\n\r\n", desp);
+			fprintf(fp, "\r\n\r\n");
 			/* myparsehtml(desp); */
 			removetags(desp);
 			xmlFree(desp);
@@ -208,14 +212,41 @@ main(int argc, char **argv)
 {
 
 	char *docname;
+	char *outfile;
 		
-	if (argc <= 1) {
-		printf("Usage: %s docname\n", argv[0]);
+	if (argc <= 2) {
+		printf("Usage: %s docname outputfile\n", argv[0]);
 		return(0);
 	}
 
 	docname = argv[1];
-	parseDoc (docname);
+	outfile = argv[2];
 
+	fp = fopen(argv[2], "w+");
+	if (fp == NULL) {
+		printf("cannot open output file: %s\n", outfile);
+		exit(1);
+	}
+	
+	fprintf(fp, "\\documentclass [16pt]{article}\n");
+	fprintf(fp, "\\usepackage {geometry}\n");
+	fprintf(fp, "\\usepackage {fancyhdr}\n");
+	fprintf(fp, "\\usepackage {amsmath ,amsthm , amssymb}\n");
+	fprintf(fp, "\\usepackage {graphicx}\n");
+	fprintf(fp, "\\usepackage {hyperref}\n");
+	fprintf(fp, "\\usepackage {CJK}\n");
+/*	fprintf(fp, "\\usepackage [utf8x]{inputenc}\n"); */
+
+	fprintf(fp, "\\begin {document}\n");
+	fprintf(fp, "\\begin {CJK}{UTF8}{gkai}\n");
+	
+	parseDoc (docname);
+	
+	fprintf(fp, "\n");
+	fprintf(fp, "\\end {CJK}\n");
+	fprintf(fp, "\\end {document}\n");
+
+	fclose(fp);
+	
 	return (1);
 }
