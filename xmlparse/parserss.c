@@ -144,12 +144,15 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 			/* removetags(desp); */
 			xmlFree(desp);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"content:encoded")) {
+			printf("get content:encoded\n");
 			content = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 			newcont = removetags(content);
 			fprintf(fp, "\\Huge{content: %s}\r\n\r\n", content);
 			fprintf(fp, "\r\n\r\n");
 			xmlFree(content);
 			free(newcont);
+		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"content")) {
+			printf("get content\n");
 		}
 		
 		cur = cur->next;
