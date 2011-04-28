@@ -112,7 +112,7 @@ myparsehtml(const xmlChar *content)
 	
 	ret = htmlParseChunk(parser, NULL, 0, 1);
 	if (ret != 0) {
-		fprintf(stderr, "htmlParseChunk failure: %d\n", ret);
+		fprintf(stderr, "htmlParseChunk failure 2: %d\n", ret);
 		exit(1);
 	}
 	
