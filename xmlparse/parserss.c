@@ -143,18 +143,14 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 			/* myparsehtml(desp); */
 			/* removetags(desp); */
 			xmlFree(desp);
-		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"content:encoded")) {
-			printf("get content:encoded\n");
+		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"encoded")) {
+			/* printf("get content:encoded\n"); */
 			content = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 			newcont = removetags(content);
 			fprintf(fp, "\\Huge{content: %s}\r\n\r\n", content);
 			fprintf(fp, "\r\n\r\n");
 			xmlFree(content);
 			free(newcont);
-		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"content")) {
-			printf("get content\n");
-		} else {
-			printf("cur name: %s\n", cur->name);
 		}
 		
 		cur = cur->next;
