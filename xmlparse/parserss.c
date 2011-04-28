@@ -70,9 +70,15 @@ void walkTree(xmlNode * a_node)
 {
   xmlNode *cur_node = NULL;
   xmlAttr *cur_attr = NULL;
+  
   for (cur_node = a_node; cur_node; cur_node = cur_node->next) {
      // do something with that node information, like… printing the tag’s name and attributes
-    printf("Got tag : %s; Content: %s\n", cur_node->name, cur_node->content);
+/*    printf("Got tag : %s; Content: %s\n", cur_node->name, cur_node->content);
+*/
+	if (!xmlStrcmp(cur->name, (const xmlChar *)"text")) {
+		fprintf("\\Huge{%s}\r\n\r\n", cur_node->content);
+	}
+	printf("Got tag : %s; Content: %s\n", cur_node->name, cur_node->content);
     for (cur_attr = cur_node->properties; cur_attr; cur_attr = cur_attr->next) {
       printf("  -> with attribute : %s\n", cur_attr->name);
     }
@@ -99,7 +105,7 @@ myparsehtml(const xmlChar *content)
 
 	int ret;
 	
-	ret = htmlParseChunk(parser, content2, strlen(content2), 0);
+	ret = htmlParseChunk(parser, content, strlen(content), 0);
 	if (ret != 0) {
 		fprintf(stderr, "htmlParseChunk failure: %d\n", ret);
 		exit(1);
@@ -147,8 +153,9 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"encoded")) {
 			/* printf("get content:encoded\n"); */
 			content = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
-			newcont = removetags(content);
-			fprintf(fp, "\\Huge{content: %s}\r\n\r\n", newcont);
+			myparsehtml(content);
+/*			newcont = removetags(content);
+			fprintf(fp, "\\Huge{content: %s}\r\n\r\n", newcont);*/
 			fprintf(fp, "\r\n\r\n");
 			xmlFree(content);
 			free(newcont);
