@@ -75,7 +75,7 @@ void walkTree(xmlNode * a_node)
      // do something with that node information, like… printing the tag’s name and attributes
 /*    printf("Got tag : %s; Content: %s\n", cur_node->name, cur_node->content);
 */
-	if (!xmlStrcmp(cur->name, (const xmlChar *)"text")) {
+	if (!xmlStrcmp(cur_node->name, (const xmlChar *)"text")) {
 		fprintf("\\Huge{%s}\r\n\r\n", cur_node->content);
 	}
 	printf("Got tag : %s; Content: %s\n", cur_node->name, cur_node->content);
