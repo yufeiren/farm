@@ -66,22 +66,27 @@ removetags(xmlChar *content)
 	return buf;
 }
 
-void walkTree(xmlNode * a_node)
+void walkTree(xmlDocPtr doc, xmlNode * a_node)
 {
   xmlNode *cur_node = NULL;
   xmlAttr *cur_attr = NULL;
+  
+  xmlChar *content;
   
   for (cur_node = a_node; cur_node; cur_node = cur_node->next) {
      // do something with that node information, like… printing the tag’s name and attributes
 /*    printf("Got tag : %s; Content: %s\n", cur_node->name, cur_node->content);
 */
 	if (!xmlStrcmp(cur_node->name, (const xmlChar *)"text")) {
-		fprintf(fp, "\\Huge{%s}\r\n\r\n", cur_node->content);
+		content = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
+		fprintf(fp, "\\Huge{title: %s}\r\n\r\n", content);
+		xmlFree(content);
+/*		fprintf(fp, "\\Huge{%s}\r\n\r\n", cur_node->content); */
 	}
     for (cur_attr = cur_node->properties; cur_attr; cur_attr = cur_attr->next) {
       printf("  -> with attribute : %s\n", cur_attr->name);
     }
-    walkTree(cur_node->children);
+    walkTree(doc, cur_node->children);
   }
 }
 
@@ -103,6 +108,7 @@ myparsehtml(const xmlChar *content)
 </html>";
 
 	int ret;
+	xmlNodePtr root;
 	
 	printf("content len: %d\n", xmlStrlen(content));
 	
@@ -118,7 +124,9 @@ myparsehtml(const xmlChar *content)
 		return;
 	}
 	
-	walkTree(xmlDocGetRootElement(parser->myDoc));
+/*	walkTree(xmlDocGetRootElement(parser->myDoc)); */
+	root = xmlDocGetRootElement(parser->myDoc);
+	walkTree(parser->myDoc, root);
 	
 	return;
 }
