@@ -10,7 +10,7 @@
 static int fd;
 static FILE *fp;
 
-void
+char *
 removetags(xmlChar *content)
 {
 	int intag = 0;
@@ -19,10 +19,15 @@ removetags(xmlChar *content)
 	int tagstart = 0;
 	int tagend = 0;
 	
-	char buf[4096];
+	char *buf;
 	
 	int c;
-	memset(buf, '\0', 4096);
+	buf = (char *) malloc(409600);
+	if (buf == NULL) {
+		printf("malloc fail\n");
+		exit(0);
+	}
+	memset(buf, '\0', 409600);
 	
 	while ((c = *(content + cur++)) != '\0') {
 		switch (c) {
@@ -54,10 +59,11 @@ removetags(xmlChar *content)
 				*(buf + cur2++) = c;					
 		}
 	}
-	*(buf + cur2) == '\0';		
+	*(buf + cur2) == '\0';
 
-	printf("pure txt:\n:%s\n", buf);
-	return;
+/*	printf("pure txt:\n:%s\n", buf); */
+	
+	return buf;
 }
 
 void walkTree(xmlNode * a_node)
@@ -117,6 +123,8 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 	xmlChar *title;
 	xmlChar *link;
 	xmlChar *desp;
+	xmlChar *content;
+	char *newcont;
 	cur = cur->xmlChildrenNode;
 	
 	while (cur != NULL) {
@@ -135,6 +143,13 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 			/* myparsehtml(desp); */
 			/* removetags(desp); */
 			xmlFree(desp);
+		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"content:encoded"))) {
+			content = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
+			newcont = removetags(content);
+			fprintf(fp, "\\Huge{content: %s}\r\n\r\n", content);
+			fprintf(fp, "\r\n\r\n");
+			xmlFree(content);
+			free(newcont);
 		}
 		
 		cur = cur->next;
