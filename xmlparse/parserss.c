@@ -160,6 +160,10 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 			fprintf(fp, "\r\n\r\n");
 			xmlFree(content);
 			free(newcont);
+		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"pubDate")) {
+			content = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
+			printf("pubDate: %s\n", content);
+			xmlFree(content);
 		}
 		
 		cur = cur->next;
