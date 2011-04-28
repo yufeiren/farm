@@ -143,7 +143,7 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 			/* myparsehtml(desp); */
 			/* removetags(desp); */
 			xmlFree(desp);
-		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"content:encoded"))) {
+		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"content:encoded")) {
 			content = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 			newcont = removetags(content);
 			fprintf(fp, "\\Huge{content: %s}\r\n\r\n", content);
