@@ -126,14 +126,14 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 			xmlFree(title);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"link")) {
 			link = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
-			fprintf(fp, "link: %s\n", link);
+			fprintf(fp, "link: %s\r\n\r\n", link);
 			xmlFree(link);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"description")) {
 			desp = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 			fprintf(fp, "\\Huge{description: %s}\r\n\r\n", desp);
 			fprintf(fp, "\r\n\r\n");
 			/* myparsehtml(desp); */
-			removetags(desp);
+			/* removetags(desp); */
 			xmlFree(desp);
 		}
 		
