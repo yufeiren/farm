@@ -158,25 +158,23 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 			fprintf(fp, "link: %s\r\n\r\n", link);
 			xmlFree(link);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"description")) {
-			/* XML_CDATA_SECTION_NODE = 4
+			/* XML_CDATA_SECTION_NODE = 4 */
 			printf("desp element type: %d\n", cur->xmlChildrenNode->type);
-			desp = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1); */
-			myparsehtml(desp);
-/*			newcont = removetags(desp);
+			desp = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
+/*			myparsehtml(desp); */
+			newcont = removetags(desp);
 			fprintf(fp, "\\Huge{description: %s}\r\n\r\n", newcont);
-			fprintf(fp, "\r\n\r\n"); */
-			/* myparsehtml(desp); */
-			/* removetags(desp); */
+			fprintf(fp, "\r\n\r\n");
 			xmlFree(desp);
 			free(newcont);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"encoded")) {
-			/* printf("get content:encoded\n");
+			/* printf("get content:encoded\n"); */
 			printf("encoded element type: %d\n", cur->xmlChildrenNode->type);
-			content = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1); */
-			myparsehtml(content);
-/*			newcont = removetags(content);
+			content = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
+/*			myparsehtml(content); */
+			newcont = removetags(content);
 			fprintf(fp, "\\Huge{content: %s}\r\n\r\n", newcont);
-			fprintf(fp, "\r\n\r\n"); */
+			fprintf(fp, "\r\n\r\n");
 			xmlFree(content);
 			free(newcont);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"pubDate")) {
