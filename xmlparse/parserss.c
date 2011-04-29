@@ -256,7 +256,7 @@ parseStory (xmlDocPtr doc, xmlNodePtr cur) {
 	/* title */
 	while (cur2 != NULL) {
 		if (!xmlStrcmp(cur2->name, (const xmlChar *)"title")) {
-			key = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
+			key = xmlNodeListGetString(doc, cur2->xmlChildrenNode, 1);
 			printf("get title\n");
 			fprintf(fp, "\\title{%s}\n", key);
 		}
@@ -266,18 +266,19 @@ parseStory (xmlDocPtr doc, xmlNodePtr cur) {
 
 	fprintf(fp, "\\begin {document}\n");
 	fprintf(fp, "\\begin {CJK}{UTF8}{gkai}\n");
-	
+	fprintf(fp, "\\maketitle\n");
 	while (cur != NULL) {
 		if ((!xmlStrcmp(cur->name, (const xmlChar *)"link"))) {
 			key = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
-			printf("link: %s\n", key);
+/*			printf("link: %s\n", key); */
 			xmlFree(key);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"item")) {
 			parseitem(doc, cur);
-		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"title")) {
+		}
+/*		 else if (!xmlStrcmp(cur->name, (const xmlChar *)"title")) {
 			key = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 			fprintf(fp, "\\title{%s}\n", key);
-		}
+		} */
 		
 		cur = cur->next;
 	}
