@@ -179,7 +179,7 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 		if (!xmlStrcmp(cur->name, (const xmlChar *)"title")) {
 			title = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 			newcont = removetags(title);
-			fprintf(fp, "\\Huge{%s}\r\n\r\n", newcont);
+			fprintf(fp, "\\section{%s}\n", newcont);
 			xmlFree(title);
 			free(newcont);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"link")) {
