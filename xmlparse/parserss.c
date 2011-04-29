@@ -75,8 +75,8 @@ void walkTree(xmlDocPtr doc, xmlNode * a_node)
   
   for (cur_node = a_node; cur_node; cur_node = cur_node->next) {
      // do something with that node information, like… printing the tag’s name and attributes
-/*    printf("Got tag : %s; Content: %s\n", cur_node->name, cur_node->content);
-*/
+    printf("Got tag : %s: content %s\n", cur_node->name, cur_node->content);
+
 	if (!xmlStrcmp(cur_node->name, (const xmlChar *)"text")) {
 		content = xmlNodeListGetString(doc, cur_node, 1);/*->xmlChildrenNode*/
 		fprintf(fp, "\\Huge{content: %s}\r\n\r\n", content);
@@ -114,7 +114,7 @@ myparsehtml(const xmlChar *content)
 	
 	printf("content len: %d\n", xmlStrlen(content));
 	
-	ret = htmlParseChunk(parser, content, xmlStrlen(content), 0);
+	ret = htmlParseChunk(parser, content2, xmlStrlen(content2), 0);
 	if (ret != 0) {
 		err = xmlCtxtGetLastError(parser);
 		fprintf(stderr, "htmlParseChunk failure: %d: %s\n", \
@@ -156,23 +156,25 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 			fprintf(fp, "link: %s\r\n\r\n", link);
 			xmlFree(link);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"description")) {
+			/* XML_CDATA_SECTION_NODE = 4
 			printf("desp element type: %d\n", cur->xmlChildrenNode->type);
-			desp = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
+			desp = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1); */
 			newcont = removetags(desp);
-/*			myparsehtml(desp); */
+/*			myparsehtml(desp);
 			fprintf(fp, "\\Huge{description: %s}\r\n\r\n", newcont);
-			fprintf(fp, "\r\n\r\n");
+			fprintf(fp, "\r\n\r\n"); */
 			/* myparsehtml(desp); */
 			/* removetags(desp); */
 			xmlFree(desp);
+			free(newcont);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"encoded")) {
-			/* printf("get content:encoded\n"); */
+			/* printf("get content:encoded\n");
 			printf("encoded element type: %d\n", cur->xmlChildrenNode->type);
-			content = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
-/*			myparsehtml(content); */
-			newcont = removetags(content);
+			content = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1); */
+			myparsehtml(content);
+/*			newcont = removetags(content);
 			fprintf(fp, "\\Huge{content: %s}\r\n\r\n", newcont);
-			fprintf(fp, "\r\n\r\n");
+			fprintf(fp, "\r\n\r\n"); */
 			xmlFree(content);
 			free(newcont);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"pubDate")) {
