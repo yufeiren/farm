@@ -57,6 +57,8 @@ removetags(xmlChar *content)
 				*(buf + cur2++) = '*';
 			}
 			break;
+		case '\t':
+			break;
 		case '\n':
 			if (intag == 0)
 				*(buf + cur2++) = ' ';
