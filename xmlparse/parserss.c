@@ -238,9 +238,33 @@ void
 parseStory (xmlDocPtr doc, xmlNodePtr cur) {
 
 	xmlChar *key;
+	xmlNodePtr cur2;
+	cur2 = cur->xmlChildrenNode;
+	
 	cur = cur->xmlChildrenNode;
 	
 	fprintf(fp, "\\documentclass[a4paper,12pt]{article}\n");
+	
+	/* title */
+	while (cur2 != NULL) {
+		if (!xmlStrcmp(cur2->name, (const xmlChar *)"title")) {
+			key = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
+			fprintf(fp, "\\title{%s}\n", key);
+		}
+		
+		cur2 = cur2->next;
+	}
+	
+	fprintf(fp, "\\usepackage {geometry}\n");
+	fprintf(fp, "\\usepackage {fancyhdr}\n");
+	fprintf(fp, "\\usepackage {amsmath ,amsthm , amssymb}\n");
+	fprintf(fp, "\\usepackage {graphicx}\n");
+	fprintf(fp, "\\usepackage {hyperref}\n");
+	fprintf(fp, "\\usepackage {CJK}\n");
+/*	fprintf(fp, "\\usepackage [utf8x]{inputenc}\n"); */
+
+	fprintf(fp, "\\begin {document}\n");
+	fprintf(fp, "\\begin {CJK}{UTF8}{gkai}\n");
 	
 	while (cur != NULL) {
 		if ((!xmlStrcmp(cur->name, (const xmlChar *)"link"))) {
@@ -257,16 +281,6 @@ parseStory (xmlDocPtr doc, xmlNodePtr cur) {
 		cur = cur->next;
 	}
 	
-	fprintf(fp, "\\usepackage {geometry}\n");
-	fprintf(fp, "\\usepackage {fancyhdr}\n");
-	fprintf(fp, "\\usepackage {amsmath ,amsthm , amssymb}\n");
-	fprintf(fp, "\\usepackage {graphicx}\n");
-	fprintf(fp, "\\usepackage {hyperref}\n");
-	fprintf(fp, "\\usepackage {CJK}\n");
-/*	fprintf(fp, "\\usepackage [utf8x]{inputenc}\n"); */
-
-	fprintf(fp, "\\begin {document}\n");
-	fprintf(fp, "\\begin {CJK}{UTF8}{gkai}\n");
 	
 	return;
 }
