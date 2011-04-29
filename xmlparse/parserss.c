@@ -156,7 +156,7 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 			fprintf(fp, "link: %s\r\n\r\n", link);
 			xmlFree(link);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"description")) {
-			printf("desp element type: %d\n", cur->type);
+			printf("desp element type: %d\n", cur->xmlChildrenNode->type);
 			desp = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 			newcont = removetags(desp);
 /*			myparsehtml(desp); */
@@ -167,7 +167,7 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 			xmlFree(desp);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"encoded")) {
 			/* printf("get content:encoded\n"); */
-			printf("encoded element type: %d\n", cur->type);
+			printf("encoded element type: %d\n", cur->xmlChildrenNode->type);
 			content = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 /*			myparsehtml(content); */
 			newcont = removetags(content);
