@@ -60,6 +60,19 @@ removetags(xmlChar *content)
 			break;
 		case '\t':
 			break;
+		case '\\':
+		case '$':
+		case '{':
+		case '}':
+		case '~':
+		case '^':
+		case '_':
+		case '%':
+		case '#':
+			/* TEX sensitive character:
+			 * \ { } $ ^ _ % ~ # &
+			 */
+			break;
 		case '\n':
 			if (intag == 0)
 				*(buf + cur2++) = ' ';
