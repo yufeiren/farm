@@ -52,6 +52,9 @@ removetags(xmlChar *content)
 				cur += 3;
 			} else if (memcmp(content + cur, "nbsp;", 5) == 0) {
 				cur += 5;
+			} else if (memcmp(content + cur, "bull;", 5) == 0) {
+				cur += 5;
+				*(buf + cur2++) = '*';
 			}
 			break;
 		case '\n':
