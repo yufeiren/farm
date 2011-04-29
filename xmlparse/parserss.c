@@ -159,8 +159,8 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 			/* XML_CDATA_SECTION_NODE = 4
 			printf("desp element type: %d\n", cur->xmlChildrenNode->type);
 			desp = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1); */
-			newcont = removetags(desp);
-/*			myparsehtml(desp);
+			myparsehtml(desp);
+/*			newcont = removetags(desp);
 			fprintf(fp, "\\Huge{description: %s}\r\n\r\n", newcont);
 			fprintf(fp, "\r\n\r\n"); */
 			/* myparsehtml(desp); */
