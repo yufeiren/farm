@@ -175,6 +175,10 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 	char *newcont;
 	cur = cur->xmlChildrenNode;
 	
+	if (xmlGetNoNsProp(cur, "encoded") != NULL) {
+		printf("content:encoded found\n");
+	}
+	
 	while (cur != NULL) {
 		if (!xmlStrcmp(cur->name, (const xmlChar *)"title")) {
 			title = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
