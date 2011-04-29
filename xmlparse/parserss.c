@@ -194,7 +194,7 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 			desp = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 /*			myparsehtml(desp); */
 			newcont = removetags(desp);
-			fprintf(fp, "\\Huge{%s}\r\n\r\n", newcont);
+			fprintf(fp, "\\LARGE{%s}\r\n\r\n", newcont);
 			fprintf(fp, "\r\n\r\n");
 			xmlFree(desp);
 			free(newcont);
