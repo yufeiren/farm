@@ -259,6 +259,8 @@ parseStory (xmlDocPtr doc, xmlNodePtr cur) {
 			key = xmlNodeListGetString(doc, cur2->xmlChildrenNode, 1);
 			printf("get title\n");
 			fprintf(fp, "\\title{%s}\n", key);
+			xmlFree(key);
+			break;
 		}
 		
 		cur2 = cur2->next;
@@ -310,7 +312,7 @@ parseDoc(char *docname) {
 	
 	/* rss */
 	if (xmlStrcmp(cur->name, (const xmlChar *) "rss")) {
-		fprintf(stderr,"document of the wrong type, root node != rss");
+		fprintf(stderr,"document of the wrong type, not rss\n");
 		xmlFreeDoc(doc);
 		return;
 	}
