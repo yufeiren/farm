@@ -44,7 +44,6 @@ removetags(xmlChar *content)
 			intag = 0;
 			break;
 		case '&':
-			printf("get an & text\n");
 			if (memcmp(content + cur, "lt;", 3) == 0) {
 				intag = 1;
 				cur += 3;
@@ -180,13 +179,13 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 		if (!xmlStrcmp(cur->name, (const xmlChar *)"title")) {
 			title = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 			newcont = removetags(title);
-			fprintf(fp, "\\Huge{title: %s}\r\n\r\n", newcont);
+			fprintf(fp, "\\section{%s}\r\n\r\n", newcont);
 			xmlFree(title);
 			free(newcont);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"link")) {
 			link = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 			newcont = removetags(link);
-			fprintf(fp, "link: %s\r\n\r\n", newcont);
+			/* fprintf(fp, "link: %s\r\n\r\n", newcont); */
 			xmlFree(link);
 			free(newcont);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"description")) {
@@ -195,7 +194,7 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 			desp = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 /*			myparsehtml(desp); */
 			newcont = removetags(desp);
-			fprintf(fp, "\\Huge{description: %s}\r\n\r\n", newcont);
+			fprintf(fp, "\\Huge{%s}\r\n\r\n", newcont);
 			fprintf(fp, "\r\n\r\n");
 			xmlFree(desp);
 			free(newcont);
@@ -212,6 +211,8 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"pubDate")) {
 			content = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 			printf("pubDate: %s\n", content);
+			fprintf(fp, "\\emph{Date: %s}\r\n\r\n", content);
+			fprintf(fp, "\r\n\r\n");
 			xmlFree(content);
 		}
 		
@@ -306,7 +307,7 @@ main(int argc, char **argv)
 		exit(1);
 	}
 	
-	fprintf(fp, "\\documentclass [16pt]{article}\n");
+	fprintf(fp, "\\documentclass[a4paper,12pt]{article}\n");
 	fprintf(fp, "\\usepackage {geometry}\n");
 	fprintf(fp, "\\usepackage {fancyhdr}\n");
 	fprintf(fp, "\\usepackage {amsmath ,amsthm , amssymb}\n");
