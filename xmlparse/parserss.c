@@ -173,7 +173,7 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 	xmlChar *desp;
 	xmlChar *content;
 	char *newcont;
-	xmlNodePrt cur2;
+	xmlNodePtr cur2;
 	
 	cur = cur->xmlChildrenNode;
 	cur2 = cur->xmlChildrenNode;
