@@ -79,7 +79,12 @@ removetags(xmlChar *content)
 			break;
 		default:
 			if (intag == 0)
-				*(buf + cur2++) = c;					
+				*(buf + cur2++) = c;
+			if (c == '&') {
+				printf("fuck\n");
+				exit(0);
+			}
+			break;
 		}
 	}
 	*(buf + cur2) == '\0';
