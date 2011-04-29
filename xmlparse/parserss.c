@@ -180,13 +180,13 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 		if (!xmlStrcmp(cur->name, (const xmlChar *)"title")) {
 			title = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 			newcont = removetags(title);
-			fprintf(fp, "\\Huge{title: %s}\r\n\r\n", title);
+			fprintf(fp, "\\Huge{title: %s}\r\n\r\n", newcont);
 			xmlFree(title);
 			free(newcont);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"link")) {
 			link = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 			newcont = removetags(link);
-			fprintf(fp, "link: %s\r\n\r\n", link);
+			fprintf(fp, "link: %s\r\n\r\n", newcont);
 			xmlFree(link);
 			free(newcont);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"description")) {
