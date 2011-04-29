@@ -253,7 +253,7 @@ parseStory (xmlDocPtr doc, xmlNodePtr cur) {
 	fprintf(fp, "\\usepackage {CJK}\n");
 /*	fprintf(fp, "\\usepackage [utf8x]{inputenc}\n"); */
 
-	fprintf(fp, "\\renewcommand*\\sfdefault{cmss}\\normalfont\\upshape\n");
+	fprintf(fp, "\\renewcommand*\\rmdefault{ppl}\\normalfont\\upshape\n");
 	/* title */
 	while (cur2 != NULL) {
 		if (!xmlStrcmp(cur2->name, (const xmlChar *)"title")) {
