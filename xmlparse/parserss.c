@@ -179,7 +179,7 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 		if (!xmlStrcmp(cur->name, (const xmlChar *)"title")) {
 			title = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 			newcont = removetags(title);
-			fprintf(fp, "\\section{%s}\n", newcont);
+			fprintf(fp, "\\Huge{%s}\r\n\r\n", newcont);
 			xmlFree(title);
 			free(newcont);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"link")) {
@@ -233,8 +233,10 @@ parseStory (xmlDocPtr doc, xmlNodePtr cur) {
 			printf("link: %s\n", key);
 			xmlFree(key);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"item")) {
-	 	    	key = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 			parseitem(doc, cur);
+		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"title")) {
+			key = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
+			fprintf(fp, "\\title{%s}\n", key);
 		}
 		
 		cur = cur->next;
