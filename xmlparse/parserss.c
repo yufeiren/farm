@@ -174,13 +174,16 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 	xmlChar *content;
 	char *newcont;
 	xmlNodePtr cur2;
+	int havecontent = 0;
 	
 	cur2 = cur->xmlChildrenNode;
 	cur = cur->xmlChildrenNode;
 	
 	while (cur2 != NULL) {
-		if (!xmlStrcmp(cur2->name, (const xmlChar *)"encoded"))
-			printf("get content:encoded\n");
+		if (!xmlStrcmp(cur2->name, (const xmlChar *)"encoded")) {
+			havecontent = 1;
+			break;
+		}
 		
 		cur2 = cur2->next;
 	}
@@ -198,7 +201,7 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 			/* fprintf(fp, "link: %s\r\n\r\n", newcont); */
 			xmlFree(link);
 			free(newcont);
-		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"description")) {
+		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"description") && (havecontent == 0)) {
 			/* XML_CDATA_SECTION_NODE = 4 */
 			printf("desp element type: %d\n", cur->xmlChildrenNode->type);
 			desp = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
