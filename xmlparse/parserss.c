@@ -44,6 +44,7 @@ removetags(xmlChar *content)
 			intag = 0;
 			break;
 		case '&':
+			printf("get an & text\n");
 			if (memcmp(content + cur, "lt;", 3) == 0) {
 				intag = 1;
 				cur += 3;
