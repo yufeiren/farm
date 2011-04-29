@@ -179,7 +179,7 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 	cur = cur->xmlChildrenNode;
 	
 	while (cur2 != NULL) {
-		if (!xmlStrcmp(cur->name, (const xmlChar *)"encoded"))
+		if (!xmlStrcmp(cur2->name, (const xmlChar *)"encoded"))
 			printf("get content:encoded\n");
 		
 		cur2 = cur2->next;
