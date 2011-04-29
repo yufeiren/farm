@@ -179,12 +179,16 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 	while (cur != NULL) {
 		if (!xmlStrcmp(cur->name, (const xmlChar *)"title")) {
 			title = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
+			newcont = removetags(title);
 			fprintf(fp, "\\Huge{title: %s}\r\n\r\n", title);
 			xmlFree(title);
+			free(newcont);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"link")) {
 			link = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
+			newcont = removetags(link);
 			fprintf(fp, "link: %s\r\n\r\n", link);
 			xmlFree(link);
+			free(newcont);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"description")) {
 			/* XML_CDATA_SECTION_NODE = 4 */
 			printf("desp element type: %d\n", cur->xmlChildrenNode->type);
