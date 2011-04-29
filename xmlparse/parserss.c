@@ -33,8 +33,12 @@ removetags(xmlChar *content)
 		switch (c) {
 		case '<':
 			intag = 1;
-			if (*(content + cur) == 'p')
+			if (*(content + cur) == 'p') {
+				*(buf + cur2++) = '\r';
 				*(buf + cur2++) = '\n';
+				*(buf + cur2++) = '\r';
+				*(buf + cur2++) = '\n';
+			}
 			break;
 		case '>':
 			intag = 0;
