@@ -18,6 +18,9 @@ parsesample: parsesample.c
 parserss: parserss.c
 	$(CC) $(CFLAGS) -o $@ $@.c $(EXTRALIBS)
 
+rsshtml: rsshtml.c
+	$(CC) $(CFLAGS) -o $@ $@.c $(EXTRALIBS)
+
 omplparse: omplparse.c
 	$(CC) $(CFLAGS) -o $@ $@.c $(EXTRALIBS)
 
