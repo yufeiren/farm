@@ -141,7 +141,7 @@ myparsehtml(const xmlChar *content)
 	
 	printf("content len: %d\n", xmlStrlen(content));
 	
-	ret = htmlParseChunk(parser, content, xmlStrlen(content), 0);
+	ret = htmlParseChunk(parser, content2, xmlStrlen(content2), 0);
 	if (ret != 0) {
 		err = xmlCtxtGetLastError(parser);
 		fprintf(stderr, "htmlParseChunk failure: %d: %s\n", \
