@@ -153,7 +153,7 @@ myparsehtml(const xmlChar *content)
 		err = xmlCtxtGetLastError(parser);
 		fprintf(stderr, "htmlParseChunk failure: %d: %s\n", \
 			ret, err->message);
-		return;
+/*		return; */
 	}
 	
 	ret = htmlParseChunk(parser, NULL, 0, 1);
