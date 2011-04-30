@@ -25,4 +25,4 @@ rsshtml: rsshtml.c
 	$(CC) $(CFLAGS) -o $@ $@.c $(EXTRALIBS)
 
 clean:
-	rm -rf parsesample parserss
+	rm -rf parsesample parserss omplparse rsshtml
