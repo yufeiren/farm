@@ -161,7 +161,7 @@ myparsehtml(const xmlChar *content)
 		err = xmlCtxtGetLastError(parser);
 		fprintf(stderr, "htmlParseChunk failure 2: %d: %s\n", \
 			ret, err->message);
-		return;
+/*		return; */
 	}
 	
 /*	walkTree(xmlDocGetRootElement(parser->myDoc)); */
