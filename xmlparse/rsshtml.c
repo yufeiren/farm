@@ -140,6 +140,7 @@ myparsehtml(const xmlChar *content)
 	xmlNodePtr root;
 	
 	printf("content len: %d\n", xmlStrlen(content));
+	printf("content: \n%s\n", content);
 	
 	ret = htmlParseChunk(parser, content, xmlStrlen(content), 0);
 	if (ret != 0) {
