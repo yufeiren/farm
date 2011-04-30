@@ -99,10 +99,11 @@ void walkTree(xmlDocPtr doc, xmlNode * a_node)
   xmlAttr *cur_attr = NULL;
   
   xmlChar *content;
+  xmlChar *tagstr;
   
   for (cur_node = a_node; cur_node; cur_node = cur_node->next) {
      // do something with that node information, like… printing the tag’s name and attributes
-    printf("Got tag : %s: content %s\n", cur_node->name, cur_node->content);
+    printf("Got tag : %s: content: %s\n", cur_node->name, cur_node->content);
 
 	if (!xmlStrcmp(cur_node->name, (const xmlChar *)"text")) {
 		content = xmlNodeListGetString(doc, cur_node, 1);/*->xmlChildrenNode*/
@@ -112,6 +113,10 @@ void walkTree(xmlDocPtr doc, xmlNode * a_node)
 	}
     for (cur_attr = cur_node->properties; cur_attr; cur_attr = cur_attr->next) {
       printf("  -> with attribute : %s\n", cur_attr->name);
+      
+      tagstr = xmlNodeListGetString(doc, cur_attr->children, 1);
+	printf("  -> with value : %s\n", tagstr);
+	xmlFree(tagstr);
     }
     walkTree(doc, cur_node->children);
   }
