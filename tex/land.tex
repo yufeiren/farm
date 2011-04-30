@@ -1,0 +1,148 @@
+\documentclass[landscape,twocolumn,letterpaper]{article}
+
+\setlength{\oddsidemargin}{0in}		% default=0in
+\setlength{\textwidth}{9in}		% default=9in
+
+\setlength{\columnsep}{0.5in}		% default=10pt
+\setlength{\columnseprule}{1pt}		% default=0pt (no line)
+
+\setlength{\textheight}{5.85in}		% default=5.15in
+\setlength{\topmargin}{-0.15in}		% default=0.20in
+\setlength{\headsep}{0.25in}		% default=0.35in
+
+\setlength{\parskip}{1.2ex}
+\setlength{\parindent}{0mm}
+
+\title{A Sample Landscape \LaTeX{} Document}
+\author{Cy D. Ways}
+\date{24 May 2004}
+
+\begin{document}
+\maketitle
+
+The \verb9\documentclass9 options used above---
+{\tt landscape}, {\tt twocolumn}, {\tt letterpaper}---
+will be used by LaTeX to place the text of the
+document appropriately; sideways on the letter-size page,
+in two columns.
+However, you will also have to provide
+previewer programs (like \verb9xdvi9 or \verb9ghostview9)
+and converter programs (like \verb9dvips9)
+with the correct command-line options
+to make sure that they handle the document
+in landscape mode.
+
+\begin{verbatim}
+  unix>  latex landscapedoc.tex
+  unix>  xdvi  -paper usr  landscapedoc.dvi
+  unix>  dvips  -t landscape  landscapedoc.dvi
+  unix>  ghostview  -landscape  landscapedoc.ps
+\end{verbatim}
+
+The default measurements of the LaTeX document can be
+overridden in the same way as in normal portrait mode.
+In addition, the measurements
+\verb8\columnsep8 and \verb8\columnseprule8
+are relevent to landscape mode and can be adjusted.
+
+\begin{verbatim}
+  \setlength{\textheight}{5.85in}    % default=5.15in
+  \setlength{\topmargin}{-0.15in}    % default=0.20in
+  \setlength{\headsep}{0.25in}       % default=0.35in
+  \setlength{\columnsep}{0.5in}      % default=10pt
+  \setlength{\columnseprule}{1pt}    % default=0pt
+\end{verbatim}
+
+Normally there is no center line drawn between the columns,
+but the command \verb2\setlength{\columnseprule}{1pt}2 draws
+such a line, 1 point in thickness.
+The default \verb2\columnseprule2 is 0pt (no line).
+So, if you don't want the line down the center of the page,
+between the two columns, just get rid of (or comment out)
+the definition for \verb2\columnseprule2.
+
+One feature of \verb9twocolumn9 mode is that the commands
+\verb9pagebreak9 and \verb9newpage9 will only end the
+current \emph{column} and begin a new one.
+To actually force a new page---even if it means
+leaving a blank right column---use the macro
+\verb9clearpage9.
+
+
+Filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+
+Filler filler filler.
+Filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+
+Filler filler filler.
+Filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+
+Filler filler filler.
+Filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+
+Filler filler filler.
+Filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+
+
+Filler filler filler.
+Filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+
+
+Filler filler filler.
+Filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+
+
+Filler filler filler.
+Filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+Filler filler filler filler filler filler filler filler filler filler filler filler.
+
+
+\end{document}
