@@ -203,7 +203,7 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 			free(newcont);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"description") && (havecontent == 0)) {
 			/* XML_CDATA_SECTION_NODE = 4 */
-/*			printf("desp element type: %d\n", cur->xmlChildrenNode->type); */
+			printf("desp element type: %d\n", cur->xmlChildrenNode->type);
 			desp = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 			myparsehtml(desp);
 /*			newcont = removetags(desp);
@@ -213,7 +213,7 @@ parseitem(xmlDocPtr doc, xmlNodePtr cur)
 			free(newcont); */
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"encoded")) {
 			/* printf("get content:encoded\n"); */
-/*			printf("encoded element type: %d\n", cur->xmlChildrenNode->type); */
+			printf("encoded element type: %d\n", cur->xmlChildrenNode->type);
 			content = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 			myparsehtml(content);
 /*			newcont = removetags(content);
