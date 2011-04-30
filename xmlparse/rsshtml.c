@@ -120,7 +120,7 @@ void walkTree(xmlDocPtr doc, xmlNode * a_node)
 		{
 			if (!xmlStrcmp(cur_attr->name, (const xmlChar *)"src")){
 				tagstr = xmlNodeListGetString(doc, cur_attr->children, 1);
-				printf("image url: %s", tagstr);
+				printf("image url: %s\n", tagstr);
 				xmlFree(tagstr);
 			}
     		}
