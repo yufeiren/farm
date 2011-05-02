@@ -2,6 +2,40 @@
 
 extern FILE *texfp;
 
+/* refer http://www.maths.tcd.ie/~dwilkins/LaTeXPrimer/TextSymbols.html */
+static void
+checkTexSymbol(char *outstr, const char *instr)
+{
+	int c;
+	int curin, curout;
+	
+	curin = curout = 0;
+	
+	while ((c = *(instr + curin ++)) != '\0') {
+		switch (c) {
+		case '#':
+		case '$':
+		case '%':
+		case '&':
+		case '_':
+		case '{':
+		case '}':
+			*(outstr + curout ++) = '\';
+			*(outstr + curout ++) = c;
+			break;
+		case '\':
+		case '^':
+		case '~':	
+			break;
+		default:
+			*(outstr + curout ++) = c;
+		}
+	}
+	
+	*(outstr + curout) = '\0';
+	return;
+}
+
 void
 texinit(FILE *fp)
 {
@@ -24,7 +58,6 @@ texinit(FILE *fp)
 void
 texclose(FILE *fp)
 {
-
 	fprintf(fp, "\n");
 	fprintf(fp, "\\end {CJK}\n");
 	fprintf(fp, "\\end {document}\n");
@@ -35,8 +68,17 @@ texclose(FILE *fp)
 void
 data2tex(const char *str)
 {
-	fprintf(texfp, "\\LARGE{%s}\r\n\r\n", str);
-
+	char *outstr;
+	outstr = (char *) malloc(strlen(str) * 2 + 1);
+	if (outstr == NULL)
+		return;
+	
+	checkTexSymbol(outstr, str);
+	
+	fprintf(texfp, "\\LARGE{%s}\r\n\r\n", outstr);
+	
+	free(outstr);
+	
 	return;
 }
 
