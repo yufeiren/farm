@@ -3,7 +3,7 @@
 
 CC=gcc
 CFLAGS=-g -O2 -I/usr/include/libxml2
-EXTRALIBS=-lxml2
+EXTRALIBS=-lxml2  -lcurl
 
 all: parsesample parserss omplparse rsshtml kd
 

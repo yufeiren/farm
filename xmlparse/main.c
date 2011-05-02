@@ -51,9 +51,11 @@ main(int argc, char **argv)
 	
 	texinit(texfp);
 	
-	ompl2tex(const char *omplfile);
+	ompl2tex(omplfile);
 	
 	texclose(texfp);
 
+	fclose(texfp);
+	
 	exit(EXIT_SUCCESS);
 }

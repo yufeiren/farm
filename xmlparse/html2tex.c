@@ -1,4 +1,4 @@
-#incude "kd.h"
+#include "kd.h"
 
 static int imgseq = 0;
 
@@ -21,7 +21,7 @@ walkTree(xmlDocPtr doc, xmlNodePtr cur)
 		}
 		
 		/* img */
-		if (!xmlStrcmp(cur_node->name, (const xmlChar *)"img")) {
+		if (!xmlStrcmp(cur->name, (const xmlChar *)"img")) {
 			/* download a new img */
 			for (cur_attr = cur->properties; \
 				cur_attr; \
@@ -42,7 +42,7 @@ walkTree(xmlDocPtr doc, xmlNodePtr cur)
     			}
 		}
 		
-		walkTree(doc, cur_node->xmlChildrenNode);
+		walkTree(doc, cur->xmlChildrenNode);
 	}
 
 	return;

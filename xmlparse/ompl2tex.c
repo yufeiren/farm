@@ -50,7 +50,7 @@ parseOmplBody(xmlDocPtr doc, xmlNodePtr cur)
 			/* get rss file */
 			memset(rssfile, '\0', 128);
 			snprintf(rssfile, 128, "rss%05d", fileseq);
-			urltofile(xmlUrl, rssfile);
+			urltofile(xmlurl, rssfile);
 			
 			/* parse rss file */
 			rss2tex(rssfile);

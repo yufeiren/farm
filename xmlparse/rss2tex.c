@@ -1,4 +1,4 @@
-#incude "kd.h"
+#include "kd.h"
 
 static void
 parseRssChannelItem(xmlDocPtr doc, xmlNodePtr cur)
@@ -96,7 +96,7 @@ rss2tex(const char *rssfile)
 	
 	/* rss */
 	if (xmlStrcmp(cur->name, (const xmlChar *) "rss")) {
-		fprintf(stderr,"document of the wrong type, root node != rss");
+		fprintf(stderr,"document of the wrong type, root node != rss\n");
 		xmlFreeDoc(doc);
 		return 1;
 	}
