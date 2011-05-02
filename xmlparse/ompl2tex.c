@@ -34,7 +34,7 @@ parseOmplBody(xmlDocPtr doc, xmlNodePtr cur)
 	char rssfile[128];
 	cur = cur->xmlChildrenNode;
 	
-	for ( ; cur != NULL; fileseq ++) {
+	for ( ; cur != NULL; cur = cur->next) {
 /*	while (cur != NULL) { */
 		if (cur->xmlChildrenNode != NULL) {
 			parseOmplBody(doc, cur);
@@ -45,11 +45,14 @@ parseOmplBody(xmlDocPtr doc, xmlNodePtr cur)
 			xmlurl = xmlGetProp(cur, "xmlUrl");
 			type = xmlGetProp(cur, "type");
 			
+			if (xmlurl == NULL)
+				continue;
+			
 			data2tex(title);
 			
 			/* get rss file */
 			memset(rssfile, '\0', 128);
-			snprintf(rssfile, 128, "rss%05d", fileseq);
+			snprintf(rssfile, 128, "rss%05d", ++ fileseq);
 			urltofile(xmlurl, rssfile);
 			
 			/* parse rss file */
@@ -61,8 +64,7 @@ parseOmplBody(xmlDocPtr doc, xmlNodePtr cur)
 			xmlFree(xmlurl);
 			xmlFree(type);
 		}
-		
-		cur = cur->next;
+
 	}
 	
 	return;
