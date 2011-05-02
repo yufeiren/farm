@@ -39,7 +39,7 @@ walkTree(xmlDocPtr doc, xmlNodePtr cur)
 						snprintf(imgfile, 128, "img%05d.jpg", ++ imgseq);
 					
 					
-					
+						printf("%s: %s\n", imgfile, tagstr);
 						if (urltofile(tagstr, imgfile) == 0)
 							img2tex(imgfile);
 					}
