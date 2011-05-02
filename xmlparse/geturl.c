@@ -15,7 +15,7 @@ urltofile(const char *url, const char *fname)
 	
 	fp = fopen(fname, "w+");
 	if(!fp){
-		perror("File Open Failure: ");
+		perror("File Open Failure ");
 		return 1;
 	}
 	
