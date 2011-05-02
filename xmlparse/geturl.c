@@ -12,6 +12,7 @@ urltofile(const char *url, const char *fname)
 {
 	FILE *fp;
 	CURL *handle;
+	CURLcode ret;
 	
 	fp = fopen(fname, "w+");
 	if(!fp){
@@ -26,7 +27,13 @@ urltofile(const char *url, const char *fname)
 	curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, write_data);
 	curl_easy_setopt(handle, CURLOPT_WRITEDATA, fp);
 	
-	curl_easy_perform(handle);
+	ret = curl_easy_perform(handle);
+	if (ret != 0) {
+		fprintf(stderr, "curl_easy_perform fail: %d\n", ret);
+		fclose(fp);
+		return 1;
+	}
+	
 	curl_easy_cleanup(handle);
 	
 	fclose(fp);

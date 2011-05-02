@@ -10,6 +10,8 @@ walkTree(xmlDocPtr doc, xmlNodePtr cur)
 	xmlChar *content;
 	xmlChar *tagstr;
 	
+	int ret;
+	
 	char imgfile[128];
 
 	while (cur != NULL) {
@@ -38,9 +40,8 @@ walkTree(xmlDocPtr doc, xmlNodePtr cur)
 					
 					
 					
-						urltofile(tagstr, imgfile);
-					
-						img2tex(imgfile);
+						if (urltofile(tagstr, imgfile) == 0)
+							img2tex(imgfile);
 					}
 					
 					xmlFree(tagstr);
