@@ -16,7 +16,7 @@ texinit(FILE *fp)
 	
 	fprintf(fp, "\\begin {document}\n");
 	fprintf(fp, "\\begin {CJK}{UTF8}{gkai}\n");
-	fprintf(fp, "\\maketitle\n");
+/*	fprintf(fp, "\\maketitle\n"); */
 	
 	return;
 }
