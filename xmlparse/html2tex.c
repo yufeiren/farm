@@ -43,6 +43,8 @@ walkTree(xmlDocPtr doc, xmlNodePtr cur)
 		}
 		
 		walkTree(doc, cur->xmlChildrenNode);
+		
+		cur = cur->next;
 	}
 
 	return;
