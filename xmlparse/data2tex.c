@@ -6,7 +6,7 @@ void
 texinit(FILE *fp)
 {
 	fprintf(fp, "\\documentclass[a4paper,12pt]{article}\n");
-	
+	fprintf(fp, "\\usepackage{graphicx}\n");
 	fprintf(fp, "\\usepackage {geometry}\n");
 	fprintf(fp, "\\usepackage {fancyhdr}\n");
 	fprintf(fp, "\\usepackage {amsmath ,amsthm , amssymb}\n");
