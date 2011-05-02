@@ -45,7 +45,7 @@ img2tex(const char *loc)
 {
 	fprintf(texfp, "\\begin{center}\n");
 	fprintf(texfp, "\\includegraphics[scale=0.3]{%s}\n", loc);
-	fprintf(texfp, "\\\end{center}\n");
+	fprintf(texfp, "\\end{center}\n");
 	
 	return;
 }

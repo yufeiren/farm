@@ -32,7 +32,11 @@ walkTree(xmlDocPtr doc, xmlNodePtr cur)
 					tagstr = xmlNodeListGetString(doc, cur_attr->xmlChildrenNode, 1);
 					/* get img file */
 					memset(imgfile, '\0', 128);
-					snprintf(imgfile, 128, "img%05d", ++ imgseq);
+					if (memcmp(tagstr + xmlStrlen(tagstr) - 3, "jpg", 3) == 0) {
+					snprintf(imgfile, 128, "img%05d.jpg", ++ imgseq);
+					}
+					
+					
 					urltofile(tagstr, imgfile);
 					
 					img2tex(imgfile);
