@@ -20,10 +20,10 @@ checkTexSymbol(char *outstr, const char *instr)
 		case '_':
 		case '{':
 		case '}':
-			*(outstr + curout ++) = '\';
+			*(outstr + curout ++) = '\\';
 			*(outstr + curout ++) = c;
 			break;
-		case '\':
+		case '\\':
 		case '^':
 		case '~':	
 			break;
