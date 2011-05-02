@@ -5,7 +5,7 @@ CC=gcc
 CFLAGS=-g -O2 -I/usr/include/libxml2
 EXTRALIBS=-lxml2
 
-all: parsesample parserss omplparse rsshtml
+all: parsesample parserss omplparse rsshtml kd
 
 #
 
@@ -23,6 +23,9 @@ omplparse: omplparse.c
 
 rsshtml: rsshtml.c
 	$(CC) $(CFLAGS) -o $@ $@.c $(EXTRALIBS)
+
+kd: main.c html2tex.o rss2tex.o ompl2tex.o data2tex.o geturl.o
+	$(CC) $(CFLAGS) -o $@ main.c html2tex.o rss2tex.o ompl2tex.o data2tex.o geturl.o $(EXTRALIBS)
 
 clean:
 	rm -rf parsesample parserss omplparse rsshtml
