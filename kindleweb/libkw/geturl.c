@@ -1,4 +1,4 @@
-#include "kd.h"
+#include "kindleweb.h"
 
 static size_t
 write_data(void *ptr, size_t size, size_t nmeb, void *stream)

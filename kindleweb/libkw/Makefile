@@ -1,18 +1,21 @@
 # `mysql_config --cflags --libs`
 
 CC=gcc
-CFLAGS=-g -O2 -I/usr/include/libxml2
-EXTRALIBS=-lxml2 -lcurl `mysql_config --cflags --libs`
+CFLAGS=-g -O2 -I/usr/include/libxml2 -I../include
+EXTRALIBS=
+KWLIB=libkw.a
 
-all: parse_nytimes
+OBJS	= geturl.o
 
-#
+AR=ar
+RANLIB=ranlib
+
+all:	${OBJS}
+	${AR} -r ${KWLIB} ${OBJS}
+	${RANLIB} ${KWLIB}
 
 %.o: %.c
 	$(CC) $(CFLAGS) $< -c $(EXTRALIBS)
 
-parse_nytimes: parse_nytimes.c
-	$(CC) $(CFLAGS) -o $@ $@.c $(EXTRALIBS)
-
 clean:
-	rm -rf parse_nytimes
+	rm -rf *.o a.out core temp.* ${KWLIB}

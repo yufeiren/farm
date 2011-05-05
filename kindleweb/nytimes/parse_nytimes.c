@@ -6,8 +6,7 @@
  * 	INSERT INTO kw_rss_item (rssid) VALUES (...); 
  */
 
-/* #include "kindleweb.h" */
-#include "kd.h"
+#include "kindleweb.h"
 
 #include <my_global.h>
 #include <mysql.h>
@@ -72,10 +71,10 @@ main(int argc, char **argv)
 	snprintf(query, 1024, \
 		"SELECT id FROM kw_rss_link WHERE link = '%s'", rssurl);
 	
-	mysql_query(conn, "SELECT id FROM pet WHERE ");
-
+	mysql_query(conn, query);
+	
 	result = mysql_store_result(conn);
-
+	
 	if ((row = mysql_fetch_row(result)) == NULL) {
 		fprintf(stderr, "can not find rss url %s in kw_rss_link", \
 			rssurl);
