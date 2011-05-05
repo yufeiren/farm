@@ -65,12 +65,12 @@ main(int argc, char **argv)
 	
 	/* connect to db */
 	conn = mysql_init(NULL);
-	mysql_real_connect(conn, "localhost", "kindleweb", "kindleweb", "kw_rss_link", 0, NULL, 0);
+	mysql_real_connect(conn, "localhost", "kindleweb", "kindleweb", "kindleweb", 0, NULL, 0);
 
 	/* query link id */
 	memset(query, '\0', 1024);
 	snprintf(query, 1024, \
-		"SELECT id FROM kw_rss_link WHERE link = '%s';", rssurl);
+		"SELECT id FROM kw_rss_link WHERE link = '%s'", rssurl);
 	
 	mysql_query(conn, "SELECT id FROM pet WHERE ");
 
