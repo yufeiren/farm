@@ -1,0 +1,52 @@
+New York Times Home Page
+
+
+NYT > Home Page
+
+Feed URL: http://www.nytimes.com/services/xml/rss/nyt/HomePage.xml
+
+xml feed:
+rss
+	channel
+		item
+			title
+			pheedo:origLink
+			description
+			pubDate
+
+
+html content:		
+download: origLink
+
+HEAD:
+<h1 class="articleHeadline"><NYT_HEADLINE> title </NYT_HEADLINE>
+
+<div class="articleSpanImage">
+	<img src="" width="468" height="257">
+	<p class="caption">
+</div>
+
+BODY:
+<div class="articleBody">
+	<p></p>
+</div>
+
+Image:
+<div class="articleInline runaroundLeft">
+	<div class="inlineImage module">
+	<div class="image">
+	<a>
+		<img src="http://graphics8.nytimes.com/images/2011/05/05/business/5CHIP/5CHIP-articleInline.jpg" width="190" height="123" alt="">
+		large: http://graphics8.nytimes.com/images/2011/05/05/business/5CHIP/5CHIP-popup.jpg
+	</a>
+	</div> -- image
+	<p class="caption">Intel's new transistors have tiny pillars, or fins, that rise above the chip's surface.                            </p>
+	</div> -- inlineImage module
+	
+
+BODY:
+<div class="articleBody">
+	<p></p>
+</div>
+
+
