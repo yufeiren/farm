@@ -6,10 +6,11 @@
  * 	INSERT INTO kw_rss_item (rssid) VALUES (...); 
  */
 
-#include "kindleweb.h"
-
 #include <my_global.h>
 #include <mysql.h>
+
+#include "kindleweb.h"
+
 
 static void
 usage(const char *msg)
