@@ -57,7 +57,7 @@ main(int argc, char **argv)
 		}
 	}
 	
-	if ((rssurl == NULL) || (texfile == NULL))
+	if (rssurl == NULL)
 		usage("need parameter\n");
 	
 	/* get the latest xml
