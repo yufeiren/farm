@@ -1,0 +1,45 @@
+
+user: kindleweb
+
+mysql> CREATE USER kindleweb IDENTIFIED BY 'kindleweb';
+
+database name: kindleweb
+
+mysql> CREATE DATABASE kindleweb;
+
+mysql> GRANT ALL PRIVILEGES ON kindleweb.* TO kindleweb;
+
+mysql> USE kindleweb;
+
+mysql> show TABLES;
+
+table: kw_rss_link
+this table stores the name and link of rss
+
+CREATE TABLE `kw_rss_link` (
+`id` INT(4) NOT NULL auto_increment,
+`title` VARCHAR(256) NOT NULL default '',
+`link` VARCHAR(256) NOT NULL default '',
+`lastBuildDate` DATETIME,
+`language` VARCHAR(20) NOT NULL default '',
+PRIMARY KEY (`id`)
+);
+
+
+table: kw_rss_item
+
+this table stores the attribution of the rss items
+
+CREATE TABLE `kw_rss_item` (
+`id` INT(4) NOT NULL auto_increment,
+`rssid` INT(4) NOT NULL REFERENCES kw_rss_link(id),
+`title` VARCHAR(256) NOT NULL default '',
+`link` VARCHAR(256) NOT NULL default '',
+`pubDate` DATETIME,
+`origLink` VARCHAR(256) NOT NULL default '',
+`description` MEDIUMBLOB NOT NULL default '',
+`encoded` MEDIUMBLOB NOT NULL default '',
+PRIMARY KEY (`id`)
+);
+
+
