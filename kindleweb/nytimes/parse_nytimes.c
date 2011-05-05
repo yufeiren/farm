@@ -59,8 +59,8 @@ main(int argc, char **argv)
 	if (rssurl == NULL)
 		usage("need parameter\n");
 	
-	/* get the latest xml
-	urltofile(rssurl, "nytimes.xml"); */
+	/* get the latest xml */
+	urltofile(rssurl, "nytimes.xml");
 	
 	/* connect to db */
 	conn = mysql_init(NULL);
