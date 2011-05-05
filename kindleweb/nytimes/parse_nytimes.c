@@ -45,6 +45,7 @@ main(int argc, char **argv)
 
 	rssurl = texfile = NULL;
 	
+	int c;
 	while ((c = getopt(argc, argv, "u:")) != -1) {
 		switch (c) {
 		case 'u':
@@ -78,7 +79,7 @@ main(int argc, char **argv)
 	if ((row = mysql_fetch_row(result)) == NULL) {
 		fprintf(stderr, "can not find rss url %s in kw_rss_link", \
 			rssurl);
-		exit(EXIT_FAULURE);
+		exit(EXIT_FAILURE);
 	}
 	
 	rssid = atoi(row[0]);
