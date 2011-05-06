@@ -40,6 +40,8 @@ main(int argc, char **argv)
 	
 	char query[1024];
 	
+	int i;
+	
 	FILE *fp;
 	
 	int rssid = -1;
@@ -88,6 +90,34 @@ main(int argc, char **argv)
 	
 	/* parse rss xml */
 	rssparser(rssfile, rssid);
+	
+	/* get html */
+	/* query link id */
+	memset(query, '\0', 1024);
+	snprintf(query, 1024, \
+		"SELECT origLink FROM kw_rss_item WHERE rssid = '%d'", rssid);
+	
+	mysql_query(conn, query);
+	
+	result = mysql_store_result(conn);
+	
+	int num_fields;
+	MYSQL_FIELD *field;
+	num_fields = mysql_num_fields(result);
+
+	while ((row = mysql_fetch_row(result)) != NULL) {
+		for(i = 0; i < num_fields; i++) {
+			if (i == 0) {
+				while(field = mysql_fetch_field(result)) {
+					printf("%s ", field->name);
+				}
+				printf("\n");
+			}
+			printf("%s  ", row[i] ? row[i] : "NULL");
+		}
+		printf("\n");
+	}
+	
 	
 	exit(EXIT_SUCCESS);
 }
