@@ -22,11 +22,11 @@ parseRssChannelItem(xmlDocPtr doc, xmlNodePtr cur)
 	
 	while (cur != NULL) {
 		/* title - descrption - content:encoded */
-		if (!xmlStrcmp(cur->name, (const xmlChar *)"title") {
+		if (!xmlStrcmp(cur->name, (const xmlChar *)"title")) {
 			title = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
-		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"link") {
+		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"link")) {
 			link = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
-		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"origLink") {
+		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"origLink")) {
 			link = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 		}
 		
