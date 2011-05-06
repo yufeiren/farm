@@ -17,7 +17,7 @@ walkTree(xmlDocPtr doc, xmlNodePtr cur, char *text)
 			return;
 		}
 		
-		walkTree(doc, cur->xmlChildrenNode);
+		walkTree(doc, cur->xmlChildrenNode, text);
 		cur = cur->next;
 	}
 

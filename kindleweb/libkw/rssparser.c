@@ -9,37 +9,53 @@ parseRssChannelItem(xmlDocPtr doc, xmlNodePtr cur)
 {
 	xmlChar *key;
 	
-	xmlNodePtr cur2;
-	int havecontent = 0;
-	
-	cur2 = cur->xmlChildrenNode;
 	cur = cur->xmlChildrenNode;
 	
-	/* choose description or content:encoded */
-	while (cur2 != NULL) {
-		if (!xmlStrcmp(cur2->name, (const xmlChar *)"encoded")) {
-			havecontent = 1;
-			break;
-		}
-		
-		cur2 = cur2->next;
-	}
+	xmlChar *title;
+	xmlChar *link;
+	xmlChar *pubDate;
+	xmlChar *origLink;
+	xmlChar *description;
+	xmlChar *encoded;
+	
+	char query[1024];
 	
 	while (cur != NULL) {
 		/* title - descrption - content:encoded */
-		if ( (!xmlStrcmp(cur->name, (const xmlChar *)"title"))
-		   || (!xmlStrcmp(cur->name, (const xmlChar *)"description") && (havecontent == 0))
-		   || (!xmlStrcmp(cur->name, (const xmlChar *)"encoded")) )
-		{
-			key = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
-			/* parse html
-			html2tex(, key); */
-			
-			xmlFree(key);
+		if (!xmlStrcmp(cur->name, (const xmlChar *)"title") {
+			title = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
+		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"link") {
+			link = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
+		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"origLink") {
+			link = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 		}
 		
 		cur = cur->next;
 	}
+	
+	/* query link id */
+	memset(query, '\0', 1024);
+	snprintf(query, 1024, \
+		"INSERT INTO kw_rss_item (rssid, title, link, origLink) VALUES ()", id, title, link, origLink);
+	
+	mysql_query(conn, query);
+	
+	xmlFree(title);
+	xmlFree(link);
+	xmlFree(origLink);
+	
+/*	INSERT INTO kw_rss_item (rssid) VALUES (...); */ 
+	
+	
+/*	
+| rssid       | int(4)       | NO   |     | NULL    |                |
+| title       | varchar(256) | NO   |     |         |                |
+| link        | varchar(256) | NO   |     |         |                |
+| pubDate     | datetime     | YES  |     | NULL    |                |
+| origLink    | varchar(256) | NO   |     |         |                |
+| description | mediumblob   | NO   |     | NULL    |                |
+| encoded     | mediumblob   | NO   |     | NULL    |                |
+*/
 	
 	return;
 }
@@ -48,7 +64,6 @@ static void
 parseRssChannel(xmlDocPtr doc, xmlNodePtr cur)
 {
 	xmlChar *key;
-	xmlNodePtr cur2;
 	
 	cur = cur->xmlChildrenNode;
 	
@@ -65,21 +80,19 @@ parseRssChannel(xmlDocPtr doc, xmlNodePtr cur)
 		if (!xmlStrcmp(cur->name, (const xmlChar *)"item")) {
 			parseRssChannelItem(doc, cur);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"title")) {
-			key = xmlNodeListGetString(doc, cur2->xmlChildrenNode, 1);
-			/* update key to kw_rss_link */
-			
+			key = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
+			/* update key to kw_rss_link
 			html2text(title, key);
-			memset(title, '\0', 256);
+			memset(title, '\0', 256); */
 			
 			/* query link id */
 			memset(query, '\0', 1024);
 			snprintf(query, 1024, \
-				"UPDATE kw_rss_link SET title = '%s' FROM  WHERE id = %d", title, id);
+				"UPDATE kw_rss_link SET title = '%s' WHERE id = %d", key, id);
 			
 			mysql_query(conn, query);
 			
 			xmlFree(key);
-			break;
 		}
 		
 		cur = cur->next;

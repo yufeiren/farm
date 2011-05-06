@@ -3,7 +3,7 @@
  * 2. parse rss file (get `id` from table kw_rss_link via link)
  * 	SELECT id FROM kw_rss_link WHERE link = 'url';
  * 3. insert into the latest item into kw_rss_item
- * 	INSERT INTO kw_rss_item (rssid) VALUES (...); 
+ * 	INSERT INTO kw_rss_item (rssid) VALUES (...);
  */
 
 #include <my_global.h>
@@ -87,7 +87,7 @@ main(int argc, char **argv)
 	printf("rss id is %d\n", rssid);
 	
 	/* parse rss xml */
-	rssparser(rssfile, linkid);
+	rssparser(rssfile, rssid);
 	
 	exit(EXIT_SUCCESS);
 }

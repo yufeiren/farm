@@ -1,7 +1,7 @@
 # `mysql_config --cflags --libs`
 
 CC=gcc
-CFLAGS=-g -O2 -I/usr/include/libxml2 -I../include
+CFLAGS=-g -O2 -I/usr/include/libxml2 -I../include `mysql_config --cflags`
 EXTRALIBS=
 KWLIB=libkw.a
 
