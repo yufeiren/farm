@@ -95,7 +95,7 @@ main(int argc, char **argv)
 	/* query link id */
 	memset(query, '\0', 1024);
 	snprintf(query, 1024, \
-		"SELECT origLink FROM kw_rss_item WHERE rssid = '%d'", rssid);
+		"SELECT id origLink FROM kw_rss_item WHERE rssid = '%d'", rssid);
 	
 	mysql_query(conn, query);
 	
@@ -104,7 +104,9 @@ main(int argc, char **argv)
 	int num_fields;
 	MYSQL_FIELD *field;
 	num_fields = mysql_num_fields(result);
-
+	
+	char tmpfile[256];
+	
 	while ((row = mysql_fetch_row(result)) != NULL) {
 		for(i = 0; i < num_fields; i++) {
 			if (i == 0) {
@@ -113,9 +115,15 @@ main(int argc, char **argv)
 				}
 				printf("\n");
 			}
-			printf("%s  ", row[i] ? row[i] : "NULL");
+			printf("%s ", row[i] ? row[i] : "NULL");
+			
+/*			if (row[i] != NULL) {
+				memset(tmpfile, '\0', 256);
+				
+				snprintf
+			}
+				urltofile(rssurl, rssfile);*/
 		}
-		printf("\n");
 	}
 	
 	
