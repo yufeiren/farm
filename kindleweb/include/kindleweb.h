@@ -12,6 +12,10 @@
 /* curl */
 #include <curl/curl.h>
 
+/* mysql */
+#include <my_global.h>
+#include <mysql.h>
+
 FILE *texfp;
 
 void texinit(FILE *fp);
@@ -25,6 +29,6 @@ int ompl2tex(const char *omplfile);
 
 int urltofile(const char *url, const char *file);
 
-int rss2tex(const char *rssfile);
+int rssparser(const char *rssfile, int linkid);
 
-int html2tex(const char *str);
+int html2text(char *text, const char *html);

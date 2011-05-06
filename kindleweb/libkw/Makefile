@@ -5,7 +5,7 @@ CFLAGS=-g -O2 -I/usr/include/libxml2 -I../include
 EXTRALIBS=
 KWLIB=libkw.a
 
-OBJS	= geturl.o
+OBJS	= geturl.o rssparser.o html2text.o
 
 AR=ar
 RANLIB=ranlib

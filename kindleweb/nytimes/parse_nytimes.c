@@ -11,6 +11,7 @@
 
 #include "kindleweb.h"
 
+MYSQL *conn;
 
 static void
 usage(const char *msg)
@@ -30,10 +31,10 @@ int
 main(int argc, char **argv)
 {
 	char *rssurl;
+	char *rssfile = "nytimes.xml";
 	char *texfile;
 	
 	/* mysql */
-	MYSQL *conn;
 	MYSQL_RES *result;
 	MYSQL_ROW row;
 	
@@ -61,7 +62,7 @@ main(int argc, char **argv)
 		usage("need parameter\n");
 	
 	/* get the latest xml */
-	urltofile(rssurl, "nytimes.xml");
+	urltofile(rssurl, rssfile);
 	
 	/* connect to db */
 	conn = mysql_init(NULL);
@@ -86,7 +87,7 @@ main(int argc, char **argv)
 	printf("rss id is %d\n", rssid);
 	
 	/* parse rss xml */
-	
+	rssparser(rssfile, linkid);
 	
 	exit(EXIT_SUCCESS);
 }

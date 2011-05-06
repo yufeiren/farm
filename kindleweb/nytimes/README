@@ -1,7 +1,7 @@
 
 usage:
 
-./parse_nytimes -u http://www.nytimes.com/services/xml/rss/nyt/HomePage.xml
+./parse_nytimes -u http://feeds.nytimes.com/nyt/rss/HomePage
 
 
 =====================
@@ -9,11 +9,11 @@ usage:
 New York Times Home Page
 
 
-INSERT INTO kw_rss_link (link) VALUES ('http://www.nytimes.com/services/xml/rss/nyt/HomePage.xml');
+INSERT INTO kw_rss_link (link) VALUES ('http://feeds.nytimes.com/nyt/rss/HomePage');
 
 NYT > Home Page
 
-Feed URL: http://www.nytimes.com/services/xml/rss/nyt/HomePage.xml
+Feed URL: http://feeds.nytimes.com/nyt/rss/HomePage
 
 xml feed:
 rss
