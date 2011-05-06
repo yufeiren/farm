@@ -27,7 +27,7 @@ parseRssChannelItem(xmlDocPtr doc, xmlNodePtr cur)
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"link")) {
 			link = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"origLink")) {
-			link = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
+			origLink = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 		}
 		
 		cur = cur->next;
@@ -36,7 +36,7 @@ parseRssChannelItem(xmlDocPtr doc, xmlNodePtr cur)
 	/* query link id */
 	memset(query, '\0', 1024);
 	snprintf(query, 1024, \
-		"INSERT INTO kw_rss_item (rssid, title, link, origLink) VALUES ()", id, title, link, origLink);
+		"INSERT INTO kw_rss_item (rssid, title, link, origLink) VALUES ('%d', '%s', '%s')", id, title, origLink);
 	
 	mysql_query(conn, query);
 	
