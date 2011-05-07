@@ -41,10 +41,16 @@ void printdir(char *dir, int depth)
 
 /*  Now we move onto the main function.  */
 
-int main()
+int main(int argc, char* argv[])
 {
-    printf("Directory scan of /home:\n");
-    printdir("/home",0);
+    char *topdir, pwd[2]=".";
+    if (argc != 2)
+        topdir=pwd;
+    else
+        topdir=argv[1];
+
+    printf("Directory scan of %s\n",topdir);
+    printdir(topdir,0);
     printf("done.\n");
 
     exit(0);
