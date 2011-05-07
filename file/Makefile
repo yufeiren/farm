@@ -6,7 +6,7 @@
 DIR=printdir
 # MMAP=mmap
 
-ALL= $(COPY)
+ALL= $(DIR)
 
 all: $(ALL)
 
