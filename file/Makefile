@@ -3,7 +3,7 @@
 
 # SIMPLE=simple_write simple_read
 # COPY=copy_system copy_block copy_stdio
-DIR=printdir
+DIR=printdir checkpath
 # MMAP=mmap
 
 ALL= $(DIR)
