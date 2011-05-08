@@ -7,6 +7,8 @@
 
 void checkpath(char *path)
 {
+	struct stat statbuf;
+	
 	lstat(path, &statbuf);
 	
 	if (S_ISDIR(statbuf.st_mode)) {
@@ -21,6 +23,8 @@ void checkpath(char *path)
 		printf("IS LNK\n");
 	} else if (S_ISSOCK(statbuf.st_mode)) {
 		printf("IS SOCK\n");
+	} else {
+		printf("unknown file type\n");
 	}
 	
 	return;
