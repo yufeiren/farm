@@ -19,6 +19,8 @@ void checkpath(char *path)
 		printf("IS CHR\n");
 	} else if (S_ISBLK(statbuf.st_mode)) {
 		printf("IS BLK\n");
+	} else if (S_ISFIFO(statbuf.st_mode)) {
+		printf("IS FIFO\n");
 	} else if (S_ISLNK(statbuf.st_mode)) {
 		printf("IS LNK\n");
 	} else if (S_ISSOCK(statbuf.st_mode)) {
