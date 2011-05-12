@@ -28,15 +28,32 @@ parseRssChannelItem(xmlDocPtr doc, xmlNodePtr cur)
 			link = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"origLink")) {
 			origLink = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
+		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"description")) {
+			description = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 		}
 		
 		cur = cur->next;
 	}
 	
+	/* convert blob data */
+	char *chunk;
+	int len;
+	
+	len = xmlStelen(description);
+	chunk = (char *) malloc(2 * len);
+	if (chunk == NULL) {
+		perror("malloc fail");
+		exit(EXIT_FAILURE);
+	}
+	
+	memset(chunk, '\0', 2 * len);
+	mysql_real_escape_string(conn, chunk, description, len);
+	
 	/* query link id */
 	memset(query, '\0', 1024);
 	snprintf(query, 1024, \
-		"INSERT INTO kw_rss_item (rssid, title, link, origLink) VALUES ('%d', '%s', '%s', '%s')", id, title, link, origLink);
+		"INSERT INTO kw_rss_item (rssid, title, link, origLink, description) VALUES ('%d', '%s', '%s', '%s', '%s')", \
+		id, title, link, origLink, chunk);
 	
 	mysql_query(conn, query);
 	
