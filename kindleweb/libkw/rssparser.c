@@ -36,7 +36,7 @@ parseRssChannelItem(xmlDocPtr doc, xmlNodePtr cur)
 	/* query link id */
 	memset(query, '\0', 1024);
 	snprintf(query, 1024, \
-		"INSERT INTO kw_rss_item (rssid, title, origLink) VALUES ('%d', '%s', '%s')", id, title, origLink);
+		"INSERT INTO kw_rss_item (rssid, title, link, origLink) VALUES ('%d', '%s', '%s', '%s')", id, title, link, origLink);
 	
 	mysql_query(conn, query);
 	
