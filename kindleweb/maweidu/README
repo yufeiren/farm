@@ -1,0 +1,10 @@
+
+usage:
+
+./parse_maweidu -u http://blog.sina.com.cn/rss/mazhahuchuang.xml
+
+
+=====================
+
+INSERT INTO kw_rss_link (link) VALUES ('http://blog.sina.com.cn/rss/mazhahuchuang.xml');
+
