@@ -39,7 +39,7 @@ parseRssChannelItem(xmlDocPtr doc, xmlNodePtr cur)
 	char *chunk;
 	int len;
 	
-	len = xmlStelen(description);
+	len = xmlStrlen(description);
 	chunk = (char *) malloc(2 * len);
 	if (chunk == NULL) {
 		perror("malloc fail");
