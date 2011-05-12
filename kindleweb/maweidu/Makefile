@@ -11,7 +11,7 @@ all: parse_maweidu
 %.o: %.c
 	$(CC) $(CFLAGS) $< -c $(EXTRALIBS)
 
-parse_nytimes: parse_nytimes.c
+parse_maweidu: parse_maweidu.c
 	$(CC) $(CFLAGS) -o $@ $@.c $(EXTRALIBS)
 
 clean:
