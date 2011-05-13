@@ -1,4 +1,4 @@
-/* pullrss from the web accroding to the `link` of kw_rss_link
+/* parserss which already downloaded
  */
 
 #include <my_global.h>
@@ -40,10 +40,10 @@ main(int argc, char **argv)
 	mysql_real_connect(conn, "localhost", "kindleweb", "kindleweb", \
 				"kindleweb", 0, NULL, 0);
 	
-	/* query link and id */
+	/* query id */
 	memset(query, '\0', 1024);
 	snprintf(query, 1024, \
-		"SELECT id, link FROM kw_rss_link");
+		"SELECT id FROM kw_rss_link");
 	
 	mysql_query(conn, query);
 	
@@ -56,8 +56,8 @@ main(int argc, char **argv)
 		id = atoi(row[0]);
 		snprintf(xmlfile, 32, "rss%05d.xml", id);
 		
-		/* get the latest xml */
-		urltofile(row[1], xmlfile);
+		/* parserss */
+		rssparser(xmlfile, id);
 	}
 	
 	mysql_close(conn);
