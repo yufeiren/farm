@@ -112,8 +112,8 @@ main(int argc, char **argv)
 	
 	unsigned long *lengths;
 	
-	char title[1024];
-	char desc[10240];
+	char *title;
+	char *desc;
 	
 	/* open or create ompl file and texfile */
 	texfp = fopen("mwd.tex", "w+");
@@ -126,14 +126,17 @@ main(int argc, char **argv)
 	
 	while ((row = mysql_fetch_row(result)) != NULL) {
 		printf("%s %s\n", row[0], row[2]);
-		memset(title, '\0', 1024);
-		memset(desc, '\0', 10240);
 		
-		html2text(title, row[1]);
-		html2text(desc, row[3]);
+		title = removetags(row[1]);
+		desc = removetags(row[3]);
 		
+		data2tex("----------------------------\r\n");
 		data2tex(title);
+		data2tex(row[2]);
 		data2tex(desc);
+		
+		free(title);
+		free(desc);
 	}
 	
 	texclose(texfp);

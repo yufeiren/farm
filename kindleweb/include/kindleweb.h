@@ -23,6 +23,8 @@ void texinit(FILE *fp);
 void data2tex(const char *str);
 void img2tex(const char *loc);
 
+char *removetags(xmlChar *content);
+
 void texclose(FILE *fp);
 
 int ompl2tex(const char *omplfile);

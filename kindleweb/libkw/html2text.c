@@ -56,3 +56,87 @@ html2text(char *text, const char *content)
 	
 	return 0;
 }
+
+
+char *
+removetags(xmlChar *content)
+{
+	int intag = 0;
+	int cur = 0;
+	int cur2 = 0;
+	int tagstart = 0;
+	int tagend = 0;
+	
+	char *buf;
+	
+	int c;
+	buf = (char *) malloc(409600);
+	if (buf == NULL) {
+		printf("malloc fail\n");
+		exit(0);
+	}
+	memset(buf, '\0', 409600);
+	
+	while ((c = *(content + cur++)) != '\0') {
+		switch (c) {
+		case '<':
+			intag = 1;
+			if (*(content + cur) == 'p') {
+				*(buf + cur2++) = '\r';
+				*(buf + cur2++) = '\n';
+				*(buf + cur2++) = '\r';
+				*(buf + cur2++) = '\n';
+			}
+			break;
+		case '>':
+			intag = 0;
+			break;
+		case '&':
+			if (memcmp(content + cur, "lt;", 3) == 0) {
+				intag = 1;
+				cur += 3;
+			} else if (memcmp(content + cur, "gt;", 3) == 0) {
+				intag = 0;
+				cur += 3;
+			} else if (memcmp(content + cur, "nbsp;", 5) == 0) {
+				cur += 5;
+			} else if (memcmp(content + cur, "bull;", 5) == 0) {
+				cur += 5;
+				*(buf + cur2++) = '*';
+			}
+			break;
+		case '\t':
+			break;
+		case '\\':
+		case '$':
+		case '{':
+		case '}':
+		case '~':
+		case '^':
+		case '_':
+		case '%':
+		case '#':
+			/* TEX sensitive character:
+			 * \ { } $ ^ _ % ~ # &
+			 */
+			break;
+		case '\n':
+			if (intag == 0)
+				*(buf + cur2++) = ' ';
+			break;
+		default:
+			if (intag == 0)
+				*(buf + cur2++) = c;
+			if (c == '&') {
+				printf("fuck\n");
+				exit(0);
+			}
+			break;
+		}
+	}
+	*(buf + cur2) == '\0';
+
+/*	printf("pure txt:\n:%s\n", buf); */
+	
+	return buf;
+}
