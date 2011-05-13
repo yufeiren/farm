@@ -18,7 +18,7 @@ parseRssChannelItem(xmlDocPtr doc, xmlNodePtr cur)
 	xmlChar *description;
 	xmlChar *encoded;
 	
-	char query[1024];
+	char query[10240];
 	
 	while (cur != NULL) {
 		/* title - descrption - content:encoded */
@@ -26,6 +26,8 @@ parseRssChannelItem(xmlDocPtr doc, xmlNodePtr cur)
 			title = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"link")) {
 			link = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
+		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"pubDate")) {
+			pubDate = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"origLink")) {
 			origLink = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"description")) {
@@ -49,11 +51,19 @@ parseRssChannelItem(xmlDocPtr doc, xmlNodePtr cur)
 	memset(chunk, '\0', 2 * len);
 	mysql_real_escape_string(conn, chunk, description, len);
 	
+	/* pubDate - Fri, 29 Apr 2011 16:02:33 +0800 -> YYYYMMDDHHMMSS */
+	/* man strptime and strtime */
+	struct tm tm;
+	strptime(pubDate, "%A, %d %B %Y %OH:%OM:%OS %z", &tm);
+	/* YYYY-MM-DD HH:MM:SS */
+	char date[64];
+	strftime(date, 64, "%F %T", &tm);
+	
 	/* query link id */
-	memset(query, '\0', 1024);
-	snprintf(query, 1024, \
-		"INSERT INTO kw_rss_item (rssid, title, link, origLink, description) VALUES ('%d', '%s', '%s', '%s', '%s')", \
-		id, title, link, origLink, chunk);
+	memset(query, '\0', 10240);
+	snprintf(query, 10240, \
+		"INSERT INTO kw_rss_item (rssid, title, link, pubDate, origLink, description) VALUES ('%d', '%s', '%s', '%s', '%s', '%s')", \
+		id, title, link, date, origLink, chunk);
 	
 	mysql_query(conn, query);
 	
