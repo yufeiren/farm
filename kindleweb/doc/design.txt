@@ -1,0 +1,37 @@
+
+
+0. crontab start script
+
+-- collect data
+
+1. script fetch data from kw_rss_link
+	1.1 get rss file
+		geturl -u [url] -o [id.xml]
+	1.2 parse rss file
+		parserss -i [id.xml]
+	1.3 check lastBuildDate (or pubDate)
+		if lastBuildDate updated
+			loop: check each <item>
+			this item pubDate is new then previous lastBuildDate
+				insert new items into kw_rss_item
+		else
+			no new item - cleanup - continue
+
+-- parse data
+
+2. parse items from kw_rss_item
+	2.1 begin time, end time
+	2.2 select pubDate in the time period
+	2.3 get title, pubDate, description or encoded 
+		output to the texfile
+
+
+-- generate pdf
+
+3. pdflatex [texfile]
+
+
+
+TODO:
+1. table kw_rss_link add `pubDate` DATETIME
+2. 

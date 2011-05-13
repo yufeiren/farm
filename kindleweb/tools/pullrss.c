@@ -52,7 +52,7 @@ main(int argc, char **argv)
 	i = 1;
 	while ((row = mysql_fetch_row(result)) != NULL) {
 		memset(xmlfile, '\0', 32);
-		snpintf(xmlfile, 32, "rss%05d.xml", i);
+		snprintf(xmlfile, 32, "rss%05d.xml", i++);
 		
 		/* get the latest xml */
 		urltofile(row[1], xmlfile);
