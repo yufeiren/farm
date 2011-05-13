@@ -1,4 +1,4 @@
-#include "kd.h"
+#include "kindleweb.h"
 
 extern FILE *texfp;
 
