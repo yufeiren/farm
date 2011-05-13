@@ -13,6 +13,8 @@
 
 MYSQL *conn;
 
+FILE *texfp;
+
 static void
 usage(const char *msg)
 {
@@ -113,6 +115,15 @@ main(int argc, char **argv)
 	char title[1024];
 	char desc[10240];
 	
+	/* open or create ompl file and texfile */
+	texfp = fopen("mwd.tex", "w+");
+	if (!texfp) {
+		perror("File Open tex: ");
+		exit(EXIT_FAILURE);
+	}
+	
+	texinit(texfp);
+	
 	while ((row = mysql_fetch_row(result)) != NULL) {
 		printf("%s %s\n", row[0], row[2]);
 		memset(title, '\0', 1024);
@@ -121,39 +132,13 @@ main(int argc, char **argv)
 		html2text(title, row[1]);
 		html2text(desc, row[3]);
 		
-/*		for(i = 0; i < num_fields; i++) {
-			if (i == 0) {
-				while(field = mysql_fetch_field(result)) {
-					printf("%s ", field->name);
-				}
-				printf("\n");
-			}
-			printf("%s  ", row[i] ? row[i] : "NULL");
-			
-			switch (i) {
-			case 0:
-				id = atoi(row[i]);
-				break;
-			case 1:
-				
-				break;
-			default:
-				break;
-			} */
-/*			if (row[i] != NULL) {
-				memset(tmpfile, '\0', 256);
-				
-				snprintf
-			}
-				urltofile(rssurl, rssfile);
-		}*/
-		
-/*		memset(tmpfile, '\0', 256);
-		snprintf(tmpfile, 256, "NYT_%d_%s.html", rssid, row[0]);
-		
-		urltofile(row[1], tmpfile); */
+		data2tex(title);
+		data2tex(desc);
 	}
 	
+	texclose(texfp);
+	
+	fclose(texfp);
 	
 	exit(EXIT_SUCCESS);
 }
