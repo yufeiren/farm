@@ -97,7 +97,7 @@ main(int argc, char **argv)
 	/* query link id */
 	memset(query, '\0', 1024);
 	snprintf(query, 1024, \
-		"SELECT id, title, pubDate, description FROM kw_rss_item WHERE rssid = '%d'", rssid);
+		"SELECT id, title, pubDate, description FROM kw_rss_item WHERE rssid = '%d' and pubDate > '2011-05-11 12:00:00'", rssid);
 	
 	mysql_query(conn, query);
 	
