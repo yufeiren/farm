@@ -110,8 +110,17 @@ main(int argc, char **argv)
 	
 	unsigned long *lengths;
 	
+	char title[1024];
+	char desc[10240];
+	
 	while ((row = mysql_fetch_row(result)) != NULL) {
 		printf("%s %s\n", row[0], row[2]);
+		memset(title, '\0', 1024);
+		memset(desc, '\0', 10240);
+		
+		html2text(title, row[1]);
+		html2text(desc, row[3]);
+		
 /*		for(i = 0; i < num_fields; i++) {
 			if (i == 0) {
 				while(field = mysql_fetch_field(result)) {

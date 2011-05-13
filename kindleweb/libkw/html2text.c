@@ -4,9 +4,7 @@ static void
 walkTree(xmlDocPtr doc, xmlNodePtr cur, char *text)
 {
 	xmlAttr *cur_attr = NULL;
-	
 	xmlChar *content;
-	xmlChar *tagstr;
 	
 	while (cur != NULL) {
 		/* text */
