@@ -8,7 +8,7 @@ extern MYSQL *conn;
 static int id;
 
 static void
-parseRssChannelItem(xmlDocPtr doc, xmlNodePtr cur)
+parseRssChannelItem(xmlDocPtr doc, xmlNodePtr cur, char *latest)
 {
 	xmlChar *key;
 	
@@ -21,6 +21,9 @@ parseRssChannelItem(xmlDocPtr doc, xmlNodePtr cur)
 	xmlChar *description;
 	xmlChar *encoded;
 	
+	/* mysql */
+	MYSQL_RES *result;
+	MYSQL_ROW row;
 	char query[10240];
 	
 	while (cur != NULL) {
@@ -40,6 +43,16 @@ parseRssChannelItem(xmlDocPtr doc, xmlNodePtr cur)
 		}
 		
 		cur = cur->next;
+	}
+	
+	/* pubDate comparision */
+	memset(query, '\0', 1024);
+	snprintf(query, 1024, "SELECT '%s' > '%s'", pubDate, latest);
+	
+	result = mysql_store_result(conn);
+	row = mysql_fetch_row(result);
+	if (atoi(row[0]) == 0) { /* don't need insert */
+		goto cleanup;
 	}
 	
 	/* convert blob data */
@@ -76,7 +89,9 @@ parseRssChannelItem(xmlDocPtr doc, xmlNodePtr cur)
 		id, title, link, date, origLink, chunk);
 	
 	mysql_query(conn, query);
-	
+
+cleanup:
+
 	xmlFree(title);
 	xmlFree(link);
 	xmlFree(origLink);
@@ -110,6 +125,7 @@ parseRssChannel(xmlDocPtr doc, xmlNodePtr cur)
 	cur = cur->xmlChildrenNode;
 	
 	char title[256];
+	char latest[32];
 	
 	/* mysql */
 	MYSQL_RES *result;
@@ -117,10 +133,27 @@ parseRssChannel(xmlDocPtr doc, xmlNodePtr cur)
 	
 	char query[1024];
 	
+	/* get the latest item pubDate */
+	memset(query, '\0', 1024);
+	snprintf(query, 1024, \
+		"SELECT MAX(pubDate) FROM kw_rss_item WHERE id = %d", id);
+/*		"SELECT pubDate FROM kw_rss_item WHERE id = %d ORDER BY pubDate DESC", id); */
+	
+	mysql_query(conn, query);
+	
+	result = mysql_store_result(conn);
+	
+	memset(latest, '\0', 32);
+	if ((row = mysql_fetch_row(result)) == NULL) {
+		strcpy(latest, "1000-01-01 00:00:00");
+	} else {
+		strcpy(latest, row[0]);
+	}
+	
 	/* item */
 	while (cur != NULL) {
 		if (!xmlStrcmp(cur->name, (const xmlChar *)"item")) {
-			parseRssChannelItem(doc, cur);
+			parseRssChannelItem(doc, cur, latest);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"title")) {
 			key = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 			/* update key to kw_rss_link
@@ -146,6 +179,32 @@ parseRssChannel(xmlDocPtr doc, xmlNodePtr cur)
 			memset(date, '\0', 64);
 			
 			strftime(date, 64, "%F %T", &tm);
+			
+			/* query lastBuildDate */
+			memset(query, '\0', 1024);
+			snprintf(query, 1024, \
+			"SELECT lastBuildDate kw_rss_link WHERE id = %d", id);
+			
+			mysql_query(conn, query);
+			
+			result = mysql_store_result(conn);
+			
+			if ((row = mysql_fetch_row(result)) == NULL) {
+				fprintf(stderr, "can not find id: %d\n", id);
+				return;
+			}
+			
+			/* query comparision */
+			memset(query, '\0', 1024);
+			snprintf(query, 1024, \
+				"SELECT '%s' > '%s'", date, row[0]);
+			
+			result = mysql_store_result(conn);
+			row = mysql_fetch_row(result);
+			if (atoi(row[0]) == 0) { /* don't need update */
+				fprintf(stderr, "id: %d no need update\n", id);
+				return;
+			}
 			
 			/* query link id */
 			memset(query, '\0', 1024);

@@ -34,4 +34,6 @@
 
 TODO:
 1. table kw_rss_link add `pubDate` DATETIME
-2. 
+2. table kw_rss_link add `filename` varchar
+
+
