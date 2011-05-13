@@ -5,7 +5,7 @@ CFLAGS=-g -O2 -I/usr/include/libxml2 -I../include `mysql_config --cflags`
 EXTRALIBS=
 KWLIB=libkw.a
 
-OBJS	= geturl.o rssparser.o html2text.o
+OBJS	= geturl.o rssparser.o html2text.o data2tex.o
 
 AR=ar
 RANLIB=ranlib
