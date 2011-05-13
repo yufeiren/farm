@@ -35,6 +35,8 @@ parseRssChannelItem(xmlDocPtr doc, xmlNodePtr cur)
 			origLink = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"description")) {
 			description = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
+		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"encoded")) {
+			encoded = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 		}
 		
 		cur = cur->next;
@@ -57,7 +59,9 @@ parseRssChannelItem(xmlDocPtr doc, xmlNodePtr cur)
 	/* pubDate - Fri, 29 Apr 2011 16:02:33 +0800 -> YYYYMMDDHHMMSS */
 	/* man strptime and strtime */
 	struct tm tm;
-	strptime(pubDate, "%A, %d %B %Y %OH:%OM:%OS %z", &tm);
+	if (strptime(pubDate, "%A, %d %B %Y %OH:%OM:%OS %z", &tm) == NULL) {
+		perror("strptime");
+	}
 	/* YYYY-MM-DD HH:MM:SS */
 	char date[64];
 	memset(date, '\0', 64);
@@ -71,11 +75,16 @@ parseRssChannelItem(xmlDocPtr doc, xmlNodePtr cur)
 		"INSERT INTO kw_rss_item (rssid, title, link, pubDate, origLink, description) VALUES ('%d', '%s', '%s', '%s', '%s', '%s')", \
 		id, title, link, date, origLink, chunk);
 	
-	mysql_real_query(conn, query, 2 * len);
+	mysql_query(conn, query);
 	
 	xmlFree(title);
 	xmlFree(link);
 	xmlFree(origLink);
+	xmlFree(pubDate);
+	xmlFree(description);
+	xmlFree(encoded);
+	
+	free(trunk);
 	
 /*	INSERT INTO kw_rss_item (rssid) VALUES (...); */ 
 	
