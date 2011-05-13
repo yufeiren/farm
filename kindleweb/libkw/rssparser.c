@@ -84,7 +84,7 @@ parseRssChannelItem(xmlDocPtr doc, xmlNodePtr cur)
 	xmlFree(description);
 	xmlFree(encoded);
 	
-	free(trunk);
+	free(chunk);
 	
 /*	INSERT INTO kw_rss_item (rssid) VALUES (...); */ 
 	
