@@ -57,7 +57,10 @@ parseRssChannelItem(xmlDocPtr doc, xmlNodePtr cur)
 	strptime(pubDate, "%A, %d %B %Y %OH:%OM:%OS %z", &tm);
 	/* YYYY-MM-DD HH:MM:SS */
 	char date[64];
+	memset(date, '\0', 64);
+	
 	strftime(date, 64, "%F %T", &tm);
+	printf("query:")
 	
 	/* query link id */
 	memset(query, '\0', 10240);
@@ -65,7 +68,7 @@ parseRssChannelItem(xmlDocPtr doc, xmlNodePtr cur)
 		"INSERT INTO kw_rss_item (rssid, title, link, pubDate, origLink, description) VALUES ('%d', '%s', '%s', '%s', '%s', '%s')", \
 		id, title, link, date, origLink, chunk);
 	
-	mysql_query(conn, query);
+	mysql_real_query(conn, query, 2 * len);
 	
 	xmlFree(title);
 	xmlFree(link);
