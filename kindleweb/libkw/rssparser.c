@@ -1,5 +1,8 @@
 #include "kindleweb.h"
 
+#define _XOPEN_SOURCE
+#include <time.h>
+
 extern MYSQL *conn;
 
 static int id;
