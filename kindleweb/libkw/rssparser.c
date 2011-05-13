@@ -135,6 +135,26 @@ parseRssChannel(xmlDocPtr doc, xmlNodePtr cur)
 			mysql_query(conn, query);
 			
 			xmlFree(key);
+		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"lastBuildDate")) {
+			key = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
+			struct tm tm;
+			if (strptime(key, "%A, %d %B %Y %T %z", &tm) == NULL) {
+				perror("strptime");
+			}
+			/* YYYY-MM-DD HH:MM:SS */
+			char date[64];
+			memset(date, '\0', 64);
+			
+			strftime(date, 64, "%F %T", &tm);
+			
+			/* query link id */
+			memset(query, '\0', 1024);
+			snprintf(query, 1024, \
+				"UPDATE kw_rss_link SET lastBuildDate = '%s' WHERE id = %d", date, id);
+			
+			mysql_query(conn, query);
+			
+			xmlFree(key);
 		}
 		
 		cur = cur->next;
