@@ -95,7 +95,7 @@ main(int argc, char **argv)
 	/* query link id */
 	memset(query, '\0', 1024);
 	snprintf(query, 1024, \
-		"SELECT id, origLink FROM kw_rss_item WHERE rssid = '%d'", rssid);
+		"SELECT id, title, pubDate, description FROM kw_rss_item WHERE rssid = '%d'", rssid);
 	
 	mysql_query(conn, query);
 	
@@ -108,15 +108,18 @@ main(int argc, char **argv)
 	char tmpfile[256];
 	int id;
 	
+	unsigned long *lengths;
+	
 	while ((row = mysql_fetch_row(result)) != NULL) {
-		for(i = 0; i < num_fields; i++) {
+		printf("%s %s\n", row[0], row[2]);
+/*		for(i = 0; i < num_fields; i++) {
 			if (i == 0) {
 				while(field = mysql_fetch_field(result)) {
 					printf("%s ", field->name);
 				}
 				printf("\n");
 			}
-/*			printf("%s  ", row[i] ? row[i] : "NULL");
+			printf("%s  ", row[i] ? row[i] : "NULL");
 			
 			switch (i) {
 			case 0:
@@ -133,8 +136,8 @@ main(int argc, char **argv)
 				
 				snprintf
 			}
-				urltofile(rssurl, rssfile);*/
-		}
+				urltofile(rssurl, rssfile);
+		}*/
 		
 /*		memset(tmpfile, '\0', 256);
 		snprintf(tmpfile, 256, "NYT_%d_%s.html", rssid, row[0]);

@@ -59,7 +59,7 @@ parseRssChannelItem(xmlDocPtr doc, xmlNodePtr cur)
 	/* pubDate - Fri, 29 Apr 2011 16:02:33 +0800 -> YYYYMMDDHHMMSS */
 	/* man strptime and strtime */
 	struct tm tm;
-	if (strptime(pubDate, "%A, %d %B %Y %OH:%OM:%OS %z", &tm) == NULL) {
+	if (strptime(pubDate, "%A, %d %B %Y %T %z", &tm) == NULL) {
 		perror("strptime");
 	}
 	/* YYYY-MM-DD HH:MM:SS */
