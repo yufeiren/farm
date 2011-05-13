@@ -63,7 +63,7 @@ parseRssChannelItem(xmlDocPtr doc, xmlNodePtr cur)
 	memset(date, '\0', 64);
 	
 	strftime(date, 64, "%F %T", &tm);
-	printf("query:")
+	printf("date: %s\n", date);
 	
 	/* query link id */
 	memset(query, '\0', 10240);
