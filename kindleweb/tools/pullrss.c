@@ -49,10 +49,12 @@ main(int argc, char **argv)
 	
 	result = mysql_store_result(conn);
 	
-	i = 1;
+	int id;
+	
 	while ((row = mysql_fetch_row(result)) != NULL) {
 		memset(xmlfile, '\0', 32);
-		snprintf(xmlfile, 32, "rss%05d.xml", i++);
+		id = atoi(row[0]);
+		snprintf(xmlfile, 32, "rss%05d.xml", id);
 		
 		/* get the latest xml */
 		urltofile(row[1], xmlfile);
