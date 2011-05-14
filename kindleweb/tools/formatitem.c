@@ -56,9 +56,9 @@ fetchitem(int rssid, char *start, char *end)
 	while ((row = mysql_fetch_row(result)) != NULL) {
 		title = removetags(row[0]);
 		pubdate = row[1];
-printf("%encoded len: %d\n", stelen(row[3]));
+printf("%encoded len: %d\n", strlen(row[3]));
 		
-		if (stelen(row[3]) != 0) {
+		if (strlen(row[3]) != 0) {
 			content = removetags(row[3]);
 		} else {
 			content = removetags(row[2]);
