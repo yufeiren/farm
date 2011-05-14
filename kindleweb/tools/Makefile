@@ -21,4 +21,4 @@ formatitem: formatitem.c
 	$(CC) $(CFLAGS) -o $@ $@.c $(EXTRALIBS)
 
 clean:
-	rm -rf *.o a.out core temp.* pullrss parserss
+	rm -rf *.o a.out core temp.* pullrss parserss formatitem
