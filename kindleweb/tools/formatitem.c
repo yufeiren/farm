@@ -63,12 +63,12 @@ fetchitem(int rssid, char *start, char *end)
 			content = removetags(row[2]);
 		}
 		
-		data2tex("----------------------------\r\n");
+		data2tex("----------------------------\r\n", TEX_FONT_Large);
 		data2tex(title, TEX_FONT_huge);
 		data2tex(pubdate, TEX_FONT_normalsize);
-		data2tex("---\r\n");
+		data2tex("---\r\n", TEX_FONT_normalsize);
 		data2tex(content, TEX_FONT_Large);
-		data2tex("---\r\n");
+		data2tex("---\r\n", TEX_FONT_normalsize);
 		
 		free(title);
 		free(content);
@@ -147,7 +147,7 @@ main(int argc, char **argv)
 		rssid = atoi(row[0]);
 		title = removetags(row[1]);
 		
-		date2tex(title, TEX_FONT_Huge);
+		data2tex(title, TEX_FONT_Huge);
 		free(title);
 		
 		fetchitem(rssid, startdate, enddate);
