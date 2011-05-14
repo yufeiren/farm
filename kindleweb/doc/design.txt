@@ -35,5 +35,6 @@
 TODO:
 1. table kw_rss_link add `pubDate` DATETIME
 2. table kw_rss_link add `filename` varchar
-
+3. content parse method libxml2 htmlparser or removetags
+4. table kw_rss_link add `rate` int 
 
