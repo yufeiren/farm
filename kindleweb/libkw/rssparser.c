@@ -45,16 +45,6 @@ parseRssChannelItem(xmlDocPtr doc, xmlNodePtr cur, char *latest)
 		cur = cur->next;
 	}
 	
-	/* pubDate comparision */
-	memset(query, '\0', 1024);
-	snprintf(query, 1024, "SELECT '%s' > '%s'", pubDate, latest);
-	
-	result = mysql_store_result(conn);
-	row = mysql_fetch_row(result);
-	if (atoi(row[0]) == 0) { /* don't need insert */
-		goto cleanup;
-	}
-	
 	/* convert blob data */
 	char *chunk;
 	int len;
@@ -80,7 +70,21 @@ parseRssChannelItem(xmlDocPtr doc, xmlNodePtr cur, char *latest)
 	memset(date, '\0', 64);
 	
 	strftime(date, 64, "%F %T", &tm);
-	printf("date: %s\n", date);
+	
+	/* pubDate comparision */
+	memset(query, '\0', 1024);
+	snprintf(query, 1024, "SELECT '%s' > '%s'", date, latest);
+	
+	mysql_query(conn, query);
+	
+	result = mysql_store_result(conn);
+	row = mysql_fetch_row(result);
+	if (atoi(row[0]) == 0) { /* don't need insert */
+		mysql_free_result(result);
+		goto cleanup;
+	}
+	
+	mysql_free_result(result);
 	
 	/* query link id */
 	memset(query, '\0', 10240);
@@ -136,8 +140,8 @@ parseRssChannel(xmlDocPtr doc, xmlNodePtr cur)
 	/* get the latest item pubDate */
 	memset(query, '\0', 1024);
 	snprintf(query, 1024, \
-		"SELECT MAX(pubDate) FROM kw_rss_item WHERE id = %d", id);
-/*		"SELECT pubDate FROM kw_rss_item WHERE id = %d ORDER BY pubDate DESC", id); */
+		"SELECT MAX(pubDate) FROM kw_rss_item WHERE rssid = %d", id);
+/*		"SELECT pubDate FROM kw_rss_item WHERE rssid = %d ORDER BY pubDate DESC", id); */
 	
 	mysql_query(conn, query);
 	
@@ -149,6 +153,8 @@ parseRssChannel(xmlDocPtr doc, xmlNodePtr cur)
 	} else {
 		strcpy(latest, row[0]);
 	}
+	
+	mysql_free_result(result);
 	
 	/* item */
 	while (cur != NULL) {
@@ -183,7 +189,7 @@ parseRssChannel(xmlDocPtr doc, xmlNodePtr cur)
 			/* query lastBuildDate */
 			memset(query, '\0', 1024);
 			snprintf(query, 1024, \
-			"SELECT lastBuildDate kw_rss_link WHERE id = %d", id);
+			"SELECT lastBuildDate FROM kw_rss_link WHERE id = %d", id);
 			
 			mysql_query(conn, query);
 			
@@ -199,12 +205,20 @@ parseRssChannel(xmlDocPtr doc, xmlNodePtr cur)
 			snprintf(query, 1024, \
 				"SELECT '%s' > '%s'", date, row[0]);
 			
+			mysql_free_result(result);
+			
+			
+			mysql_query(conn, query);
+			
 			result = mysql_store_result(conn);
 			row = mysql_fetch_row(result);
+			
 			if (atoi(row[0]) == 0) { /* don't need update */
 				fprintf(stderr, "id: %d no need update\n", id);
 				return;
 			}
+			
+			mysql_free_result(result);
 			
 			/* query link id */
 			memset(query, '\0', 1024);
