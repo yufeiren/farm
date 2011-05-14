@@ -56,8 +56,9 @@ fetchitem(int rssid, char *start, char *end)
 	while ((row = mysql_fetch_row(result)) != NULL) {
 		title = removetags(row[0]);
 		pubdate = row[1];
+printf("%encoded len: %d\n", stelen(row[3]);
 		
-		if (row[3] != NULL) {
+		if (stelen(row[3]) != 0) {
 			content = removetags(row[3]);
 		} else {
 			content = removetags(row[2]);
@@ -135,7 +136,7 @@ main(int argc, char **argv)
 
 	/* query link id */
 	memset(query, '\0', 1024);
-	snprintf(query, 1024, "SELECT id FROM kw_rss_link");
+	snprintf(query, 1024, "SELECT id, title FROM kw_rss_link");
 	
 	mysql_query(conn, query);
 	
