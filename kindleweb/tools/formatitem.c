@@ -144,7 +144,7 @@ main(int argc, char **argv)
 	while ((row = mysql_fetch_row(result)) != NULL) {
 		rssid = atoi(row[0]);
 		
-		fetchitem(rssid);
+		fetchitem(rssid, startdate, enddate);
 	}
 	
 	mysql_free_result(result);
