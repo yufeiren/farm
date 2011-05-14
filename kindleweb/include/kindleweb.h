@@ -33,7 +33,7 @@ FILE *texfp;
 
 void texinit(FILE *fp);
 
-void data2tex(const char *str);
+void data2tex(const char *str, enum tex_font_size fontsize);
 void img2tex(const char *loc);
 
 char *removetags(xmlChar *content);
