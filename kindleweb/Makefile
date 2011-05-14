@@ -1,7 +1,7 @@
 # You can do "make SUB=blah" to make only a few, or edit here, or both
 # You can also run make directly in the subdirs you want.
 
-SUB =   libkw tools nytimes maweidu
+SUB =   libkw tools
 
 %.build:
 	(cd $(patsubst %.build, %, $@) && $(MAKE))
