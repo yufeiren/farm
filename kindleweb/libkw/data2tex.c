@@ -66,7 +66,7 @@ texclose(FILE *fp)
 
 
 void
-data2tex(const char *str)
+data2tex(const char *str, enum tex_font_size fontsize)
 {
 	char *outstr;
 	outstr = (char *) malloc(strlen(str) * 2 + 1);
@@ -75,7 +75,42 @@ data2tex(const char *str)
 	
 	checkTexSymbol(outstr, str);
 	
-	fprintf(texfp, "\\LARGE{%s}\r\n\r\n", outstr);
+	char *fs;
+	
+	switch(fontsize) {
+	case TEX_FONT_tiny:
+		fs = "tiny";
+		break;
+	case TEX_FONT_scriptsize:
+		fs = "scriptsize";
+		break;
+	case TEX_FONT_footnotesize:
+		fs = "footnotesize";
+		break;
+	case TEX_FONT_small:
+		fs = "small";
+		break;
+	case TEX_FONT_normalsize:
+		fs = "normalsize";
+		break;
+	case TEX_FONT_large:
+		fs = "large";
+		break;
+	case TEX_FONT_Large:
+		fs = "Large";
+		break;
+	case TEX_FONT_huge:
+		fs = "huge";
+		break;
+	case TEX_FONT_Huge:
+		fs = "Huge";
+		break;
+	default:
+		fs = "normalsize";
+		break;
+	}
+	
+	fprintf(texfp, "\\%s{%s}\r\n\r\n", fs, outstr);
 	
 	free(outstr);
 	

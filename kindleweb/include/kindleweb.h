@@ -16,6 +16,19 @@
 #include <my_global.h>
 #include <mysql.h>
 
+enum tex_font_size {
+	TEX_FONT_tiny = 0,
+	TEX_FONT_scriptsize,
+	TEX_FONT_footnotesize,
+	TEX_FONT_small,
+	TEX_FONT_normalsize,
+	TEX_FONT_large,
+	TEX_FONT_Large,
+	TEX_FONT_huge,
+	TEX_FONT_Huge
+	
+};
+
 FILE *texfp;
 
 void texinit(FILE *fp);

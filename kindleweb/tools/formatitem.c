@@ -56,7 +56,6 @@ fetchitem(int rssid, char *start, char *end)
 	while ((row = mysql_fetch_row(result)) != NULL) {
 		title = removetags(row[0]);
 		pubdate = row[1];
-printf("encoded len: %d\n", strlen(row[3]));
 		
 		if (strlen(row[3]) != 0) {
 			content = removetags(row[3]);
@@ -65,10 +64,10 @@ printf("encoded len: %d\n", strlen(row[3]));
 		}
 		
 		data2tex("----------------------------\r\n");
-		data2tex(title);
-		data2tex(pubdate);
+		data2tex(title, TEX_FONT_huge);
+		data2tex(pubdate, TEX_FONT_normalsize);
 		data2tex("---\r\n");
-		data2tex(content);
+		data2tex(content, TEX_FONT_Large);
 		data2tex("---\r\n");
 		
 		free(title);
@@ -142,8 +141,14 @@ main(int argc, char **argv)
 	
 	result = mysql_store_result(conn);
 	
+	char *title;
+	
 	while ((row = mysql_fetch_row(result)) != NULL) {
 		rssid = atoi(row[0]);
+		title = removetags(row[1]);
+		
+		date2tex(title, TEX_FONT_Huge);
+		free(title);
 		
 		fetchitem(rssid, startdate, enddate);
 	}
