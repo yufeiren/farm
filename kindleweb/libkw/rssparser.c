@@ -140,8 +140,7 @@ parseRssChannel(xmlDocPtr doc, xmlNodePtr cur)
 	/* get the latest item pubDate */
 	memset(query, '\0', 1024);
 	snprintf(query, 1024, \
-		"SELECT MAX(pubDate) FROM kw_rss_item WHERE rssid = %d", id);
-/*		"SELECT pubDate FROM kw_rss_item WHERE rssid = %d ORDER BY pubDate DESC", id); */
+		"SELECT pubDate FROM kw_rss_item WHERE rssid = %d ORDER BY pubDate DESC", id);
 	
 	mysql_query(conn, query);
 	
