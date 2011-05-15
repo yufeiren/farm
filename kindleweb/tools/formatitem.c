@@ -147,7 +147,9 @@ main(int argc, char **argv)
 		rssid = atoi(row[0]);
 		title = removetags(row[1]);
 		
+		fprintf(texfp, "\\begin{center}\r\n");
 		data2tex(title, TEX_FONT_Huge);
+		fprintf(texfp, "\\end{center}\r\n");
 		free(title);
 		
 		fetchitem(rssid, startdate, enddate);
