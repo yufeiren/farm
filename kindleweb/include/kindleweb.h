@@ -24,6 +24,7 @@ enum tex_font_size {
 	TEX_FONT_normalsize,
 	TEX_FONT_large,
 	TEX_FONT_Large,
+	TEX_FONT_LARGE,
 	TEX_FONT_huge,
 	TEX_FONT_Huge
 	

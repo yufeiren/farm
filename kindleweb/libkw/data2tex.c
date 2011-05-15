@@ -99,6 +99,9 @@ data2tex(const char *str, enum tex_font_size fontsize)
 	case TEX_FONT_Large:
 		fs = "Large";
 		break;
+	case TEX_FONT_LARGE:
+		fs = "LARGE";
+		break;
 	case TEX_FONT_huge:
 		fs = "huge";
 		break;

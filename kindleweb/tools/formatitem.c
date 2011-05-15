@@ -67,7 +67,7 @@ fetchitem(int rssid, char *start, char *end)
 		data2tex(title, TEX_FONT_huge);
 		data2tex(pubdate, TEX_FONT_normalsize);
 		data2tex("---\r\n", TEX_FONT_normalsize);
-		data2tex(content, TEX_FONT_Large);
+		data2tex(content, TEX_FONT_LARGE);
 		data2tex("---\r\n", TEX_FONT_normalsize);
 		
 		free(title);
