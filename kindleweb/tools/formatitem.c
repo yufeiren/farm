@@ -46,7 +46,7 @@ fetchitem(int rssid, char *start, char *end)
 	/* query link id */
 	memset(query, '\0', 1024);
 	snprintf(query, 1024, \
-		"SELECT title, pubDate, description, encoded FROM kw_rss_item WHERE rssid = %d AND pubDate >= '%s' AND pubDate <= '%s' ORDER BY pubDate", \
+		"SELECT title, pubDate, description, encoded FROM kw_rss_item WHERE rssid = %d AND pubDate >= '%s' AND pubDate <= '%s' ORDER BY pubDate DESC", \
 		rssid, start, end);
 	
 	mysql_query(conn, query);

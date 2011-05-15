@@ -43,3 +43,8 @@ PRIMARY KEY (`id`)
 );
 
 
+
+
+INSERT INTO kw_rss_link (link) VALUES ('http://www.wangxiaofeng.net/?feed=rss2');
+
+
