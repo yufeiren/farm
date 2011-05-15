@@ -26,6 +26,8 @@ parseRssChannelItem(xmlDocPtr doc, xmlNodePtr cur, char *latest)
 	MYSQL_ROW row;
 	char query[10240];
 	
+	description = encoded = NULL;
+	
 	while (cur != NULL) {
 		/* title - descrption - content:encoded */
 		if (!xmlStrcmp(cur->name, (const xmlChar *)"title")) {
@@ -46,18 +48,32 @@ parseRssChannelItem(xmlDocPtr doc, xmlNodePtr cur, char *latest)
 	}
 	
 	/* convert blob data */
-	char *chunk;
+	char *chunk_description, *chunk_encoded;
 	int len;
 	
-	len = xmlStrlen(description);
-	chunk = (char *) malloc(2 * len);
-	if (chunk == NULL) {
-		perror("malloc fail");
-		exit(EXIT_FAILURE);
+	if (description != NULL) {
+		len = xmlStrlen(description);
+		chunk_description = (char *) malloc(2 * len);
+		if (chunk_description == NULL) {
+			perror("malloc fail");
+			exit(EXIT_FAILURE);
+		}
+		
+		memset(chunk_description, '\0', 2 * len);
+		mysql_real_escape_string(conn, chunk_description, description, len);
 	}
 	
-	memset(chunk, '\0', 2 * len);
-	mysql_real_escape_string(conn, chunk, description, len);
+	if (encoded != NULL) {
+		len = xmlStrlen(encoded);
+		chunk_encoded = (char *) malloc(2 * len);
+		if (chunk_encoded == NULL) {
+			perror("malloc fail");
+			exit(EXIT_FAILURE);
+		}
+		
+		memset(chunk_encoded, '\0', 2 * len);
+		mysql_real_escape_string(conn, chunk_encoded, encoded, len);
+	}
 	
 	/* pubDate - Fri, 29 Apr 2011 16:02:33 +0800 -> YYYYMMDDHHMMSS */
 	/* man strptime and strtime */
@@ -89,11 +105,11 @@ parseRssChannelItem(xmlDocPtr doc, xmlNodePtr cur, char *latest)
 	/* query link id */
 	memset(query, '\0', 10240);
 	snprintf(query, 10240, \
-		"INSERT INTO kw_rss_item (rssid, title, link, pubDate, origLink, description) VALUES ('%d', '%s', '%s', '%s', '%s', '%s')", \
-		id, title, link, date, origLink, chunk);
+		"INSERT INTO kw_rss_item (rssid, title, link, pubDate, origLink, description, encoded) VALUES ('%d', '%s', '%s', '%s', '%s', '%s', '%s')", \
+		id, title, link, date, origLink, chunk_description, chunk_encoded);
 	
 	mysql_query(conn, query);
-
+	
 cleanup:
 
 	xmlFree(title);
