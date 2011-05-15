@@ -21,6 +21,7 @@ CREATE TABLE `kw_rss_link` (
 `title` VARCHAR(256) NOT NULL default '',
 `link` VARCHAR(256) NOT NULL default '',
 `lastBuildDate` DATETIME NOT NULL default '1000-01-01',
+`pubDate` DATETIME NOT NULL default '1000-01-01',
 `language` VARCHAR(20) NOT NULL default '',
 PRIMARY KEY (`id`)
 );
@@ -45,7 +46,10 @@ PRIMARY KEY (`id`)
 
 ALTER TABLE kw_rss_link CHANGE COLUMN lastBuildDate lastBuildDate DATETIME NOT NULL default '1000-01-01';
 
+ALTER TABLE kw_rss_link ADD COLUMN pubDate DATETIME NOT NULL default '1000-01-01';
 
+
+pubDate
 
 INSERT INTO kw_rss_link (link) VALUES ('http://www.wangxiaofeng.net/?feed=rss2');
 

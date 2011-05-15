@@ -249,6 +249,60 @@ parseRssChannel(xmlDocPtr doc, xmlNodePtr cur)
 			mysql_query(conn, query);
 			
 			xmlFree(key);
+		} else if (!xmlStrcmp(cur->name, (const xmlChar *)"pubDate")) {
+			key = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
+			struct tm tm;
+			if (strptime(key, "%A, %d %B %Y %T %z", &tm) == NULL) {
+				perror("strptime");
+			}
+			/* YYYY-MM-DD HH:MM:SS */
+			char date[64];
+			memset(date, '\0', 64);
+			
+			strftime(date, 64, "%F %T", &tm);
+			
+			/* query lastBuildDate */
+			memset(query, '\0', 1024);
+			snprintf(query, 1024, \
+			"SELECT pubDate FROM kw_rss_link WHERE id = %d", id);
+			
+			mysql_query(conn, query);
+			
+			result = mysql_store_result(conn);
+			
+			if ((row = mysql_fetch_row(result)) == NULL) {
+				fprintf(stderr, "can not find id: %d\n", id);
+				return;
+			}
+			
+			/* query comparision */
+			memset(query, '\0', 1024);
+			snprintf(query, 1024, \
+				"SELECT '%s' > '%s'", date, row[0]);
+			
+			mysql_free_result(result);
+			
+			
+			mysql_query(conn, query);
+			
+			result = mysql_store_result(conn);
+			row = mysql_fetch_row(result);
+			
+			if (atoi(row[0]) == 0) { /* don't need update */
+				fprintf(stderr, "id: %d no need update\n", id);
+				return;
+			}
+			
+			mysql_free_result(result);
+			
+			/* query link id */
+			memset(query, '\0', 1024);
+			snprintf(query, 1024, \
+				"UPDATE kw_rss_link SET pubDate = '%s' WHERE id = %d", date, id);
+			
+			mysql_query(conn, query);
+			
+			xmlFree(key);
 		}
 		
 		cur = cur->next;
