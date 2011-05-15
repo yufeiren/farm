@@ -20,7 +20,7 @@ CREATE TABLE `kw_rss_link` (
 `id` INT(4) NOT NULL auto_increment,
 `title` VARCHAR(256) NOT NULL default '',
 `link` VARCHAR(256) NOT NULL default '',
-`lastBuildDate` DATETIME,
+`lastBuildDate` DATETIME NOT NULL default '1000-01-01',
 `language` VARCHAR(20) NOT NULL default '',
 PRIMARY KEY (`id`)
 );
@@ -43,8 +43,13 @@ PRIMARY KEY (`id`)
 );
 
 
+ALTER TABLE kw_rss_link CHANGE COLUMN lastBuildDate lastBuildDate DATETIME NOT NULL default '1000-01-01';
+
 
 
 INSERT INTO kw_rss_link (link) VALUES ('http://www.wangxiaofeng.net/?feed=rss2');
 
+INSERT INTO kw_rss_link (link) VALUES ('http://feeds2.feedburner.com/webarch');
+
+INSERT INTO kw_rss_link (link) VALUES ('http://blog.sina.com.cn/rss/mazhahuchuang.xml');
 
