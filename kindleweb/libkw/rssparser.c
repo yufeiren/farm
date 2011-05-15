@@ -119,7 +119,8 @@ cleanup:
 	xmlFree(description);
 	xmlFree(encoded);
 	
-	free(chunk);
+	free(chunk_description);
+	free(chunk_encoded);
 	
 /*	INSERT INTO kw_rss_item (rssid) VALUES (...); */ 
 	
