@@ -24,7 +24,7 @@ parseRssChannelItem(xmlDocPtr doc, xmlNodePtr cur, char *latest)
 	/* mysql */
 	MYSQL_RES *result;
 	MYSQL_ROW row;
-	char query[10240];
+	char query[102400];
 	
 	description = encoded = NULL;
 	
@@ -88,8 +88,8 @@ parseRssChannelItem(xmlDocPtr doc, xmlNodePtr cur, char *latest)
 	strftime(date, 64, "%F %T", &tm);
 	
 	/* pubDate comparision */
-	memset(query, '\0', 1024);
-	snprintf(query, 1024, "SELECT '%s' > '%s'", date, latest);
+	memset(query, '\0', 102400);
+	snprintf(query, 102400, "SELECT '%s' > '%s'", date, latest);
 	
 	mysql_query(conn, query);
 	
@@ -103,13 +103,13 @@ parseRssChannelItem(xmlDocPtr doc, xmlNodePtr cur, char *latest)
 	mysql_free_result(result);
 	
 	/* query link id */
-	memset(query, '\0', 10240);
+	memset(query, '\0', 102400);
 	if (chunk_encoded != NULL)
-		snprintf(query, 10240, \
+		snprintf(query, 102400, \
 			"INSERT INTO kw_rss_item (rssid, title, link, pubDate, origLink, description, encoded) VALUES ('%d', '%s', '%s', '%s', '%s', '%s', '%s')", \
 			id, title, link, date, origLink, chunk_description, chunk_encoded);
 	else
-		snprintf(query, 10240, \
+		snprintf(query, 102400, \
 			"INSERT INTO kw_rss_item (rssid, title, link, pubDate, origLink, description) VALUES ('%d', '%s', '%s', '%s', '%s', '%s')", \
 			id, title, link, date, origLink, chunk_description);
 	
