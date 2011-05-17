@@ -81,8 +81,10 @@ wr_done(io_context_t ctx, struct iocb *iocb, long res, long res2)
 			iocb->u.c.nbytes, res2);
 		exit(1);
 	}
-	// --tocopy;
-	// --busy;
+	
+	--tocopy;
+	--busy;
+	
 	free(iocb->u.c.buf);
 	memset(iocb, 0xff, sizeof(iocb));
 				
@@ -125,7 +127,8 @@ rd_done(io_context_t ctx, struct iocb *iocb, long res, long res2)
 }
 
 
-int main(int argc, char *const *argv)
+int
+main(int argc, char *const *argv)
 {
 	int srcfd;
 	struct stat st;

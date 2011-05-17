@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-g -O2
-EXTRALIBS=-lpthread
+EXTRALIBS=-lpthread -laio
 
 all: aiocp
 
