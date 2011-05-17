@@ -51,6 +51,7 @@
 #include <linux/limits.h>
 #include <sys/times.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef long long int num;
 
@@ -259,8 +260,8 @@ for ( ; ; ) {
   
   time_total = readcpu();
   
-  user_util = (double) cpucorenum * ((double) (utime - oldutime) / (time_total - old_time_total));
-  sys_util = (double) cpucorenum * ((double) (stimev - oldstimev) / (time_total - old_time_total));
+  user_util = (double) (cpucorenum * 100) * ((double) (utime - oldutime) / (time_total - old_time_total));
+  sys_util = (double) (cpucorenum * 100) * ((double) (stimev - oldstimev) / (time_total - old_time_total));
   
   printf("%.2f\t%.2f\t%.2f\n", user_util, sys_util, user_util + sys_util);
   fprintf(cupusage, "%.2f\t%.2f\t%.2f\n", user_util, sys_util, user_util + sys_util);
