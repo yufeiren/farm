@@ -2,6 +2,12 @@
 
   Yufei Ren, renyufei83@gmail.com
 
+	proccpuusage [pid] [interval]
+	
+	file generated: cpuusage_[pid].dat
+	
+	CPU usage percentage output:
+	user	sys	total
  */
 
 /*

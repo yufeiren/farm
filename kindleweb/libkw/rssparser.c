@@ -51,6 +51,10 @@ parseRssChannelItem(xmlDocPtr doc, xmlNodePtr cur, char *latest)
 	char *chunk_description, *chunk_encoded;
 	int len;
 	
+	chunk_description = NULL;
+	chunk_encoded = NULL;
+	
+	
 	if (description != NULL) {
 		len = xmlStrlen(description);
 		chunk_description = (char *) malloc(2 * len);
@@ -124,8 +128,13 @@ cleanup:
 	xmlFree(description);
 	xmlFree(encoded);
 	
-	free(chunk_description);
-	free(chunk_encoded);
+	if (chunk_description != NULL) {
+		free(chunk_description);
+	}
+	
+	if (chunk_encoded != NULL) {
+		free(chunk_encoded);
+	}
 	
 /*	INSERT INTO kw_rss_item (rssid) VALUES (...); */ 
 	
