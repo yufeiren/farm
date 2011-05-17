@@ -20,9 +20,10 @@
 #include <sys/param.h>
 #include <fcntl.h>
 #include <errno.h>
+#include <stdlib.h>
 
 #include <libaio.h>
-	
+
 
 #define AIO_BLKSIZE	(64*1024)
 
