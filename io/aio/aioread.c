@@ -143,6 +143,7 @@ main(int argc, char *const *argv)
 				struct iocb *io = (struct iocb *) malloc(sizeof(struct iocb));
 				int iosize = MIN(length - offset, AIO_BLKSIZE);
 /*				char *buf = (char *) malloc(iosize); */
+				char *buf;
 				posix_memalign(&buf, ps, iosize);
 				if (NULL == buf || NULL == io) {
 					fprintf(stderr, "out of memory\n");
