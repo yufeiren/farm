@@ -13,16 +13,16 @@
 * Usage: aiocp file(s) desination
 */
 
-#define _XOPEN_SOURCE 600
-#include <unistd.h>
 #include <stdio.h>
+#include <errno.h>
+#define _XOPEN_SOURCE 600
+#include <stdlib.h>
+#include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/param.h>
 #define __USE_GNU
 #include <fcntl.h>
-#include <errno.h>
-#include <stdlib.h>
 
 #include <libaio.h>
 
