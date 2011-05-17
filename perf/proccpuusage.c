@@ -179,7 +179,19 @@ if (!cupusage) {
       perror("fopen");
       return 1;
     }
-  
+
+/* get cpu core number */
+        int cpucorenum;
+        
+	FILE * fp;
+        char res[128];
+        fp = popen("/bin/cat /proc/cpuinfo |grep -c '^processor'", "r");
+        fread(res, 1, sizeof(res)-1, fp);
+        fclose(fp);
+        
+	cpucorenum = atoi(res);
+        
+
   if(argc > 1) {
     chdir("/proc");
     if(chdir(argv[1]) == 0) { input = fopen("stat", "r"); }
@@ -247,8 +259,8 @@ for ( ; ; ) {
   
   time_total = readcpu();
   
-  user_util = (double) 2400.00 * ((double) (utime - oldutime) / (time_total - old_time_total));
-  sys_util = (double) 2400.00 * ((double) (stimev - oldstimev) / (time_total - old_time_total));
+  user_util = (double) cpucorenum * ((double) (utime - oldutime) / (time_total - old_time_total));
+  sys_util = (double) cpucorenum * ((double) (stimev - oldstimev) / (time_total - old_time_total));
   
   printf("%.2f\t%.2f\t%.2f\n", user_util, sys_util, user_util + sys_util);
   fprintf(cupusage, "%.2f\t%.2f\t%.2f\n", user_util, sys_util, user_util + sys_util);
