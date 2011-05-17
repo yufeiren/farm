@@ -13,11 +13,13 @@
 * Usage: aiocp file(s) desination
 */
 
+#define _XOPEN_SOURCE 600
 #include <unistd.h>
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/param.h>
+#define __USE_GNU
 #include <fcntl.h>
 #include <errno.h>
 #include <stdlib.h>
@@ -125,6 +127,8 @@ main(int argc, char *const *argv)
 	io_queue_init(AIO_MAXIO, &myctx);
 	tocopy = howmany(length, AIO_BLKSIZE);
 	
+	int ps = getpagesize();
+	
 	while (tocopy > 0) {
 		int i, rc;
 	
@@ -138,7 +142,8 @@ main(int argc, char *const *argv)
 			for (i = 0; i < n; i++) {
 				struct iocb *io = (struct iocb *) malloc(sizeof(struct iocb));
 				int iosize = MIN(length - offset, AIO_BLKSIZE);
-				char *buf = (char *) malloc(iosize);
+/*				char *buf = (char *) malloc(iosize); */
+				posix_memalign(&buf, ps, iosize);
 				if (NULL == buf || NULL == io) {
 					fprintf(stderr, "out of memory\n");
 					exit(1);
