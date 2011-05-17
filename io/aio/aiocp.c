@@ -50,11 +50,11 @@ static void
 io_error(const char *func, int rc)
 {
 	if (rc == -ENOSYS)
-		fprintf(stderr, "AIO not in this kernel0);
+		fprintf(stderr, "AIO not in this kernel\n");
 	else if (rc < 0 && -rc < sys_nerr)
-		fprintf(stderr, "%s: %s0, func, sys_errlist[-rc]);
+		fprintf(stderr, "%s: %s0, func, sys_errlist[-rc]\n");
 	else
-		fprintf(stderr, "%s: error %d0, func, rc);
+		fprintf(stderr, "%s: error %d0, func, rc\n");
 
 	if (dstfd > 0)
 		close(dstfd);
@@ -132,7 +132,7 @@ int main(int argc, char *const *argv)
 	off_t length = 0, offset = 0;
 	io_context_t myctx;
 
-	if (argc != 3 || argv[1][0] == ’-’) {
+	if (argc != 3 || argv[1][0] == '-') {
 		fprintf(stderr, "Usage: aiocp SOURCE DEST");
 		exit(1);
 	}
