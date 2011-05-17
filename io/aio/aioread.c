@@ -66,35 +66,6 @@ io_error(const char *func, int rc)
 	exit(1);
 }
 
-/*
-* Write complete callback.
-* Adjust counts and free resources
-*/
-static void
-wr_done(io_context_t ctx, struct iocb *iocb, long res, long res2)
-{
-	if (res2 != 0) {
-		io_error("aio write", res2);
-	}
-
-	if (res != iocb->u.c.nbytes) {
-		fprintf(stderr, "write missed bytes expect %d got %d\n", \
-			iocb->u.c.nbytes, res2);
-		exit(1);
-	}
-	
-	--tocopy;
-	--busy;
-	
-	free(iocb->u.c.buf);
-	memset(iocb, 0xff, sizeof(iocb));
-				
-
-// paranoia
-	free(iocb);
-	write(2, "w", 1);
-}
-
 
 /*
 * Read complete callback.
@@ -116,15 +87,11 @@ rd_done(io_context_t ctx, struct iocb *iocb, long res, long res2)
 			iocb->u.c.nbytes, res);
 		exit(1);
 	}
-
-	/* turn read into write */
-	io_prep_pwrite(iocb, dstfd, buf, iosize, offset);
-	io_set_callback(iocb, wr_done);
-
-	if (1 != (res = io_submit(ctx, 1, &iocb)))
-		io_error("io_submit write", res);
 	
-	write(2, "r", 1);
+	--tocopy;
+	--busy;
+
+	return;
 }
 
 
@@ -136,8 +103,8 @@ main(int argc, char *const *argv)
 	off_t length = 0, offset = 0;
 	io_context_t myctx;
 
-	if (argc != 3 || argv[1][0] == '-') {
-		fprintf(stderr, "Usage: aiocp SOURCE DEST");
+	if (argc != 2 || argv[1][0] == '-') {
+		fprintf(stderr, "Usage: aioread SOURCE");
 		exit(1);
 	}
 	
@@ -152,12 +119,6 @@ main(int argc, char *const *argv)
 	}
 
 	length = st.st_size;
-	
-	if ((dstfd = open(dstname = argv[2], O_WRONLY | O_CREAT, 0666)) < 0) {
-		close(srcfd);
-		perror(dstname);
-		exit(1);
-	}
 	
 	/* initialize state machine */
 	memset(&myctx, 0, sizeof(myctx));
@@ -211,11 +172,9 @@ main(int argc, char *const *argv)
 			if (rc < 0)
 				io_error("io_queue_wait", rc);
 		}
-		
 	}
 	
 	close(srcfd);
-	close(dstfd);
 	
 	exit(0);
 }
