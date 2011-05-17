@@ -1,6 +1,6 @@
 #! /bin/bash
 
-Fio=/usr/local/bin/fio
+Fio=/usr/bin/fio
 LocalDir=/data/fio
 LocalDiskFileIn=/data/fio/readhg
 LocalDiskFileOut=/data/fio/writehg
