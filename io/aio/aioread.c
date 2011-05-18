@@ -36,7 +36,7 @@ static int busy = 0;
 // # of I/O’s in flight
 	
 
-static int tocopy = 0;
+static long tocopy = 0;
 					
 // # of blocks left to copy
 	
@@ -90,6 +90,8 @@ rd_done(io_context_t ctx, struct iocb *iocb, long res, long res2)
 		exit(1);
 	}
 	
+	free(iocb);
+	
 	--tocopy;
 	--busy;
 
@@ -127,6 +129,8 @@ main(int argc, char *const *argv)
 	io_queue_init(AIO_MAXIO, &myctx);
 	tocopy = howmany(length, AIO_BLKSIZE);
 	
+	printf("tocopy: %ld times\n", tocopy);
+	
 	int ps = getpagesize();
 	
 	while (tocopy > 0) {
@@ -144,6 +148,7 @@ main(int argc, char *const *argv)
 				int iosize = MIN(length - offset, AIO_BLKSIZE);
 /*				char *buf = (char *) malloc(iosize); */
 				char *buf;
+				
 				posix_memalign(&buf, ps, iosize);
 				if (NULL == buf || NULL == io) {
 					fprintf(stderr, "out of memory\n");
