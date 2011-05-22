@@ -7,7 +7,7 @@ if [ ! -x $Fio ]; then
 fi
 
 LocalDir=/data/fio
-Testfile=fio-bench.dat
+Testfile=fio-read-bench.dat
 FileoutSize=1000G
 Logdir=/home/ren/fiotest/fio/log
 Taskdir=/home/ren/fiotest/fio/task
