@@ -13,7 +13,6 @@ $num=mysql_numrows($result);
 mysql_close();
 
 echo "<html>"
-echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\"> "
 echo "<b><center>Database Output</center></b><br><br>";
 
 $i=0;
