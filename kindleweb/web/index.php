@@ -16,6 +16,7 @@ echo "<b><center>Database Output</center></b><br><br>";
 
 $i=0;
 while ($i < $num) {
+echo "<br>$i<br>";
 
 $title=mysql_result($result,$i,"title");
 $link=mysql_result($result,$i,"link");
