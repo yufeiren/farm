@@ -61,4 +61,6 @@ INSERT INTO kw_rss_link (link) VALUES ('http://feeds.feedburner.com/caitou');
 
 INSERT INTO kw_rss_link (link) VALUES ('http://perspectives.mvdirona.com/SyndicationService.asmx/GetRss');
 
-UPDATE kw_rss_link SET lastBuildDate = '1000-01-01 00:00:00' where 
+INSERT INTO kw_rss_link (link) VALUES ('http://www.immusoul.com/index.php/feed');
+
+UPDATE kw_rss_link SET lastBuildDate = '1000-01-01 00:00:00' where id = 14;
