@@ -63,4 +63,8 @@ INSERT INTO kw_rss_link (link) VALUES ('http://perspectives.mvdirona.com/Syndica
 
 INSERT INTO kw_rss_link (link) VALUES ('http://www.immusoul.com/index.php/feed');
 
+INSERT INTO kw_rss_link (link) VALUES ('http://www.drunkpiano-liuyu.net/?feed=rss2');
+
+
+
 UPDATE kw_rss_link SET lastBuildDate = '1000-01-01 00:00:00' where id = 14;

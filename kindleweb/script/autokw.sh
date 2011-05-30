@@ -15,3 +15,7 @@ for texfile in rss_$startdate*
 do
 	/usr/bin/pdflatex $texfile
 done
+
+mkdir $startdate
+
+mv *.xml *.tex *.aux *.log *.out
