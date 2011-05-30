@@ -18,4 +18,4 @@ done
 
 mkdir $startdate
 
-mv *.xml *.tex *.aux *.log *.out
+mv *.xml *.tex *.aux *.log *.out $startdate
