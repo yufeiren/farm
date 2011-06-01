@@ -1,5 +1,15 @@
 #include <stdio.h>
 
+int G;
+
+void
+printg()
+{
+	printf("G = %d\n", G);
+
+	return;
+}
+
 int
 main()
 {

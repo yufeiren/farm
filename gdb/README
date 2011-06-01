@@ -17,5 +17,26 @@ c - continue
 	b linenum
 	b function
 
-disable - cancel breakpoint
+disable breakpointnum - cancel breakpoint
+
+
+d - display
+
+disp variable
+
+printf "i = %d\n" i
+
+
+n - Next
+
+s - Step
+
+bt - backtrace
+
+set variable i = 1
+
+
+call func()
+
+
 
