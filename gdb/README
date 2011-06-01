@@ -1,2 +1,21 @@
 http://heather.cs.ucdavis.edu/~matloff/UnixAndC/CLanguage/Debug.html
 
+
+gdb [program]
+
+(gdb)
+
+r - run
+
+l - list
+	l linenum
+	l sourcefile:linenum
+
+b - breakpoint
+c - continue
+
+	b linenum
+	b function
+
+disable - cancel breakpoint
+
