@@ -2,7 +2,7 @@ CC=gcc
 CFLAGS=-g -O2
 EXTRALIBS=-lpthread
 
-all: hello
+all: hello FindPrimes
 
 
 %.o: %.c
@@ -10,6 +10,9 @@ all: hello
 
 hello: hello.c
 	$(CC) $(CFLAGS) -o $@ $@.c $(EXTRALIBS)
+
+FindPrimes: Main.o CheckPrime.o
+	$(CC) $(CFLAGS) -o $@ Main.o CheckPrime.o $(EXTRALIBS)
 
 clean:
 	rm -rf *.o hello
