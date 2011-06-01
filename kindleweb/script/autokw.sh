@@ -11,7 +11,7 @@ cd /home/ren/kindleweb/daily
 
 /home/ren/kindleweb/bin/formatitem -s $startdate
 
-for texfile in rss_$startdate*
+for texfile in *.tex
 do
 	/usr/bin/pdflatex $texfile
 done
