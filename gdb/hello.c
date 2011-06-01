@@ -20,7 +20,7 @@ main()
 	printf("hello\n");
 
 	G = 5;
-	printfg();
+	printg();
 
 	return 0;
 }
