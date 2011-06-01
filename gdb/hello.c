@@ -19,5 +19,8 @@ main()
 
 	printf("hello\n");
 
+	G = 5;
+	printfg();
+
 	return 0;
 }
