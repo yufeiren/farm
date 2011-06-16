@@ -1,0 +1,387 @@
+/* 
+    Document   : nola
+    Created on : Oct 29, 2009, 10:15:09 AM
+    Author     : Alan
+    Description:
+        customized css for the NOLA Events page.
+*/
+
+#nola-logo-region {
+  background:transparent url(/sites/default/modules/custom/nola/assets/bpc-nola-logo.gif) no-repeat scroll left top;
+  clear:both;
+  margin:0;
+  width: 523px;
+  height:122px;
+}
+
+#nola-about-region {
+  margin-top:20px;
+}
+
+#nola-about-region .video {
+  float:left;
+  width: 248px;
+  margin-right: -248px;   /* equal to width, to allow .txt object to align on same horizontal */
+}
+
+.horizontal-separator {
+  background:transparent url(/sites/default/modules/custom/nola/assets/img-horizontal-separator.gif) repeat-x scroll left top;
+  float:left;
+  height:1px;
+  margin-top:25px;
+  width:540px;
+}
+
+.horizontal-separator.gallery {
+  margin-top:10px;
+}
+
+#gallery-region {
+  clear:both;
+  float:left;
+  margin-top:10px;
+}
+
+#gallery-region h3 {
+  margin-bottom:0.5em;    /* override master.css */
+}
+
+#social-networking-region {
+  background-color:white;
+  margin-left:-5px;
+  margin-right:-5px;
+  padding-right: 5px;
+  padding-left: 5px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+}
+
+#social-networking-region .youtube {
+  margin-left:10px;
+}
+
+#social-networking-region .twitter {
+  margin-left:10px;
+}
+
+#timeline-region {
+  height:97px;
+  margin-left:-5px;
+  margin-top: 15px;
+  width:188px;
+}
+
+#nola-email-signup.sidebarDoubleOutside {
+  margin-bottom:5px;
+  margin-left:-5px;
+  margin-top:15px;
+  width:186px;      /* override standard width of 201px */
+}
+
+#nola-email-signup .sidebarDoubleInside {
+  height:140px;
+  width:162px;      /* override standard width of 177px */
+}
+
+#nola-email-signup .emailSignup {
+  /* override the noamrl background. Our column is a bit narrower. */
+  background:#2E353C url(/sites/default/modules/custom/nola/assets/img-emailsignup.gif) no-repeat scroll left top;
+}
+
+#nola-email-signup .emailSignup input.email-submit {
+  background:transparent url(/sites/default/themes/custom/bpc/images/search-submit.gif) no-repeat scroll left top;
+  border:medium none;
+  color:#FFFFFF;
+  display:block;
+  float:left;
+  font-size:0.9em;
+  height:23px;
+  margin:10px 0 0;
+  position:relative;
+  text-align:center;
+  text-transform:uppercase;
+  width:59px;
+}
+
+#agenda-region {
+  clear:both;
+  float:left;
+  margin-top:20px;
+}
+
+#agenda-region .day {
+  clear:both;
+  margin-bottom:15px;
+}
+
+#agenda-region .header {
+  font-size:9pt;
+}
+
+#agenda-region .footer {
+  clear:both;
+  font-size:9pt;
+  position:relative;
+  top:15px;
+}
+
+#agenda-region .footer a {
+  text-decoration:underline;
+}
+
+#agenda-region .date {
+  padding-right:10px;
+  display:inline-block;
+  float:left;
+  font-weight:bold;
+  width: 4em;
+  text-align:right;
+}
+
+#agenda-region .vertical-separator {
+  background:transparent url(/sites/default/modules/custom/nola/assets/img-vertical-separator.gif) repeat-y scroll left top;
+  float:left;
+  width:3px;
+}
+
+#agenda-region .mon {
+  height:205px;
+}
+
+#agenda-region .tue {
+  height:300px;
+}
+
+#agenda-region .odd {
+  background-color: #cedfef;
+}
+
+#agenda-region .even {
+  background-color: white;
+}
+
+#agenda-region .schedule {
+  float:left;
+  width:475px;
+}
+
+#agenda-region .schedule-item {
+  padding:10px;
+  height:80px;
+}
+
+#agenda-region .schedule-item .body {
+  height:33px;
+}
+
+#agenda-region h4 {
+  display:inline;
+  font-size:1.2em;
+  font-weight:bold;
+  margin-bottom:0;
+}
+
+#agenda-region .description {
+  float:left;
+}
+
+#agenda-region .links {
+  float:right;
+
+  /* centered vertically */
+  height:26px;
+  margin-top:-13px;
+  top:50%;
+  position:relative;
+}
+
+#agenda-region span.time {
+  font-size: 1.1em;
+}
+
+#agenda-region h3 {
+  margin-bottom:.5em;
+}
+
+#agenda-region p {
+  font-size:9pt;
+  margin-bottom:0; /* override master.css */
+}
+
+#agenda-region .links a {
+  text-decoration:none;
+}
+#agenda-region .links div {
+  background-color: #a00e20;
+  color: white;
+  font-size:10pt;
+  height: 15px;
+  left:50%;
+  margin-left:-50px;
+  margin-top:-8px;
+  position:relative;
+  text-align: center;
+  top:50%;
+  width:100px;
+  font-weight: bold;
+}
+
+#nola-idea-gallery h3 {
+  color:#20587B;
+  font-weight:bold;
+  margin-bottom:5px;
+}
+
+#nola-idea-gallery .sidebarDoubleInside {
+  background:#E7F0F7 none repeat scroll 0 0;
+  padding-bottom: 0px;
+}
+
+#nola-idea-gallery .view-idea-gallery-for-nola {
+  margin-left:-10px;
+  margin-right:-10px;
+}
+
+#nola-idea-gallery .view-content {
+}
+
+#nola-idea-gallery .views-row {
+  background:transparent url(/sites/default/modules/custom/nola/assets/img-idea-gallery-bg.gif) no-repeat scroll left top;
+  background-color:#afc9e2;
+  padding-left:10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  margin-bottom:2px;
+}
+
+#nola-idea-gallery .views-field-title a
+, #nola-idea-gallery  .views-field-teaser p {
+  color: #333333;
+}
+
+#nola-idea-gallery .views-field-title a {
+  font-size:1.2em;
+  font-weight:bold;
+}
+
+#nola-idea-gallery .view-content h4 {
+  color:#003366;
+}
+
+#nola-blog .sidebarDoubleOutside
+,#nola-tweets .sidebarDoubleOutside {
+  background-color: #8babcb;    /* override master.css */
+  background-image:none;
+}
+
+#nola-blog .sidebarDoubleInside
+,#nola-tweets .sidebarDoubleInside{
+  padding:4px;        /* override master.css */
+  width:191px;
+}
+
+#nola-blog .sidebarDoubleInside h3
+,#nola-tweets .sidebarDoubleInside h3{
+  font-weight: bold;
+  margin-bottom:0.4em;
+  margin-top:1.25em;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#nola-blog h4
+,#nola-tweets reply-to {
+  color: #003366;
+}
+
+#nola-blog p
+,#nola-tweets p {
+  color: white;
+}
+
+#nola-tweets p {
+  margin-bottom:0;
+}
+
+#nola-blog .blog-item
+, #nola-tweets .tweet {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+#nola-tweets .tweet {
+  margin-bottom:5px;
+}
+
+#nola-blog .more {
+  text-align:right;
+  width:100%;;
+}
+
+#nola-blog a {
+  color: #000033;
+  text-decoration: underline;
+}
+
+#nola-ask-a-question-form .form-item label {
+  display:inline-block;   /* override bpc.css: allow lable on same line as text box. */
+}
+
+#nola-ask-a-question-form #edit-name-wrapper label
+, #nola-ask-a-question-form #edit-email-wrapper label {
+  width:4em;              /* allow labels to line up visually when they are slightly different lengths */
+}
+
+.horizontal-separator.ask {
+  margin-top:5px;
+  padding-top:10px;
+  width:190px;
+}
+
+.background1 {
+  background-color:white;
+  height:445px;
+  margin-left:-5px;
+  padding-top:10px;
+  width:190px;
+}
+
+#nola-ask-a-question-form {
+  clear:both;
+  float:left;
+  margin-top:10px;
+}
+
+#nola-ask-a-question-form h3 {
+  font-size:1.2em;
+}
+
+#nola-ask-a-question-form .form-checkbox {
+  margin-right:5px;
+}
+
+#nola-ask-a-question-form input.form-submit {
+  background:transparent url(/sites/default/modules/custom/nola/assets/btn-submit.gif) no-repeat scroll left top;
+  color:white;
+  font-size:13pt;
+  font-weight:bold;
+  height:24px;
+  left:50%;
+  margin-left:-56px;  /* required for centering */
+  position:relative;  /* required for centering */
+  width:112px;         /* required for centering */
+}
+
+#twitter-bird{
+  float:right;
+  position:relative;
+  right:0;
+  top:-38px;
+}
+
+.clear {
+  clear:both;
+}
