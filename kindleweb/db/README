@@ -48,6 +48,8 @@ ALTER TABLE kw_rss_link CHANGE COLUMN lastBuildDate lastBuildDate DATETIME NOT N
 
 ALTER TABLE kw_rss_link ADD COLUMN pubDate DATETIME NOT NULL default '1000-01-01';
 
+# ALTER TABLE kw_rss_link ADD description VARCHAR(200) NOT NULL default '';
+
 
 pubDate
 

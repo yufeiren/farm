@@ -27,9 +27,14 @@
 #include <libaio.h>
 
 
-#define AIO_BLKSIZE	(128 * 1024)
+#define AIO_BLKSIZE	(1024 * 1024)
 
 #define AIO_MAXIO	32
+
+struct mybuf {
+	int busy;
+	char buf[AIO_BLKSIZE];
+}
 
 static int busy = 0;		
 
@@ -47,6 +52,9 @@ static int dstfd = -1;
 
 static const char *dstname = NULL;
 static const char *srcname = NULL;
+
+static struct mybuf aiobuf[AIO_MAXIO];
+
 
 /* Fatal error handler */
 static void
@@ -132,10 +140,15 @@ main(int argc, char *const *argv)
 	
 	printf("tocopy: %ld times\n", tocopy);
 	
+	
+	int i, j;
+	for (i = 0; i < AIO_MAXIO; i ++)
+		memset(&aiobuf[i], '\0', sizeof(struct mybuf));
+	
 	int ps = getpagesize();
 	
 	while (tocopy > 0) {
-		int i, rc;
+		rc;
 	
 		/* Submit as many reads as once as possible upto AIO_MAXIO */
 		int n = MIN(MIN(AIO_MAXIO - busy, AIO_MAXIO / 2), \
@@ -147,7 +160,11 @@ main(int argc, char *const *argv)
 			for (i = 0; i < n; i++) {
 				struct iocb *io = (struct iocb *) malloc(sizeof(struct iocb));
 				int iosize = MIN(length - offset, AIO_BLKSIZE);
-/*				char *buf = (char *) malloc(iosize); */
+				
+				for (j = 0; j < AIO_MAXIO; j ++) {
+					
+				}
+				
 				char *buf;
 				
 				posix_memalign(&buf, ps, iosize);

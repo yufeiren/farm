@@ -49,6 +49,10 @@ echo "runtime=$Runtime" >> $script
 echo "" >> $script
 echo "[job]" >> $script
 echo "filename=$Testfile" >> $script
+# write needs file size
+if [ $rw = "write" ]; then
+        echo "size=$FileoutSize" >> $script
+fi
 echo "iodepth=16" >> $script
 $Fio --minimal $script
 			done

@@ -37,4 +37,4 @@ TODO:
 2. table kw_rss_link add `filename` varchar
 3. content parse method libxml2 htmlparser or removetags
 4. table kw_rss_link add `rate` int 
-
+5. table kw_rss_item add `insertdate` DATETIME` to indicate when this item is inserted into this table.

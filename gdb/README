@@ -47,6 +47,8 @@ define xy
 kill
 
 
+==== faq
 
-
+list breakpoint
+> info break
 
