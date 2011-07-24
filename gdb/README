@@ -52,3 +52,8 @@ kill
 list breakpoint
 > info break
 
+debug child process
+
+> set follow-fork-mode child
+
+
