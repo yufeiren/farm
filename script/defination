@@ -1,0 +1,5 @@
+#! /bin/sh
+
+rand_device=/dev/urandom
+
+test_root=/data/ftp
