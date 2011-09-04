@@ -8,6 +8,7 @@ for i in a b c d e f g h
 do
 	test -z "$data_root$i/source" || mkdir -p $data_root$i/source
 	dd if=/dev/zero of=$data_root$i/source/zero$i bs=1M count=10240
+	dd if=/dev/zero of=$data_root$i/source/zerooneg$i bs=1M count=1024
 
 	test -z "$data_root$i/sink" || mkdir -p $data_root$i/sink
 	touch $data_root$i/sink/zero$i
@@ -25,6 +26,7 @@ for i in a b c d e f g h
 do
 	test -z "$link_root/source/disk" || mkdir -p $link_root/source/disk
 	ln -s $data_root$i/source/zero$i $link_root/source/disk/zero$i
+	ln -s $data_root$i/source/zerooneg$i $link_root/source/disk/zerooneg$i
 done
 
 # link sink memory
@@ -32,6 +34,7 @@ for i in a b c d e f g h
 do
 	test -z "$link_root/sink/mem" || mkdir -p $link_root/sink/mem
 	ln -s /dev/null $link_root/sink/mem/zero$i
+	ln -s /dev/null $link_root/sink/mem/zerooneg$i
 done
 
 # link sink disk
