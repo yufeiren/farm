@@ -85,9 +85,9 @@ touch $Logdir/mem2mem-$cbufsiz-$cbufnum-$rcstreamnum-ib0.log
 touch $Logdir/mem2mem-$cbufsiz-$cbufnum-$rcstreamnum-ib1.log
 
 env RCFTPRC=$Configdir/rcftp-$cbufsiz-$cbufnum-$rcstreamnum $rcftp -n -i -v < $task0 > $Logdir/mem2mem-$cbufsiz-$cbufnum-$rcstreamnum-ib0.log &
-pid0=echo $!
+pid0=$!
 env RCFTPRC=$Configdir/rcftp-$cbufsiz-$cbufnum-$rcstreamnum $rcftp -n -i -v < $task1 > $Logdir/mem2mem-$cbufsiz-$cbufnum-$rcstreamnum-ib1.log &
-pid1=echo $!
+pid1=$!
 wait $pid0 $pid1
 		done
 	done
