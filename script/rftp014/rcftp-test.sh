@@ -72,7 +72,7 @@ echo "bin" >> $task1
 echo "prompt" >> $task1
 echo "lcd /home/ren/data/rftp/source/mem" >> $task1
 echo "cd /home/ren/data/rftp/sink/mem" >> $task1
-echo "rmput zeroa" >> $task1
+echo "rmput zerob" >> $task1
 echo "bye" >> $task1
 
 for cbufsiz in 4K 8K 16K 64K 128K 512K 1M
