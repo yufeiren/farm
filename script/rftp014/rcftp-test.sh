@@ -134,7 +134,7 @@ echo "cd /home/ren/data/rftp/sink/mem" >> $task81
 
 printf "rmput %sa\n" $diskfile >> $task10
 printf "rmput %se\n" $diskfile >> $task11
-printf "rmput %sa $sb\n" $diskfile $diskfile >> $task20
+printf "rmput %sa %sb\n" $diskfile $diskfile >> $task20
 printf "rmput %se %sf\n" $diskfile $diskfile >> $task21
 printf "rmput %sa %sb %sc %sd\n" $diskfile $diskfile $diskfile $diskfile >> $task40
 printf "rmput %se %sf %sg %sh\n" $diskfile $diskfile $diskfile $diskfile >> $task41
