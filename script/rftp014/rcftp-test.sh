@@ -51,8 +51,9 @@ echo "rcstreamnum="$rcstreamnum >> $config
 echo "readernum=8" >> $config
 echo "writernum=8" >> $config
 echo "directio=yes" >> $config
-if [ $cbufsiz -lt 524288 ]
-then
+if [ $cbufnum -eq 1 ]; then
+	echo "devzerosiz=100M" >> $config
+elif [ $cbufsiz -lt 524288 ]; then
 	echo "devzerosiz=1G" >> $config
 else
 	echo "devzerosiz=10G" >> $config
@@ -67,7 +68,7 @@ echo "wc_event_num = 500" >> $config
 done
 
 # task disk to memory 1+1 2+2 4+4 8+8
-for diskfile in zero zerooneg
+for diskfile in zero zerooneg zerohrdm
 do
 	task10=$Taskdir/disk2mem-rmput-$diskfile-a-ib0
 	task11=$Taskdir/disk2mem-rmput-$diskfile-e-ib1
@@ -172,65 +173,43 @@ touch $Logdir/disk2mem-$cbufsiz-$cbufnum-$rcstreamnum-f$filenum-ib1.log
 date > $Logdir/disk2mem-$cbufsiz-$cbufnum-$rcstreamnum-f$filenum-ib0.log
 date > $Logdir/disk2mem-$cbufsiz-$cbufnum-$rcstreamnum-f$filenum-ib1.log
 
-if [ $cbufsiz -lt 524288 ]
-then
-	if [ $filenum -eq 1 ]; then
-env RCFTPRC=$Configdir/rcftp-$cbufsiz-$cbufnum-$rcstreamnum $rcftp -n -i -v < $Taskdir/disk2mem-rmput-zerooneg-a-ib0 >> $Logdir/disk2mem-$cbufsiz-$cbufnum-$rcstreamnum-f$filenum-ib0.log &
-pid0=$!
-sleep 3
-env RCFTPRC=$Configdir/rcftp-$cbufsiz-$cbufnum-$rcstreamnum $rcftp -n -i -v < $Taskdir/disk2mem-rmput-zerooneg-e-ib1 >> $Logdir/disk2mem-$cbufsiz-$cbufnum-$rcstreamnum-f$filenum-ib1.log &
-pid1=$!
-	elif [ $filenum -eq 2 ]; then
-env RCFTPRC=$Configdir/rcftp-$cbufsiz-$cbufnum-$rcstreamnum $rcftp -n -i -v < $Taskdir/disk2mem-rmput-zerooneg-ab-ib0 >> $Logdir/disk2mem-$cbufsiz-$cbufnum-$rcstreamnum-f$filenum-ib0.log &
-pid0=$!
-sleep 3
-env RCFTPRC=$Configdir/rcftp-$cbufsiz-$cbufnum-$rcstreamnum $rcftp -n -i -v < $Taskdir/disk2mem-rmput-zerooneg-ef-ib1 >> $Logdir/disk2mem-$cbufsiz-$cbufnum-$rcstreamnum-f$filenum-ib1.log &
-pid1=$!
-	elif [ $filenum -eq 4 ]; then
-env RCFTPRC=$Configdir/rcftp-$cbufsiz-$cbufnum-$rcstreamnum $rcftp -n -i -v < $Taskdir/disk2mem-rmput-zerooneg-abcd-ib0 >> $Logdir/disk2mem-$cbufsiz-$cbufnum-$rcstreamnum-f$filenum-ib0.log &
-pid0=$!
-sleep 3
-env RCFTPRC=$Configdir/rcftp-$cbufsiz-$cbufnum-$rcstreamnum $rcftp -n -i -v < $Taskdir/disk2mem-rmput-zerooneg-efgh-ib1 >> $Logdir/disk2mem-$cbufsiz-$cbufnum-$rcstreamnum-f$filenum-ib1.log &
-pid1=$!
-	elif [ $filenum -eq 8 ]; then
-env RCFTPRC=$Configdir/rcftp-$cbufsiz-$cbufnum-$rcstreamnum $rcftp -n -i -v < $Taskdir/disk2mem-rmput-zerooneg-abcdefgh-ib0 >> $Logdir/disk2mem-$cbufsiz-$cbufnum-$rcstreamnum-f$filenum-ib0.log &
-pid0=$!
-sleep 3
-env RCFTPRC=$Configdir/rcftp-$cbufsiz-$cbufnum-$rcstreamnum $rcftp -n -i -v < $Taskdir/disk2mem-rmput-zerooneg-abcdefgh-ib1 >> $Logdir/disk2mem-$cbufsiz-$cbufnum-$rcstreamnum-f$filenum-ib1.log &
-pid1=$!
-	else
-		echo "error filenum!!!"
-		exit 1
-	fi
+if [ $cbufnum -eq 1 ]; then
+	filescale=zerohrdm
+elif [ $cbufsiz -lt 65536 ]; then
+	filescale=zerohrdm
+elif [ $cbufsiz -lt 524288 ]; then
+	filescale=zerooneg
 else
-	if [ $filenum -eq 1 ]; then
-env RCFTPRC=$Configdir/rcftp-$cbufsiz-$cbufnum-$rcstreamnum $rcftp -n -i -v < $Taskdir/disk2mem-rmput-zero-a-ib0 >> $Logdir/disk2mem-$cbufsiz-$cbufnum-$rcstreamnum-f$filenum-ib0.log &
+	filescale=zero
+fi
+
+if [ $filenum -eq 1 ]; then
+env RCFTPRC=$Configdir/rcftp-$cbufsiz-$cbufnum-$rcstreamnum $rcftp -n -i -v < $Taskdir/disk2mem-rmput-$filescale-a-ib0 >> $Logdir/disk2mem-$cbufsiz-$cbufnum-$rcstreamnum-f$filenum-ib0.log &
 pid0=$!
 sleep 3
-env RCFTPRC=$Configdir/rcftp-$cbufsiz-$cbufnum-$rcstreamnum $rcftp -n -i -v < $Taskdir/disk2mem-rmput-zero-e-ib1 >> $Logdir/disk2mem-$cbufsiz-$cbufnum-$rcstreamnum-f$filenum-ib1.log &
+env RCFTPRC=$Configdir/rcftp-$cbufsiz-$cbufnum-$rcstreamnum $rcftp -n -i -v < $Taskdir/disk2mem-rmput-$filescale-e-ib1 >> $Logdir/disk2mem-$cbufsiz-$cbufnum-$rcstreamnum-f$filenum-ib1.log &
 pid1=$!
-	elif [ $filenum -eq 2 ]; then
-env RCFTPRC=$Configdir/rcftp-$cbufsiz-$cbufnum-$rcstreamnum $rcftp -n -i -v < $Taskdir/disk2mem-rmput-zero-ab-ib0 >> $Logdir/disk2mem-$cbufsiz-$cbufnum-$rcstreamnum-f$filenum-ib0.log &
+elif [ $filenum -eq 2 ]; then
+env RCFTPRC=$Configdir/rcftp-$cbufsiz-$cbufnum-$rcstreamnum $rcftp -n -i -v < $Taskdir/disk2mem-rmput-$filescale-ab-ib0 >> $Logdir/disk2mem-$cbufsiz-$cbufnum-$rcstreamnum-f$filenum-ib0.log &
 pid0=$!
 sleep 3
-env RCFTPRC=$Configdir/rcftp-$cbufsiz-$cbufnum-$rcstreamnum $rcftp -n -i -v < $Taskdir/disk2mem-rmput-zero-ef-ib1 >> $Logdir/disk2mem-$cbufsiz-$cbufnum-$rcstreamnum-f$filenum-ib1.log &
+env RCFTPRC=$Configdir/rcftp-$cbufsiz-$cbufnum-$rcstreamnum $rcftp -n -i -v < $Taskdir/disk2mem-rmput-$filescale-ef-ib1 >> $Logdir/disk2mem-$cbufsiz-$cbufnum-$rcstreamnum-f$filenum-ib1.log &
 pid1=$!
-	elif [ $filenum -eq 4 ]; then
-env RCFTPRC=$Configdir/rcftp-$cbufsiz-$cbufnum-$rcstreamnum $rcftp -n -i -v < $Taskdir/disk2mem-rmput-zero-abcd-ib0 >> $Logdir/disk2mem-$cbufsiz-$cbufnum-$rcstreamnum-f$filenum-ib0.log &
+elif [ $filenum -eq 4 ]; then
+env RCFTPRC=$Configdir/rcftp-$cbufsiz-$cbufnum-$rcstreamnum $rcftp -n -i -v < $Taskdir/disk2mem-rmput-$filescale-abcd-ib0 >> $Logdir/disk2mem-$cbufsiz-$cbufnum-$rcstreamnum-f$filenum-ib0.log &
 pid0=$!
 sleep 3
-env RCFTPRC=$Configdir/rcftp-$cbufsiz-$cbufnum-$rcstreamnum $rcftp -n -i -v < $Taskdir/disk2mem-rmput-zero-efgh-ib1 >> $Logdir/disk2mem-$cbufsiz-$cbufnum-$rcstreamnum-f$filenum-ib1.log &
+env RCFTPRC=$Configdir/rcftp-$cbufsiz-$cbufnum-$rcstreamnum $rcftp -n -i -v < $Taskdir/disk2mem-rmput-$filescale-efgh-ib1 >> $Logdir/disk2mem-$cbufsiz-$cbufnum-$rcstreamnum-f$filenum-ib1.log &
 pid1=$!
-	elif [ $filenum -eq 8 ]; then
-env RCFTPRC=$Configdir/rcftp-$cbufsiz-$cbufnum-$rcstreamnum $rcftp -n -i -v < $Taskdir/disk2mem-rmput-zero-abcdefgh-ib0 >> $Logdir/disk2mem-$cbufsiz-$cbufnum-$rcstreamnum-f$filenum-ib0.log &
+elif [ $filenum -eq 8 ]; then
+env RCFTPRC=$Configdir/rcftp-$cbufsiz-$cbufnum-$rcstreamnum $rcftp -n -i -v < $Taskdir/disk2mem-rmput-$filescale-abcdefgh-ib0 >> $Logdir/disk2mem-$cbufsiz-$cbufnum-$rcstreamnum-f$filenum-ib0.log &
 pid0=$!
 sleep 3
-env RCFTPRC=$Configdir/rcftp-$cbufsiz-$cbufnum-$rcstreamnum $rcftp -n -i -v < $Taskdir/disk2mem-rmput-zero-abcdefgh-ib1 >> $Logdir/disk2mem-$cbufsiz-$cbufnum-$rcstreamnum-f$filenum-ib1.log &
+env RCFTPRC=$Configdir/rcftp-$cbufsiz-$cbufnum-$rcstreamnum $rcftp -n -i -v < $Taskdir/disk2mem-rmput-$filescale-abcdefgh-ib1 >> $Logdir/disk2mem-$cbufsiz-$cbufnum-$rcstreamnum-f$filenum-ib1.log &
 pid1=$!
-	else
-		echo "error filenum!!!"
-		exit 1
-	fi
+else
+	echo "error filenum!!!"
+	exit 1
 fi
 
 wait $pid0 $pid1
@@ -286,6 +265,8 @@ sleep 3
 env RCFTPRC=$Configdir/rcftp-$cbufsiz-$cbufnum-$rcstreamnum $rcftp -n -i -v < $task1 >> $Logdir/mem2mem-$cbufsiz-$cbufnum-$rcstreamnum-ib1.log &
 pid1=$!
 wait $pid0 $pid1
+
+sleep 10
 		done
 	done
 done

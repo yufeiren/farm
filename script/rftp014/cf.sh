@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
 link_root=/home/ren/data/rftp
 data_root=/mnt/fio
@@ -9,6 +9,7 @@ do
 	test -z "$data_root$i/source" || mkdir -p $data_root$i/source
 	dd if=/dev/zero of=$data_root$i/source/zero$i bs=1M count=10240
 	dd if=/dev/zero of=$data_root$i/source/zerooneg$i bs=1M count=1024
+	dd if=/dev/zero of=$data_root$i/source/zerohrdm$i bs=1M count=100
 
 	test -z "$data_root$i/sink" || mkdir -p $data_root$i/sink
 	touch $data_root$i/sink/zero$i
@@ -27,6 +28,7 @@ do
 	test -z "$link_root/source/disk" || mkdir -p $link_root/source/disk
 	ln -s $data_root$i/source/zero$i $link_root/source/disk/zero$i
 	ln -s $data_root$i/source/zerooneg$i $link_root/source/disk/zerooneg$i
+	ln -s $data_root$i/source/zerohrdm$i $link_root/source/disk/zerohrdm$i
 done
 
 # link sink memory
@@ -35,6 +37,7 @@ do
 	test -z "$link_root/sink/mem" || mkdir -p $link_root/sink/mem
 	ln -s /dev/null $link_root/sink/mem/zero$i
 	ln -s /dev/null $link_root/sink/mem/zerooneg$i
+	ln -s /dev/null $link_root/sink/mem/zerohrdm$i
 done
 
 # link sink disk
