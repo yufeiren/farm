@@ -51,9 +51,7 @@ echo "rcstreamnum="$rcstreamnum >> $config
 echo "readernum=8" >> $config
 echo "writernum=8" >> $config
 echo "directio=yes" >> $config
-if [ $cbufnum -eq 1 ]; then
-	echo "devzerosiz=100M" >> $config
-elif [ $cbufsiz -lt 524288 ]; then
+if [ $cbufsiz -lt 524288 ]; then
 	echo "devzerosiz=1G" >> $config
 else
 	echo "devzerosiz=10G" >> $config
@@ -173,11 +171,7 @@ touch $Logdir/disk2mem-$cbufsiz-$cbufnum-$rcstreamnum-f$filenum-ib1.log
 date > $Logdir/disk2mem-$cbufsiz-$cbufnum-$rcstreamnum-f$filenum-ib0.log
 date > $Logdir/disk2mem-$cbufsiz-$cbufnum-$rcstreamnum-f$filenum-ib1.log
 
-if [ $cbufnum -eq 1 ]; then
-	filescale=zerohrdm
-elif [ $cbufsiz -lt 65536 ]; then
-	filescale=zerohrdm
-elif [ $cbufsiz -lt 524288 ]; then
+if [ $cbufsiz -lt 524288 ]; then
 	filescale=zerooneg
 else
 	filescale=zero
