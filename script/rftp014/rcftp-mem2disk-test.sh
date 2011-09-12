@@ -7,7 +7,6 @@ if [ ! -x $rcftp ]; then
         exit 1
 fi
 
-DataSize=100G
 Rootdir=/home/ren/eval/v014
 Logdir=$Rootdir/log
 Configdir=$Rootdir/config
@@ -25,8 +24,8 @@ test -d $Logdir || mkdir -p $Logdir
 test -d $Taskdir || mkdir -p $Taskdir
 test -d $Configdir || mkdir -p $Configdir
 
-# 4K 8K 16K 32K 64K 128K 512K 1M 2M"
-cbufsizs="4096 8192 16384 65536 131072 262144 524288 1048576 2097152"
+# "4K 8K 16K 32K 64K 128K 512K 1M 2M"
+cbufsizs="4096 8192 16384 32768 65536 131072 262144 524288 1048576 2097152"
 cbufnums="1 8 16 64 128 256"
 rcstreamnums="1 4 8 16"
 

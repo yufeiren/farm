@@ -24,7 +24,7 @@ test -d $Logdir || mkdir -p $Logdir
 test -d $Taskdir || mkdir -p $Taskdir
 test -d $Configdir || mkdir -p $Configdir
 
-cbufsizs="4096 8192 16384 65536 131072 262144 524288 1048576 2097152"
+cbufsizs="4096 8192 16384 32768 65536 131072 262144 524288 1048576 2097152"
 cbufnums="1 8 16 64 128 256"
 rcstreamnums="1 4 8 16"
 
