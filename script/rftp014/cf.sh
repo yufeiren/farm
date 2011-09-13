@@ -10,9 +10,9 @@ for i in a b c d e f g h
 do
 	test -z "$data_root$i/source" || mkdir -p $data_root$i/source
 	rm -rf $data_root$i/source/zero$i $data_root$i/source/zerooneg$i $data_root$i/source/zerohrdm$i
-	dd if=/dev/zero of=$data_root$i/source/zero$i bs=1M count=10240
-	dd if=/dev/zero of=$data_root$i/source/zerooneg$i bs=1M count=1024
-	dd if=/dev/zero of=$data_root$i/source/zerohrdm$i bs=1M count=100
+	dd if=/dev/zero of=$data_root$i/source/zero$i bs=1M count=10240 direct
+	dd if=/dev/zero of=$data_root$i/source/zerooneg$i bs=1M count=1024 direct
+	dd if=/dev/zero of=$data_root$i/source/zerohrdm$i bs=1M count=100 direct
 
 	test -z "$data_root$i/sink" || mkdir -p $data_root$i/sink
 	touch $data_root$i/sink/zero$i
