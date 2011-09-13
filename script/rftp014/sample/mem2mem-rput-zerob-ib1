@@ -1,0 +1,9 @@
+open 192.168.2.17 18519
+user ftp ftp
+bin
+prompt
+lcd /home/ren/data/rftp/source/mem
+cd /home/ren/data/rftp/sink/mem
+rmput zerob
+bye
+

@@ -1,0 +1,15 @@
+cbufsiz = 2M
+cbufnum = 300
+srvcomport = 18519
+evbufnum = 300
+recvbufnum = 800
+rmtaddrnum = 200
+readernum = 8
+writernum = 8
+directio = yes
+devzerosiz = 10G
+rdma_qp_sq_depth = 1280
+rdma_qp_rq_depth = 1280
+rdma_cq_depth = 2000
+wc_thread_num = 32
+wc_event_num = 500
