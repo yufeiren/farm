@@ -1,0 +1,21 @@
+
+1 launch server
+
+$ env RFTPDRC=/home/ren/git/farm/script/rftp014/sample/rftpdrc-2M-300-18519-direct rftpd -D
+
+$ netstat -an | grep 18519
+
+2 launch client
+
+rput
+
+$ env RCFTPRC=/home/ren/git/farm/script/rftp014/sample/rcftprc-rput-2M-256-direct rcftp -n -i -v < /home/ren/git/farm/script/rftp014/sample/mem2mem-rput-zeroa-ib0
+
+$ env RCFTPRC=/home/ren/git/farm/script/rftp014/sample/rcftprc-rput-2M-256-direct rcftp -n -i -v < /home/ren/git/farm/script/rftp014/sample/mem2mem-rput-zerob-ib1
+
+rget
+
+$ env RCFTPRC=/home/ren/git/farm/script/rftp014/sample/rcftprc-rget-2M-400-direct rcftp -n -i -v < /home/ren/git/farm/script/rftp014/sample/mem2mem-rget-zeroc-ib0 
+
+$ env RCFTPRC=/home/ren/git/farm/script/rftp014/sample/rcftprc-rget-2M-400-direct rcftp -n -i -v < /home/ren/git/farm/script/rftp014/sample/mem2mem-rget-zerod-ib1
+
