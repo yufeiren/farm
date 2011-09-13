@@ -49,7 +49,9 @@ echo "rcstreamnum="$rcstreamnum >> $config
 echo "readernum=8" >> $config
 echo "writernum=8" >> $config
 echo "directio=yes" >> $config
-if [ $cbufsiz -lt 524288 ]; then
+if [ $cbufsiz -lt 16384 ]; then
+	echo "devzerosiz=1G" >> $config
+elif [ $cbufsiz -lt 524288 ]; then
 	echo "devzerosiz=10G" >> $config
 else
 	echo "devzerosiz=100G" >> $config

@@ -8,4 +8,3 @@ env RCFTPRC=/home/ren/git/farm/script/rftp014/sample/rcftprc-rget-2M-400-direct 
 
 env RCFTPRC=/home/ren/git/farm/script/rftp014/sample/rcftprc-rget-2M-400-direct rcftp -n -i -v < /home/ren/git/farm/script/rftp014/sample/mem2mem-rget-zerod-ib1 > rget-zerod.log 2>&1 &
 
-
