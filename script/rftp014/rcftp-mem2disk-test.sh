@@ -50,7 +50,11 @@ echo "rcstreamnum="$rcstreamnum >> $config
 echo "readernum=8" >> $config
 echo "writernum=8" >> $config
 echo "directio=yes" >> $config
-echo "devzerosiz=10G" >> $config
+if [ $cbufsiz -lt 262144 ]; then
+	echo "devzerosiz=1G" >> $config
+else
+	echo "devzerosiz=10G" >> $config
+fi
 echo "rdma_qp_sq_depth = 1280" >> $config
 echo "rdma_qp_rq_depth = 1280" >> $config
 echo "rdma_cq_depth = 2000" >> $config
