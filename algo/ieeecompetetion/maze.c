@@ -73,7 +73,8 @@ main(int argc, char **argv)
 	
 	for (i = 0; i < 36; i++) {
 		memset(line, '\0', 1024);
-		fgets(line, 1024, input);
+		if (fgets(line, 1024, input) == NULL)
+			fprintf(stderr, "wrong file format\n");
 		
 		for (j = 0; j < 36; j ++) {
 			mp[i][j].value = *(line + j);
