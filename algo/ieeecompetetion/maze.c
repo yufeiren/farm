@@ -35,7 +35,7 @@ struct maze_point {
 	int x;
 	int y;
 
-	TAILQ_ENTRY(room) entries;
+	TAILQ_ENTRY(maze_point) entries;
 };
 typedef struct maze_point Maze_point;
 
