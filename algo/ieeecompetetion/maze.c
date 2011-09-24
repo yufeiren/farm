@@ -65,7 +65,7 @@ main(int argc, char **argv)
 	TAILQ_INIT(&maze_point_tqh);
 	apple_num = 0;
 	
-	FILE *input = fopen(argv[1]);
+	FILE *input = fopen(argv[1], "r");
 	if (input == NULL) {
 		fprintf(stderr, "can not open file: %s\n", argv[1]);
 		exit(EXIT_FAILURE);
@@ -84,7 +84,7 @@ main(int argc, char **argv)
 		printf("line[%d]: %s\n", i, line);
 	}
 
-	check_next(mp[35][0]);
+	check_next(&mp[35][0], DIR_LEFT);
 	
 	exit(EXIT_SUCCESS);
 }
@@ -110,7 +110,7 @@ check_next(Maze_point *p, int previous)
 	TAILQ_INSERT_TAIL(&maze_point_tqh, p, entries);
 	
 	switch (previous) {
-	case DIR_DOWN;
+	case DIR_DOWN:
 		pup = get_upper(p);
 		pright = get_right(p);
 		pleft = get_left(p);
