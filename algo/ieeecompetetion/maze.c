@@ -180,7 +180,8 @@ print_path()
 	Maze_point *p;
 	
 	TAILQ_FOREACH(p, &maze_point_tqh, entries)
-		fprintf(output, "%d,%d\n", p->x, p->y);
+/*		fprintf(output, "%d,%d\n", p->x, p->y); */
+		fprintf(output, "%d,%d\n", p->y, p->x);
 	
 	return;
 }
