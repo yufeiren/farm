@@ -60,8 +60,6 @@ main(int argc, char **argv)
 	int i, j;
 	char line[1024];
 
-	Maze_point mp[36][36];
-
 	TAILQ_INIT(&maze_point_tqh);
 	apple_num = 0;
 	
@@ -73,8 +71,10 @@ main(int argc, char **argv)
 	
 	for (i = 0; i < 36; i++) {
 		memset(line, '\0', 1024);
-		if (fgets(line, 1024, input) == NULL)
+		if (fgets(line, 1024, input) == NULL) {
 			fprintf(stderr, "wrong file format\n");
+			exit(EXIT_FAILURE);
+		}
 		
 		for (j = 0; j < 36; j ++) {
 			mp[i][j].value = *(line + j);
