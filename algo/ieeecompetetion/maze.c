@@ -41,10 +41,10 @@ typedef struct maze_point Maze_point;
 
 TAILQ_HEAD(, maze_point) 	maze_point_tqh;
 
-static Maze_point * get_upper(Maze_point *, int from);
-static Maze_point * get_lower(Maze_point *, int from);
-static Maze_point * get_left(Maze_point *, int from);
-static Maze_point * get_right(Maze_point *, int from);
+static Maze_point * get_upper(Maze_point *);
+static Maze_point * get_lower(Maze_point *);
+static Maze_point * get_left(Maze_point *);
+static Maze_point * get_right(Maze_point *);
 
 
 static int check_next(Maze_point *, int);
@@ -177,7 +177,7 @@ print_path()
 
 
 static Maze_point *
-get_upper(Maze_point *p, int from)
+get_upper(Maze_point *p)
 {
 	Maze_point *tmp;
 	
@@ -199,7 +199,7 @@ get_upper(Maze_point *p, int from)
 }
 
 static Maze_point *
-get_lower(Maze_point *p, int from)
+get_lower(Maze_point *p)
 {
 	Maze_point *tmp;
 	
@@ -221,7 +221,7 @@ get_lower(Maze_point *p, int from)
 }
 
 static Maze_point *
-get_left(Maze_point *p, int from)
+get_left(Maze_point *p)
 {
 	Maze_point *tmp;
 	
@@ -243,7 +243,7 @@ get_left(Maze_point *p, int from)
 }
 
 static Maze_point *
-get_right(Maze_point *p, int from)
+get_right(Maze_point *p)
 {
 	Maze_point *tmp;
 	
