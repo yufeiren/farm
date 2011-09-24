@@ -80,9 +80,10 @@ main(int argc, char **argv)
 			mp[i][j].value = *(line + j);
 			mp[i][j].x = i;
 			mp[i][j].y = j;
+			printf("%c ", mp[i][j].value);
 		}
 		
-		printf("line[%d]: %s\n", i, line);
+		printf("\n", i, line);
 	}
 
 	check_next(&mp[35][0], DIR_LEFT);
