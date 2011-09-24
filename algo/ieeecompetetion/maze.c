@@ -54,6 +54,8 @@ static Maze_point mp[36][36];
 
 void print_path();
 
+FILE *output;
+
 int
 main(int argc, char **argv)
 {
@@ -66,6 +68,12 @@ main(int argc, char **argv)
 	FILE *input = fopen(argv[1], "r");
 	if (input == NULL) {
 		fprintf(stderr, "can not open file: %s\n", argv[1]);
+		exit(EXIT_FAILURE);
+	}
+	
+	output = fopen("result.txt", "w");
+	if (output == NULL) {
+		fprintf(stderr, "can not open file result.txt\n");
 		exit(EXIT_FAILURE);
 	}
 	
@@ -148,7 +156,7 @@ check_next(Maze_point *p, int previous)
 		if (check_next(pright, DIR_LEFT) != MAZE_DEADEND)
 			p->status = MAZE_NORMAL;
 	if (pdown != NULL)
-		if (check_next(pright, DIR_UP) != MAZE_DEADEND)
+		if (check_next(pdown, DIR_UP) != MAZE_DEADEND)
 			p->status = MAZE_NORMAL;
 	if (pleft != NULL)
 		if (check_next(pleft, DIR_RIGHT) != MAZE_DEADEND)
@@ -172,7 +180,7 @@ print_path()
 	Maze_point *p;
 	
 	TAILQ_FOREACH(p, &maze_point_tqh, entries)
-		printf("(%d, %d),\n", p->x, p->y);
+		fprintf(output, "%d,%d\n", p->x, p->y);
 	
 	return;
 }
