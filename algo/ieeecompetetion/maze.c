@@ -193,9 +193,10 @@ get_upper(Maze_point *p)
 	if (tmp->status == MAZE_DEADEND)
 		return NULL;
 
-	if (tmp->value != MAZE_PATH)
+	if (tmp->value != MAZE_PATH) {
 		apple_num ++;
-	
+		printf("got an apple: (%d, %d)\n", tmp->x, tmp->y);
+	}
 	return tmp;
 }
 
@@ -215,8 +216,10 @@ get_lower(Maze_point *p)
 	if (tmp->status == MAZE_DEADEND)
 		return NULL;
 
-	if (tmp->value != MAZE_PATH)
+	if (tmp->value != MAZE_PATH){
 		apple_num ++;
+		printf("got an apple: (%d, %d)\n", tmp->x, tmp->y);
+	}
 	
 	return tmp;
 }
@@ -237,8 +240,10 @@ get_left(Maze_point *p)
 	if (tmp->status == MAZE_DEADEND)
 		return NULL;
 
-	if (tmp->value != MAZE_PATH)
+	if (tmp->value != MAZE_PATH){
 		apple_num ++;
+		printf("got an apple: (%d, %d)\n", tmp->x, tmp->y);
+	}
 	
 	return tmp;
 }
@@ -259,8 +264,10 @@ get_right(Maze_point *p)
 	if (tmp->status == MAZE_DEADEND)
 		return NULL;
 
-	if (tmp->value != MAZE_PATH)
+	if (tmp->value != MAZE_PATH){
 		apple_num ++;
+		printf("got an apple: (%d, %d)\n", tmp->x, tmp->y);
+	}
 	
 	return tmp;
 }
