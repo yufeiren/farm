@@ -88,10 +88,7 @@ main(int argc, char **argv)
 			mp[i][j].value = *(line + j);
 			mp[i][j].x = i;
 			mp[i][j].y = j;
-			printf("%c ", mp[i][j].value);
 		}
-		
-		printf("\n", i, line);
 	}
 
 	check_next(&mp[35][0], DIR_LEFT);
@@ -112,12 +109,14 @@ check_next(Maze_point *p, int previous)
 	/* if get all the apples */
 	if (apple_num == 5) {
 		printf("Completed!!!\n");
-		print_path();
+/*		print_path(); */
 		exit(EXIT_SUCCESS);
 	}
 	
-	/* insert p into list */
-	TAILQ_INSERT_TAIL(&maze_point_tqh, p, entries);
+	/* insert p into list
+	TAILQ_INSERT_TAIL(&maze_point_tqh, p, entries); */
+	
+	fprintf(output, "%d,%d\n", p->y, p->x);
 	
 	switch (previous) {
 	case DIR_DOWN:
@@ -163,12 +162,13 @@ check_next(Maze_point *p, int previous)
 			p->status = MAZE_NORMAL;
 	
 	if (p->status == MAZE_DEADEND) {
-		/* p is an apple */
+		/* p is an apple
 		if (p->value != MAZE_PATH)
-			print_path();
+			print_path(); */
 		
-		/* remove p from list */
-		TAILQ_REMOVE(&maze_point_tqh, p, entries);
+		/* remove p from list
+		TAILQ_REMOVE(&maze_point_tqh, p, entries); */
+		fprintf(output, "%d,%d\n", p->y, p->x);
 	}
 	
 	return p->status;
