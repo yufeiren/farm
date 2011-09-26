@@ -10,4 +10,4 @@ SC_MODULE(half_adder) {
 		SC_METHOD(prc_half_adder);
 		sensitive << a << b;
 	}
-}
+};
