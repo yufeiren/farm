@@ -1,4 +1,5 @@
 #include "half_adder.h"
+#include "driver.h"
 
 int sc_main(int argc, char **argv)
 {
