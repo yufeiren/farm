@@ -1,6 +1,6 @@
 #include "test.h"
 
-void driver::prc_test() {
+void test::prc_test() {
     in1 = 0;
     in2 = 0;
     in3 = 0;
