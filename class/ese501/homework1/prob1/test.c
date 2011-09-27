@@ -18,6 +18,8 @@ void test::prc_test() {
         load2 = true;
     wait(800, SC_NS);
   	dec2 = true;
+    wait(1200, SC_NS);
+  	dec2 = false;
     wait(400, SC_NS);
   	in1 = 0x08;
   	in2 = 0x05;
