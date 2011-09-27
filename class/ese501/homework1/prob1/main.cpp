@@ -34,17 +34,7 @@ int sc_main(int argc, char **argv)
 	Tst.dec2(t_dec2);
 	
 	sc_trace_file *tf = sc_create_vcd_trace_file("wave");
-	Cnt.clock(Clk);
-	Cnt.in1(t_in1);
-	Cnt.in2(t_in2);
-	Cnt.in3(t_in3);
-	Cnt.load1(t_load1);
-	Cnt.load2(t_load2);
-	Cnt.dec1(t_dec1);
-	Cnt.dec2(t_dec2);
-	Cnt.ended(t_ended);
-	Cnt.count1(t_count1);
-	Cnt.count2(t_count2);
+	
 	sc_trace(tf, Cnt.clock, "clock");
 	sc_trace(tf, Cnt.in1, "in1");
 	sc_trace(tf, Cnt.in2, "in2");
