@@ -42,7 +42,7 @@ int sc_main(int argc, char **argv)
 	sc_trace(tf, Cnt.load1, "load1");
 	sc_trace(tf, Cnt.load2, "load2");
 	sc_trace(tf, Cnt.dec1, "dec1");
-	sc_trace(tf, Cnt.dec1, "dec2");
+	sc_trace(tf, Cnt.dec2, "dec2");
 	sc_trace(tf, Cnt.ended, "ended");
 	sc_trace(tf, Cnt.count1, "count1");
 	sc_trace(tf, Cnt.count2, "count2");
