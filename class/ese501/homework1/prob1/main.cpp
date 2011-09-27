@@ -47,7 +47,7 @@ int sc_main(int argc, char **argv)
 	sc_trace(tf, Cnt.count1, "count1");
 	sc_trace(tf, Cnt.count2, "count2");
 
-	sc_start(3500, SC_NS);
+	sc_start(4000, SC_NS);
 	
 	sc_close_vcd_trace_file(tf);
 	
