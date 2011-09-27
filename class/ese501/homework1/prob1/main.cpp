@@ -8,9 +8,7 @@ int sc_main(int argc, char **argv)
 	sc_signal<bool> t_dec1, t_dec2;
 	sc_signal<bool> t_ended;
 	sc_signal<sc_uint<8> > t_count1, t_count2;
-	
-	sc_set_time_resolution(1, SC_NS);
-	sc_set_default_time_unit(1, SC_NS);
+
 	sc_clock Clk("clock", 10, SC_NS, false);
 	
 	count Cnt("Cnt");
