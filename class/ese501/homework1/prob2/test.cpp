@@ -10,6 +10,8 @@ void test::prc_test() {
 	indata = 0x0E0;
 	wait(80, SC_NS);
 	indata = 0x170;
+	wait(80, SC_NS);
+	indata = 0x0E0;
 	wait(400, SC_NS);
 	clear = 1;
 }
