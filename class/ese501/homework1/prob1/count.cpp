@@ -9,7 +9,7 @@ void count::prc_count() {
 		if (dec1.read() == 1) {
 			if (local_count1 == 0)
 				carry_out = true;
-			local_count1 -= 1;
+			local_count1 = local_count1 - 1;
 		}
 	}
 	
@@ -19,7 +19,7 @@ void count::prc_count() {
 		if (dec2.read() == 1) {
 			if (local_count2 < in3.read())
 				carry_out = true;
-			local_count2 -= in3.read();
+			local_count2 = local_count2 - in3.read();
 		}
 	}
 	
