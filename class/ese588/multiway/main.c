@@ -4,25 +4,46 @@
 int
 main(int argc, char **argv)
 {
-  /* parse define.txt */
-  parse_define();
+	TAILQ_INIT(&free_mw_item_tqh);
+	TAILQ_INIT(&mw_item_tqh);
 
-  /* parse raw data to trunk data */
-  raw2chunk(F_RAW, F_CHUNK);
+	/* parse define.txt */
+	parse_define();
 
-  /* load chunk one by one */
-  int i;
-  totaltrunknum = 1;
-  for (i = 0; i < dimnum; i ++) {
-    if (dimlen[i] % chklen[i] == 0)
-      totaltrunknum *= dimlen[i] / chklen[i];
-    else
-      totaltrunknum *= (dimlen[i] / chklen[i] + 1);
-  }
+	/* parse raw data to trunk data */
+	raw2chunk(F_RAW, F_CHUNK);
 
-  for (i = 0; i < totaltrunknum; i ++) {
-    load_chunk(i);
-  }
+	/* load chunk one by one */
+	int i;
+	totaltrunknum = 1;
+	for (i = 0; i < dimnum; i ++) {
+		totaltrunknum *= chknum[i];
+	}
+	printf("chunk number is %d\n", totaltrunknum);
 
-  exit(EXIT_SUCCESS);
+	MW_ITEM *item;
+	for (i = 0; i < totaltrunknum; i ++) {
+		item = (MW_ITEM *) malloc(sizeof(MW_ITEM));
+		memset(item, '\0', sizeof(MW_ITEM));
+		TAILQ_INSERT_TAIL(&free_mw_item_tqh, item, entries);
+	}
+
+	MW_PLATE plate;
+	memset(&plate, '\0', sizeof(MW_PLATE));
+	plate.level = dimnum;
+	build_mmst(&plate);
+
+	for (i = 0; i < totaltrunknum; i ++) {
+		load_chunk(i);
+		/* multiway each chunk */
+		while (!TAILQ_EMPTY(&mw_item_tqh)) {
+			item = TAILQ_FIRST(&mw_item_tqh);
+			TAILQ_REMOVE(&mw_item_tqh, item, entries);
+
+			multiway(item);
+			TAILQ_INSERT_TAIL(&free_mw_item_tqh, item, entries);
+		}
+	}
+
+	exit(EXIT_SUCCESS);
 }
