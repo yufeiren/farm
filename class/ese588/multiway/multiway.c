@@ -340,6 +340,7 @@ void
 check_aggregate(int chkseq)
 {
 	int i, j, k;
+	int m, n;
 	int base;
 	int groupbase;
 
@@ -357,34 +358,34 @@ check_aggregate(int chkseq)
 		if (chkseq % base != 0)
 			break;
 
-      /* 0. find out related plate
-       * 1. update child
-       * 2. write out the plate and/or child plate
-       * 3. reformat the plate
-       */
-      memset(tmpdim, 0, MAX_MULTIWAY_DIM * sizeof(int));
-      tmpdim[i] = -1;
+		/* 0. find out related plate
+		 * 1. update child
+		 * 2. write out the plate and/or child plate
+		 * 3. reformat the plate
+		 */
+		memset(tmpdim, 0, MAX_MULTIWAY_DIM * sizeof(int));
+		tmpdim[i] = -1;
 
-      TAILQ_FOREACH(plate, &mw_level_tqh[dimnum - 1], entries) {
-	if (memcmp(tmpdim, plate->dim, dimnum * sizeof(int)) == 0)
-	  break;
-      }
+		TAILQ_FOREACH(plate, &mw_level_tqh[dimnum - 1], entries) {
+			if (memcmp(tmpdim, plate->dim, dimnum * sizeof(int)) == 0)
+				break;
+		}
 
-	prt_plate(plate);
+		prt_plate(plate);
 
-      /* aggregate child node */
+		/* aggregate child node */
 
-      /* write out the plate */
-      for (k = 0; k < plate->unit; k ++) {
-	if (plate->buffer[k].count != 0) {
-	  prt_dim(plate->buffer[k].dim, "coboid group by result");
-	  printf("==============> %d\n", plate->buffer[k].count);
-	}
-      }
+		/* write out the plate */
+		for (k = 0; k < plate->unit; k ++) {
+			if (plate->buffer[k].count != 0) {
+				prt_dim(plate->buffer[k].dim, "coboid group by result");
+				printf("==============> %d\n", plate->buffer[k].count);
+			}
+		}
 
-      /* reformat the plate for the next round */
+		/* reformat the plate for the next round */
 	/* init each group */
-      int m, n;
+
 	groupbase = 1;
 	for (m = 0; m < i; m ++) { /* here i is the star */
 	  for (n = 0; n < plate->unit; n ++) {
@@ -392,7 +393,7 @@ check_aggregate(int chkseq)
 	      plate->buffer[n].dim[m] = -1;
 	    else
 	      plate->buffer[n].dim[m] = (n / groupbase) % dimlen[i];
-	  plate->buffer[n].count = 0;
+
 	  }
 	  groupbase *= dimlen[m];
 	}
@@ -410,11 +411,12 @@ check_aggregate(int chkseq)
 	  }
 	  groupbase *= chklen[m];
 	}
-	/* for (n = 0; n < plate->unit; n ++) {
-   prt_dim(plate->buffer[n].dim, "new group value");
-   }*/
-
+	/* reset cuboid's count */
+	  for (n = 0; n < plate->unit; n ++) {
+		plate->buffer[n].count = 0;
+	  }
   }
+
 
   return;
 }

@@ -56,5 +56,7 @@ main(int argc, char **argv)
 		}
 	}
 
+	check_aggregate(i);
+
 	exit(EXIT_SUCCESS);
 }
