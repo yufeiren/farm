@@ -44,7 +44,7 @@ main(int argc, char **argv)
 		 * and reformat
 		 */
 		check_aggregate(i);
-
+		printf("--load chunk %d\n", i);
 		load_chunk(i);
 		/* multiway each chunk */
 		while (!TAILQ_EMPTY(&mw_item_tqh)) {

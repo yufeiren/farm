@@ -89,3 +89,6 @@ int cal_chunkid_offset(int *chunkid, int *offset, int *dim);
 
 void check_aggregate(int chkseq);
 
+void prt_plate(MW_PLATE *plate);
+void prt_dim(int *dim, char *msg);
+

@@ -18,18 +18,22 @@ void multiway(MW_ITEM *item)
 	int i, j;
 	MW_PLATE *plate;
 	int tmpdim[MAX_MULTIWAY_DIM];
+	prt_dim(item->dim, "multiway this item");
 
 	/* update level(n-1) count */
 	plate = NULL;
 	TAILQ_FOREACH(plate, &mw_level_tqh[dimnum - 1], entries) {
 	  for (i = 0; i < plate->unit; i ++) {
 	    memcpy(tmpdim, item->dim, MAX_MULTIWAY_DIM * sizeof(int));
+
 	    /* set the `*' for group by */
 	    for (j = 0; j < dimnum; j ++)
 	      if (plate->dim[j] == -1)
 		tmpdim[j] = -1;
-	    if (memcmp(plate->buffer[i].dim, item->dim, dimnum * sizeof(int)) == 0) {
+
+	    if (memcmp(plate->buffer[i].dim, tmpdim, dimnum * sizeof(int)) == 0) {
 	      plate->buffer[i].count ++;
+	      prt_dim(plate->buffer[i].dim, "group by this cuboids");
 	      break;
 	    }
 	  }
@@ -57,8 +61,6 @@ group_alloc(int star, MW_PLATE *plate)
 			continue;
 		plate->unit *= chklen[i];
 	}
-
-	printf("level: %d, plate unit %d\n", plate->level, plate->unit);
 
 	plate->buffer = (MW_GROUP *) malloc(plate->unit * sizeof(MW_GROUP));
 	memset(plate->buffer, '\0', plate->unit * sizeof(MW_GROUP));
@@ -132,6 +134,8 @@ build_mmst(MW_PLATE *plate)
 		/* allocate memory for this plate */
 		child_plate->level = plate->level - 1;
 		group_alloc(i, child_plate);
+
+		prt_plate(child_plate);
 
 		/* insert into the level list */
 		TAILQ_INSERT_TAIL(&mw_level_tqh[child_plate->level], child_plate, entries);
@@ -326,8 +330,7 @@ cal_chunkid_offset(int *chunkid, int *offset, int *dim)
 		*chunkid += (dim[i] / chklen[i]) * dimbase;
 		*offset += (dim[i] % chklen[i]) * chunkbase;
 	}
-	printf("chunk id is %d\n", *chunkid);
-	printf("offset   is %d\n", *offset);
+	printf("chunk id is %d, offset is %d\n", *chunkid, *offset);
 
 	return 0;
 }
@@ -344,15 +347,15 @@ check_aggregate(int chkseq)
 	MW_PLATE *plate;
 
 	for(i = 0; i < dimnum; i ++) {
-    base = 1;
-    plate = NULL;
+		base = 1;
+		plate = NULL;
 
-    for (j = 0; j <= i; j ++) {
-      base *= chknum[j];
-    }
+		for (j = 0; j <= i; j ++) {
+			base *= chknum[j];
+		}
 
-    if (chkseq % base != 0)
-      break;
+		if (chkseq % base != 0)
+			break;
 
       /* 0. find out related plate
        * 1. update child
@@ -367,12 +370,16 @@ check_aggregate(int chkseq)
 	  break;
       }
 
+	prt_plate(plate);
+
       /* aggregate child node */
 
       /* write out the plate */
       for (k = 0; k < plate->unit; k ++) {
-	if (plate->buffer[k].count != 0)
-	  printf("group by: %d\n", plate->buffer[k].count);
+	if (plate->buffer[k].count != 0) {
+	  prt_dim(plate->buffer[k].dim, "coboid group by result");
+	  printf("==============> %d\n", plate->buffer[k].count);
+	}
       }
 
       /* reformat the plate for the next round */
@@ -380,25 +387,67 @@ check_aggregate(int chkseq)
       int m, n;
 	groupbase = 1;
 	for (m = 0; m < i; m ++) { /* here i is the star */
-	  groupbase *= dimlen[m];
 	  for (n = 0; n < plate->unit; n ++) {
 	    if (plate->dim[m] == -1)
 	      plate->buffer[n].dim[m] = -1;
 	    else
-	      plate->buffer[n].dim[m] = n / groupbase;
+	      plate->buffer[n].dim[m] = (n / groupbase) % dimlen[i];
+	  plate->buffer[n].count = 0;
 	  }
+	  groupbase *= dimlen[m];
 	}
 
+	  for (n = 0; n < plate->unit; n ++) {
+	      plate->buffer[n].dim[i] = -1;
+	  }
+
 	for (m = i + 1; m < dimnum; m ++) {
-	  groupbase *= chklen[m];
 	  for (n = 0; n < plate->unit; n ++) {
 	    if (plate->dim[m] == -1)
 	      plate->buffer[n].dim[m] = -1;
 	    else
-	      plate->buffer[n].dim[m] = n / chklen[m];
+	      plate->buffer[n].dim[m] = (n / groupbase) % chklen[i];
 	  }
+	  groupbase *= chklen[m];
 	}
+	/* for (n = 0; n < plate->unit; n ++) {
+   prt_dim(plate->buffer[n].dim, "new group value");
+   }*/
+
   }
+
+  return;
+}
+
+
+void
+prt_plate(MW_PLATE *plate)
+{
+  int i;
+  printf("plate: ");
+  for (i = 0; i < dimnum; i ++) {
+    if (plate->dim[i] == -1)
+      printf("*");
+    else
+      printf("%c", i + 65);
+  }
+  printf(". level: %d, unit: %d\n", plate->level, plate->unit);
+
+  return;
+}
+
+void
+prt_dim(int *dim, char *msg)
+{
+  int i;
+  printf("item: (");
+  for (i = 0; i < dimnum; i ++) {
+    if (dim[i] == -1)
+      printf("* ");
+    else
+      printf("%d ", dim[i]);
+  }
+  printf("): %s\n", msg);
 
   return;
 }
