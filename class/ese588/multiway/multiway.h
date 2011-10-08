@@ -42,7 +42,10 @@ struct Mw_plate {
 	int unit;
 	int level;
 	int dim[MAX_MULTIWAY_DIM]; /* dim[x] == -1 means `*' */
+	void *child[MAX_MULTIWAY_DIM];
 	MW_GROUP *buffer;
+
+	TAILQ_ENTRY(Mw_plate) entries;
 };
 typedef struct Mw_plate MW_PLATE;
 
@@ -58,9 +61,14 @@ TAILQ_HEAD(, Mw_item)		mw_item_tqh;
 TAILQ_HEAD(, Mw_plate)		free_mw_plate_tqh;
 TAILQ_HEAD(, Mw_plate)		mw_plate_tqh;
 
+TAILQ_HEAD(, Mw_plate)		mw_level_tqh[MAX_MULTIWAY_DIM];
+
 void group_alloc(int star, MW_PLATE *plate);
 
 void build_mmst(MW_PLATE *plate);
+
+/* check if the plate of dim is in this level */
+int check_plate(int level, int *dim);
 
 void load_chunk(int chunkid);
 
@@ -79,4 +87,5 @@ int parse_define(void);
 
 int cal_chunkid_offset(int *chunkid, int *offset, int *dim);
 
+void check_aggregate(int chkseq);
 

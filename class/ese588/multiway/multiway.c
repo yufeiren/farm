@@ -14,12 +14,27 @@ void up_plate(MW_ITEM *item)
 
 void multiway(MW_ITEM *item)
 {
-	int i;
-	for (i = 0; i < dimnum; i ++) {
-	  printf("%d ", item->dim[i]);
+	int level;
+	int i, j;
+	MW_PLATE *plate;
+	int tmpdim[MAX_MULTIWAY_DIM];
+
+	/* update level(n-1) count */
+	plate = NULL;
+	TAILQ_FOREACH(plate, &mw_level_tqh[dimnum - 1], entries) {
+	  for (i = 0; i < plate->unit; i ++) {
+	    memcpy(tmpdim, item->dim, MAX_MULTIWAY_DIM * sizeof(int));
+	    /* set the `*' for group by */
+	    for (j = 0; j < dimnum; j ++)
+	      if (plate->dim[j] == -1)
+		tmpdim[j] = -1;
+	    if (memcmp(plate->buffer[i].dim, item->dim, dimnum * sizeof(int)) == 0) {
+	      plate->buffer[i].count ++;
+	      break;
+	    }
+	  }
 	}
-	printf("\n");
-		
+
 	return;
 }
 
@@ -28,6 +43,7 @@ void
 group_alloc(int star, MW_PLATE *plate)
 {
 	int i, j;
+	int base;
 
 	plate->unit = 1;
 	for (i = 0; i < star; i ++) {
@@ -42,49 +58,68 @@ group_alloc(int star, MW_PLATE *plate)
 		plate->unit *= chklen[i];
 	}
 
-	printf("total unit is %d\n", plate->unit);
+	printf("level: %d, plate unit %d\n", plate->level, plate->unit);
 
 	plate->buffer = (MW_GROUP *) malloc(plate->unit * sizeof(MW_GROUP));
 	memset(plate->buffer, '\0', plate->unit * sizeof(MW_GROUP));
 
 	/* init each group */
+	base = 1;
 	for (i = 0; i < star; i ++) {
+	  base *= dimlen[i];
 	  for (j = 0; j < plate->unit; j ++) {
 	    if (plate->dim[i] == -1)
 	      plate->buffer[j].dim[i] = -1;
 	    else
-	      plate->buffer[j].dim[i] = j % dimlen[i];
+	      plate->buffer[j].dim[i] = j / base;
 	  }
 	}
 
 	for (i = star + 1; i < dimnum; i ++) {
+	  base *= chklen[i];
 	  for (j = 0; j < plate->unit; j ++) {
 	    if (plate->dim[i] == -1)
 	      plate->buffer[j].dim[i] = -1;
 	    else
-	      plate->buffer[j].dim[i] = j % chklen[i];
+	      plate->buffer[j].dim[i] = j / chklen[i];
 	  }
 	}
 
 	return;
 }
 
-void build_mmst(MW_PLATE *plate)
+
+int
+check_plate(int level, int *dim)
 {
-	if (plate->level == 1)
+  MW_PLATE *plate = NULL;
+  TAILQ_FOREACH(plate, &mw_level_tqh[level], entries)
+    if (memcmp(dim, plate->dim, sizeof(int) * MAX_MULTIWAY_DIM) == 0)
+      return 1;
+
+  return 0;
+}
+
+void
+build_mmst(MW_PLATE *plate)
+{
+	if (plate->level == 0)
 		return;
 
 	int i;
 	int tmpdim[MAX_MULTIWAY_DIM];
 
 	MW_PLATE *child_plate;
-	for (i = 0; i < dimnum; i ++) {
+	/* i is the coordinate of the dimension */
+       	for (i = dimnum - 1; i > -1; i --) {
 		if (plate->dim[i] == -1)
 			continue;
 
 		/* check if the child node exist */
 		memcpy(tmpdim, plate->dim, MAX_MULTIWAY_DIM*sizeof(int));
 		tmpdim[i] = -1;
+		if (check_plate(plate->level - 1, tmpdim) == 1)
+			continue;
 
 		/* create the child node */
 		child_plate = (MW_PLATE *) malloc(sizeof(MW_PLATE));
@@ -92,9 +127,14 @@ void build_mmst(MW_PLATE *plate)
 		memcpy(child_plate->dim, tmpdim, \
 		       MAX_MULTIWAY_DIM * sizeof(int));
 
+		plate->child[dimnum - (i + 1)] = child_plate;
+
 		/* allocate memory for this plate */
 		child_plate->level = plate->level - 1;
 		group_alloc(i, child_plate);
+
+		/* insert into the level list */
+		TAILQ_INSERT_TAIL(&mw_level_tqh[child_plate->level], child_plate, entries);
 
 		build_mmst(child_plate);
 	}
@@ -229,8 +269,9 @@ int parseline(char *buf, int *array)
 
 int parse_define()
 {
-  char line[1024];
-  FILE *fp;
+	char line[1024];
+	FILE *fp;
+	
 	fp = fopen(F_DEFINATION, "r");
 	if (fp == NULL) {
 		fprintf(stderr, "can not open file: %s\n", F_DEFINATION);
@@ -289,5 +330,76 @@ cal_chunkid_offset(int *chunkid, int *offset, int *dim)
 	printf("offset   is %d\n", *offset);
 
 	return 0;
+}
+
+
+void
+check_aggregate(int chkseq)
+{
+	int i, j, k;
+	int base;
+	int groupbase;
+
+	int tmpdim[MAX_MULTIWAY_DIM];
+	MW_PLATE *plate;
+
+	for(i = 0; i < dimnum; i ++) {
+    base = 1;
+    plate = NULL;
+
+    for (j = 0; j <= i; j ++) {
+      base *= chknum[j];
+    }
+
+    if (chkseq % base != 0)
+      break;
+
+      /* 0. find out related plate
+       * 1. update child
+       * 2. write out the plate and/or child plate
+       * 3. reformat the plate
+       */
+      memset(tmpdim, 0, MAX_MULTIWAY_DIM * sizeof(int));
+      tmpdim[i] = -1;
+
+      TAILQ_FOREACH(plate, &mw_level_tqh[dimnum - 1], entries) {
+	if (memcmp(tmpdim, plate->dim, dimnum * sizeof(int)) == 0)
+	  break;
+      }
+
+      /* aggregate child node */
+
+      /* write out the plate */
+      for (k = 0; k < plate->unit; k ++) {
+	if (plate->buffer[k].count != 0)
+	  printf("group by: %d\n", plate->buffer[k].count);
+      }
+
+      /* reformat the plate for the next round */
+	/* init each group */
+      int m, n;
+	groupbase = 1;
+	for (m = 0; m < i; m ++) { /* here i is the star */
+	  groupbase *= dimlen[m];
+	  for (n = 0; n < plate->unit; n ++) {
+	    if (plate->dim[m] == -1)
+	      plate->buffer[n].dim[m] = -1;
+	    else
+	      plate->buffer[n].dim[m] = n / groupbase;
+	  }
+	}
+
+	for (m = i + 1; m < dimnum; m ++) {
+	  groupbase *= chklen[m];
+	  for (n = 0; n < plate->unit; n ++) {
+	    if (plate->dim[m] == -1)
+	      plate->buffer[n].dim[m] = -1;
+	    else
+	      plate->buffer[n].dim[m] = n / chklen[m];
+	  }
+	}
+  }
+
+  return;
 }
 
