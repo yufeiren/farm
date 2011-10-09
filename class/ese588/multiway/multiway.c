@@ -472,12 +472,21 @@ void
 aggr_child(MW_PLATE *plate)
 {
   int i, j;
-  int m, n;
+  int m, n, p;
   MW_PLATE *child;
   MW_PLATE *group;
   int star;
   int tmpdim[MAX_MULTIWAY_DIM];
   int length;
+  int iternum;
+
+  /* multiway each unit to its child plate
+     for (i = 0; i < plate->unit; i ++) {*/
+    /* check if some plates need to write out
+check_aggregate
+
+    multiway_unit(plate, plate->buffer[i]);
+    }*/
 
   for (i = 0; i < dimnum; i ++) {
     if (plate->child[i] == NULL)
@@ -496,28 +505,42 @@ aggr_child(MW_PLATE *plate)
     }
 
     length = plate->unit / child->unit;
-    for (m = 0; m < child->unit; m ++) {
-      for (n = 0; n < length; n ++) {
-	child->buffer[m].count += plate->buffer[n + m * length].count;
+
+    iternum = plate->unit / (dimlen[star] * child->unit);
+    for (m = 0; m < iternum; m ++) {
+      for (n = 0; n < child->unit; n ++) {
+	for (p = 0; p < dimlen[star]; p ++) {
+	  child->buffer[n].count += plate->buffer[p + n * dimlen[star] + m * plate->unit / iternum].count;
+	}
+      /* setup the dimension */
+      memcpy(child->buffer[n].dim, plate->buffer[n * dimlen[star] + m * plate->unit / iternum].dim, dimnum * sizeof(int));
+      child->buffer[n].dim[star] = -1;
       }
 
-      printf("length is %d\n", length);
+      /* write out this plate
+      for (n = 0; n < child->unit; n ++) {
+	if (child->buffer[n].count != 0) {
+
+	}
+      }
+
       prt_dim(plate->buffer[m * length].dim, "parent group dim");
       memcpy(child->buffer[m].dim, plate->buffer[m * length].dim, dimnum * sizeof(int));
-      child->buffer[m].dim[star] = -1;
-    }
+      child->buffer[m].dim[star] = -1;*/
 
     /* recursive writeout child */
     aggr_child(child);
 
     /* write out this child content + clear the content of the group */
-    for (m = 0; m < child->unit; m ++) {
-      if (child->buffer[m].count != 0) {
-	prt_dim(child->buffer[m].dim, "aggr_child: coboid group by result");
+    for (n = 0; n < child->unit; n ++) {
+      if (child->buffer[n].count != 0) {
+	prt_dim(child->buffer[n].dim, "aggr_child: coboid group by result");
 	printf("==============> %d\n", child->buffer[m].count);
 	child->buffer[m].count = 0;
       }
     }
+    }
+
 
   }
 
