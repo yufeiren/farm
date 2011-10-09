@@ -97,6 +97,11 @@ group_alloc(int star, MW_PLATE *plate)
 				plate->buffer[j].dim[i] = j / base;
 		}
 	}
+	
+	/* update star column */
+	for (j = 0; j < plate->unit; j ++) {
+		plate->buffer[j].dim[star] = -1;
+	}
 
 	for (i = star + 1; i < dimnum; i ++) {
 		base *= chklen[i];
@@ -115,12 +120,12 @@ group_alloc(int star, MW_PLATE *plate)
 int
 check_plate(int level, int *dim)
 {
-  MW_PLATE *plate = NULL;
-  TAILQ_FOREACH(plate, &mw_level_tqh[level], entries)
-    if (memcmp(dim, plate->dim, sizeof(int) * MAX_MULTIWAY_DIM) == 0)
-      return 1;
-
-  return 0;
+	MW_PLATE *plate = NULL;
+	TAILQ_FOREACH(plate, &mw_level_tqh[level], entries)
+		if (memcmp(dim, plate->dim, sizeof(int) * MAX_MULTIWAY_DIM) == 0)
+			return 1;
+	
+	return 0;
 }
 
 void
@@ -139,7 +144,7 @@ build_mmst(MW_PLATE *plate)
 			continue;
 
 		/* check if the child node exist */
-		memcpy(tmpdim, plate->dim, MAX_MULTIWAY_DIM*sizeof(int));
+		memcpy(tmpdim, plate->dim, MAX_MULTIWAY_DIM * sizeof(int));
 		tmpdim[i] = -1;
 		if (check_plate(plate->level - 1, tmpdim) == 1)
 			continue;
@@ -154,17 +159,14 @@ build_mmst(MW_PLATE *plate)
 		child_plate->level = plate->level - 1;
 		group_alloc(i, child_plate);
 		child_plate->starpos = i;
-
-		printf("plate and child plate:\n");
+		
+		printf("plate info\n");
 		prt_plate(plate);
+		printf("child plate info\n");
 		prt_plate(child_plate);
-		printf("plate addr %ld\n", plate);
 
 		plate->child[plate->childnum] = child_plate;
-		printf("child plate addr %ld: pos %d\n", plate->child[dimnum - i - 1], plate->childnum);
 		plate->childnum ++;
-
-		printf("==============\n");
 
 		/* insert into the level list */
 		TAILQ_INSERT_TAIL(&mw_level_tqh[child_plate->level], child_plate, entries);
@@ -538,6 +540,33 @@ PRINT_OUT_PLATE:
 				"aggr_child: coboid group by result");
 			printf("==============> %d\n", \
 				plate->buffer[k].count);
+		}
+	}
+	
+	/* reformat the plate */
+	base = 1;
+	for (i = 0; i < plate->starpos; i ++) {
+		base *= [i];
+		for (j = 0; j < plate->unit; j ++) {
+			if (plate->dim[i] == -1)
+				plate->buffer[j].dim[i] = -1;
+			else
+				plate->buffer[j].dim[i] = j / base;
+		}
+	}
+	
+	/* update star column */
+	for (j = 0; j < plate->unit; j ++) {
+		plate->buffer[j].dim[star] = -1;
+	}
+	
+	for (i = star + 1; i < dimnum; i ++) {
+		base *= chklen[i];
+		for (j = 0; j < plate->unit; j ++) {
+			if (plate->dim[i] == -1)
+				plate->buffer[j].dim[i] = -1;
+			else
+				plate->buffer[j].dim[i] = j / chklen[i];
 		}
 	}
 	
