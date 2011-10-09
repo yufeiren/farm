@@ -96,5 +96,3 @@ void prt_dim(int *dim, char *msg);
 /* aggragate the child plate */
 void aggr_child(MW_PLATE *plate);
 
-void dump_plate(MW_PLATE *plate);
-

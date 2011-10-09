@@ -373,8 +373,28 @@ check_aggregate(int chkseq)
 		 * 2. write out the plate and/or child plate
 		 * 3. reformat the plate
 		 */
+		memset(tmpdim, 0, MAX_MULTIWAY_DIM * sizeof(int));
+		tmpdim[i] = -1;
+
+		TAILQ_FOREACH(plate, &mw_level_tqh[dimnum - 1], entries) {
+			if (memcmp(tmpdim, plate->dim, dimnum * sizeof(int)) == 0)
+				break;
+		}
+
+		prt_plate(plate);
+
 		/* aggregate the child node */
 		aggr_child(plate);
+
+		/* write out the plate */
+		for (k = 0; k < plate->unit; k ++) {
+			if (plate->buffer[k].count != 0) {
+				prt_dim(plate->buffer[k].dim, \
+					"coboid group by result");
+				printf("==============> %d\n", \
+					plate->buffer[k].count);
+			}
+		}
 
 
 		/* reformat the plate for the next round */
@@ -504,20 +524,3 @@ aggr_child(MW_PLATE *plate)
   return;
 }
 
-
-void
-dump_plate(MW_PLATE *plate)
-{
-  int k;
-		/* write out the plate */
-		for (k = 0; k < plate->unit; k ++) {
-			if (plate->buffer[k].count != 0) {
-				prt_dim(plate->buffer[k].dim, \
-					"coboid group by result");
-				printf("==============> %d\n", \
-					plate->buffer[k].count);
-			}
-		}
-
-  return;
-}
