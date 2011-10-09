@@ -4,10 +4,10 @@
 int
 main(int argc, char **argv)
 {
-  int i;
+	int i;
 
 	for (i = 0; i < MAX_MULTIWAY_DIM; i ++) {
-	  TAILQ_INIT(&mw_level_tqh[i]);
+		TAILQ_INIT(&mw_level_tqh[i]);
 	}
 
 	TAILQ_INIT(&free_mw_item_tqh);

@@ -39,13 +39,20 @@ struct Mw_group {
 typedef struct Mw_group MW_GROUP;
 
 struct Mw_plate {
-	int unit;
 	int level;
 	int dim[MAX_MULTIWAY_DIM]; /* dim[x] == -1 means `*' */
+	
 	int childnum;
-	void *child[MAX_MULTIWAY_DIM];
+	void *child[MAX_MULTIWAY_DIM];	/* child node address */
+	
+	int unit;
 	MW_GROUP *buffer;
 
+	int dimnum[MAX_MULTIWAY_DIM];	/* each dimension length */
+	int chunknum;
+	
+	int starpos;	/* star position in the child nod */
+	
 	TAILQ_ENTRY(Mw_plate) entries;
 };
 typedef struct Mw_plate MW_PLATE;
@@ -96,3 +103,4 @@ void prt_dim(int *dim, char *msg);
 /* aggragate the child plate */
 void aggr_child(MW_PLATE *plate);
 
+void multiway_child(MW_GROUP *group, MW_PLATE *plate);
