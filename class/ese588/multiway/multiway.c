@@ -6,10 +6,26 @@
 #include "multiway.h"
 
 /* update the plate count */
-void up_plate(MW_ITEM *item)
+void up_plate(MW_GROUP *group, MW_PLATE *plate)
 {
-
-  return;
+	int i, j;
+	MW_GROUP *child_group;
+	int tmpdim[MAX_MULTIWAY_DIM];
+	
+	memset(tmpdim, 0, MAX_MULTIWAY_DIM * sizeof(int));
+	memcpy(tmpdim, group->dim, dimnum * sizeof(int));
+	tmpdim[plate->starpos] = -1;
+	
+	for (i = 0; i < plate->unit; i ++) {
+		child_group = plate->buffer + m;
+		if (memcmp(tmpdim, child_group->dim, dimnum * sizeof(int)) == 0)
+		{
+			child_group->count += group->count;
+			break;
+		}
+	}
+	
+	return;
 }
 
 void multiway(MW_ITEM *item)
@@ -470,11 +486,16 @@ aggr_child(MW_PLATE *plate)
 		/* multiway each group */
 		for (m = 0; m < plate->unit; m ++) {
 			group = plate->buffer + m;
+			chunkid = offset = 0;
 			cal_chunkid_offset(&chunkid, &offset, group->dim);
 			if ( (seq == chunkid)
 				&& (group->count != 0) ) {
 				/* multiway to child */
-printf("chunk id is %d\n", chunkid);
+printf("chunk id is %d offset %d:  count: %d\n", chunkid, offset, group->count);
+				for (n = 0; n < plate->childnum; n ++) {
+					child = plate->child[n];
+					update(group, child);
+				}
 			}
 		}
 		

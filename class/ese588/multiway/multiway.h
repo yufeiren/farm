@@ -80,7 +80,7 @@ int check_plate(int level, int *dim);
 
 void load_chunk(int chunkid);
 
-void up_plate(MW_ITEM *);
+void up_plate(MW_GROUP *group, MW_PLATE *plate);
 
 /* process one item, update all related plate */
 void multiway(MW_ITEM *);
