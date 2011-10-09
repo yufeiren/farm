@@ -448,7 +448,7 @@ check_aggregate(int chkseq)
 void
 aggr_child(MW_PLATE *plate)
 {
-	int i, j;
+	int i, j, k;
 	int m, n, p;
 	MW_PLATE *child;
 	MW_PLATE *group;
@@ -458,13 +458,24 @@ aggr_child(MW_PLATE *plate)
 	int iternum;
 
 	/* check if this plate has child */
-	if (plate->childnum == 0)
+	if (plate->childnum == 0) {
+		for (k = 0; k < plate->unit; k ++) {
+			if (plate->buffer[k].count != 0) {
+				prt_dim(plate->buffer[k].dim, \
+					"aggr_child: coboid group by result");
+				printf("==============> %d\n", \
+					plate->buffer[k].count);
+			}
+		}
+		
 		return;
+	}
 
 	int chunkid, offset;
 	int base;
+	int seq;
 
-	for (seq = 0; seq < plate->chunknum； seq ++) {
+	for (seq = 0; seq < plate->chunknum; seq ++) {
 		for (i = 0; i < dimnum; i ++) {
 			if (plate->dim[i] == -1)
 				continue;
