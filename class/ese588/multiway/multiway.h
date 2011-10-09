@@ -33,8 +33,8 @@ struct Mw_item {
 typedef struct Mw_item MW_ITEM;
 
 struct Mw_group {
-  int dim[MAX_MULTIWAY_DIM];
-  int count;
+	int dim[MAX_MULTIWAY_DIM];
+	int count;
 };
 typedef struct Mw_group MW_GROUP;
 

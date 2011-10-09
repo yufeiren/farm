@@ -451,7 +451,6 @@ aggr_child(MW_PLATE *plate)
 	int i, j, k;
 	int m, n, p;
 	MW_PLATE *child;
-	MW_PLATE *group;
 	int star;
 	int tmpdim[MAX_MULTIWAY_DIM];
 	int length;
@@ -459,23 +458,26 @@ aggr_child(MW_PLATE *plate)
 
 	/* check if this plate has child */
 	if (plate->childnum == 0) {
-		for (k = 0; k < plate->unit; k ++) {
-			if (plate->buffer[k].count != 0) {
-				prt_dim(plate->buffer[k].dim, \
-					"aggr_child: coboid group by result");
-				printf("==============> %d\n", \
-					plate->buffer[k].count);
-			}
-		}
-		
-		return;
+		goto PRINT_OUT_PLATE;
 	}
 
 	int chunkid, offset;
 	int base;
 	int seq;
+	MW_GROUP* group;
 
 	for (seq = 0; seq < plate->chunknum; seq ++) {
+		/* multiway each group */
+		for (m = 0; m < plate->unit; m ++) {
+			group = plate->buffer + m;
+			cal_chunkid_offset(&chunkid, &offset, group->dim);
+			if ( (seq == chunkid)
+				&& (group->count != 0) ) {
+				/* multiway to child */
+printf("chunk id is %d\n", chunkid);
+			}
+		}
+		
 		for (i = 0; i < dimnum; i ++) {
 			if (plate->dim[i] == -1)
 				continue;
@@ -490,13 +492,16 @@ aggr_child(MW_PLATE *plate)
 				break;
 	
 			/* update related child, here `i' is the star */
-			memset(tmpdim, 0, dimnum * sizeof(int));
+			memset(tmpdim, 0, MAX_MULTIWAY_DIM * sizeof(int));
+			memcpy(tmpdim, plate->dim, dimnum * sizeof(int));
 			tmpdim[i] = -1;
 			
 			for (j = 0; j < plate->childnum; j ++) {
 				child = plate->child[j];
 				if (memcmp(tmpdim, child->dim, dimnum * sizeof(int)) == 0)
 					break;
+				else
+					child = NULL;
 			}
 			
 			if (child != NULL) {
@@ -505,6 +510,8 @@ aggr_child(MW_PLATE *plate)
 		}
 	}
 
+
+PRINT_OUT_PLATE:
 	for (k = 0; k < plate->unit; k ++) {
 		if (plate->buffer[k].count != 0) {
 			prt_dim(plate->buffer[k].dim, \
