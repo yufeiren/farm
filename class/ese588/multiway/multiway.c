@@ -17,7 +17,7 @@ void up_plate(MW_GROUP *group, MW_PLATE *plate)
 	tmpdim[plate->starpos] = -1;
 	
 	for (i = 0; i < plate->unit; i ++) {
-		child_group = plate->buffer + m;
+		child_group = plate->buffer + i;
 		if (memcmp(tmpdim, child_group->dim, dimnum * sizeof(int)) == 0)
 		{
 			child_group->count += group->count;
