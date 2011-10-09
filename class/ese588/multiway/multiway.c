@@ -510,11 +510,11 @@ check_aggregate
     for (m = 0; m < iternum; m ++) {
       for (n = 0; n < child->unit; n ++) {
 	for (p = 0; p < dimlen[star]; p ++) {
-	  child->buffer[n].count += plate->buffer[p + n * dimlen[star] + m * plate->unit / iternum].count;
+	  child->buffer[n].count += plate->buffer[p + n * dimlen[star] + m * child->unit * dimlen[star]].count;
 	}
-      /* setup the dimension */
-      memcpy(child->buffer[n].dim, plate->buffer[n * dimlen[star] + m * plate->unit / iternum].dim, dimnum * sizeof(int));
-      child->buffer[n].dim[star] = -1;
+	/* setup the dimension */
+	memcpy(child->buffer[n].dim, plate->buffer[n * dimlen[star] + m * child->unit * dimlen[star]].dim, dimnum * sizeof(int));
+	child->buffer[n].dim[star] = -1;
       }
 
       /* write out this plate
@@ -528,15 +528,15 @@ check_aggregate
       memcpy(child->buffer[m].dim, plate->buffer[m * length].dim, dimnum * sizeof(int));
       child->buffer[m].dim[star] = -1;*/
 
-    /* recursive writeout child */
+    /* recursive write out child */
     aggr_child(child);
 
     /* write out this child content + clear the content of the group */
     for (n = 0; n < child->unit; n ++) {
       if (child->buffer[n].count != 0) {
 	prt_dim(child->buffer[n].dim, "aggr_child: coboid group by result");
-	printf("==============> %d\n", child->buffer[m].count);
-	child->buffer[m].count = 0;
+	printf("==============> %d\n", child->buffer[n].count);
+	child->buffer[n].count = 0;
       }
     }
     }
