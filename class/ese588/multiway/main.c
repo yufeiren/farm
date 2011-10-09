@@ -56,6 +56,7 @@ main(int argc, char **argv)
 		}
 	}
 
+	/* load the pseudo last chunk */
 	check_aggregate(i);
 
 	exit(EXIT_SUCCESS);

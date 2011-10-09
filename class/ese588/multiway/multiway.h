@@ -42,6 +42,7 @@ struct Mw_plate {
 	int unit;
 	int level;
 	int dim[MAX_MULTIWAY_DIM]; /* dim[x] == -1 means `*' */
+	int childnum;
 	void *child[MAX_MULTIWAY_DIM];
 	MW_GROUP *buffer;
 
@@ -91,4 +92,7 @@ void check_aggregate(int chkseq);
 
 void prt_plate(MW_PLATE *plate);
 void prt_dim(int *dim, char *msg);
+
+/* aggragate the child plate */
+void aggr_child(MW_PLATE *plate);
 

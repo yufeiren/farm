@@ -129,19 +129,28 @@ build_mmst(MW_PLATE *plate)
 		memcpy(child_plate->dim, tmpdim, \
 		       MAX_MULTIWAY_DIM * sizeof(int));
 
-		plate->child[dimnum - (i + 1)] = child_plate;
-
 		/* allocate memory for this plate */
 		child_plate->level = plate->level - 1;
 		group_alloc(i, child_plate);
 
+		printf("plate and child plate:\n");
+		prt_plate(plate);
 		prt_plate(child_plate);
+		printf("plate addr %ld\n", plate);
+
+		plate->child[plate->childnum] = child_plate;
+		printf("child plate addr %ld: pos %d\n", plate->child[dimnum - i - 1], plate->childnum);
+		plate->childnum ++;
+
+		printf("==============\n");
 
 		/* insert into the level list */
 		TAILQ_INSERT_TAIL(&mw_level_tqh[child_plate->level], child_plate, entries);
 
 		build_mmst(child_plate);
 	}
+	prt_plate(plate);
+	printf("has child: %d\n", plate->childnum);
 
 	return;
 }
@@ -346,6 +355,7 @@ check_aggregate(int chkseq)
 
 	int tmpdim[MAX_MULTIWAY_DIM];
 	MW_PLATE *plate;
+	MW_PLATE *child_plate;
 
 	for(i = 0; i < dimnum; i ++) {
 		base = 1;
@@ -373,34 +383,36 @@ check_aggregate(int chkseq)
 
 		prt_plate(plate);
 
-		/* aggregate child node */
+		/* aggregate the child node */
+		aggr_child(plate);
 
 		/* write out the plate */
 		for (k = 0; k < plate->unit; k ++) {
 			if (plate->buffer[k].count != 0) {
-				prt_dim(plate->buffer[k].dim, "coboid group by result");
-				printf("==============> %d\n", plate->buffer[k].count);
+				prt_dim(plate->buffer[k].dim, \
+					"coboid group by result");
+				printf("==============> %d\n", \
+					plate->buffer[k].count);
 			}
 		}
 
 		/* reformat the plate for the next round */
-	/* init each group */
+		/* init each group */
 
-	groupbase = 1;
-	for (m = 0; m < i; m ++) { /* here i is the star */
-	  for (n = 0; n < plate->unit; n ++) {
-	    if (plate->dim[m] == -1)
-	      plate->buffer[n].dim[m] = -1;
-	    else
-	      plate->buffer[n].dim[m] = (n / groupbase) % dimlen[i];
+		groupbase = 1;
+		for (m = 0; m < i; m ++) { /* here i is the star */
+			for (n = 0; n < plate->unit; n ++) {
+				if (plate->dim[m] == -1)
+					plate->buffer[n].dim[m] = -1;
+				else
+					plate->buffer[n].dim[m] = (n / groupbase) % dimlen[i];
+			}
+			groupbase *= dimlen[m];
+		}
 
-	  }
-	  groupbase *= dimlen[m];
-	}
-
-	  for (n = 0; n < plate->unit; n ++) {
-	      plate->buffer[n].dim[i] = -1;
-	  }
+		for (n = 0; n < plate->unit; n ++) {
+			plate->buffer[n].dim[i] = -1;
+		}
 
 	for (m = i + 1; m < dimnum; m ++) {
 	  for (n = 0; n < plate->unit; n ++) {
@@ -411,6 +423,7 @@ check_aggregate(int chkseq)
 	  }
 	  groupbase *= chklen[m];
 	}
+
 	/* reset cuboid's count */
 	  for (n = 0; n < plate->unit; n ++) {
 		plate->buffer[n].count = 0;
@@ -450,6 +463,59 @@ prt_dim(int *dim, char *msg)
       printf("%d ", dim[i]);
   }
   printf("): %s\n", msg);
+
+  return;
+}
+
+void
+aggr_child(MW_PLATE *plate)
+{
+  int i, j;
+  int m, n;
+  MW_PLATE *child;
+  MW_PLATE *group;
+  int star;
+  int tmpdim[MAX_MULTIWAY_DIM];
+  int length;
+
+  for (i = 0; i < dimnum; i ++) {
+    if (plate->child[i] == NULL)
+      break;
+
+    child = plate->child[i];
+    printf("deal with child plate: ");
+    prt_plate(child);
+
+    /* find the star */
+    for (j = 0; j < dimnum; j ++) {
+      if (plate->dim[j] != child->dim[j]) {
+	star = j;
+	break;
+      }
+    }
+
+    length = plate->unit / child->unit;
+    for (m = 0; m < child->unit; m ++) {
+      for (n = 0; n < length; n ++) {
+	child->buffer[m].count += plate->buffer[n + m * length].count;
+      }
+      memcpy(child->buffer[m].dim, plate->buffer[0 + m * length].dim, dimnum * sizeof(int));
+      child->buffer[m].dim[star] = -1;
+    }
+
+    /* recursive writeout child */
+    aggr_child(child);
+
+    /* write out this child content + clear the content of the group */
+    for (m = 0; m < child->unit; m ++) {
+      if (child->buffer[m].count != 0) {
+	prt_dim(child->buffer[m].dim, "coboid group by result");
+	printf("==============> %d\n", child->buffer[m].count);
+	child->buffer[m].count = 0;
+      }
+    }
+
+  }
 
   return;
 }
