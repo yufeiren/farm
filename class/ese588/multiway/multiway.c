@@ -546,7 +546,7 @@ PRINT_OUT_PLATE:
 	/* reformat the plate */
 	base = 1;
 	for (i = 0; i < plate->starpos; i ++) {
-		base *= [i];
+		base *= dim[i];
 		for (j = 0; j < plate->unit; j ++) {
 			if (plate->dim[i] == -1)
 				plate->buffer[j].dim[i] = -1;
