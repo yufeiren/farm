@@ -373,28 +373,9 @@ check_aggregate(int chkseq)
 		 * 2. write out the plate and/or child plate
 		 * 3. reformat the plate
 		 */
-		memset(tmpdim, 0, MAX_MULTIWAY_DIM * sizeof(int));
-		tmpdim[i] = -1;
-
-		TAILQ_FOREACH(plate, &mw_level_tqh[dimnum - 1], entries) {
-			if (memcmp(tmpdim, plate->dim, dimnum * sizeof(int)) == 0)
-				break;
-		}
-
-		prt_plate(plate);
-
 		/* aggregate the child node */
 		aggr_child(plate);
 
-		/* write out the plate */
-		for (k = 0; k < plate->unit; k ++) {
-			if (plate->buffer[k].count != 0) {
-				prt_dim(plate->buffer[k].dim, \
-					"coboid group by result");
-				printf("==============> %d\n", \
-					plate->buffer[k].count);
-			}
-		}
 
 		/* reformat the plate for the next round */
 		/* init each group */
@@ -499,7 +480,10 @@ aggr_child(MW_PLATE *plate)
       for (n = 0; n < length; n ++) {
 	child->buffer[m].count += plate->buffer[n + m * length].count;
       }
-      memcpy(child->buffer[m].dim, plate->buffer[0 + m * length].dim, dimnum * sizeof(int));
+
+      printf("length is %d\n", length);
+      prt_dim(plate->buffer[m * length].dim, "parent group dim");
+      memcpy(child->buffer[m].dim, plate->buffer[m * length].dim, dimnum * sizeof(int));
       child->buffer[m].dim[star] = -1;
     }
 
@@ -509,7 +493,7 @@ aggr_child(MW_PLATE *plate)
     /* write out this child content + clear the content of the group */
     for (m = 0; m < child->unit; m ++) {
       if (child->buffer[m].count != 0) {
-	prt_dim(child->buffer[m].dim, "coboid group by result");
+	prt_dim(child->buffer[m].dim, "aggr_child: coboid group by result");
 	printf("==============> %d\n", child->buffer[m].count);
 	child->buffer[m].count = 0;
       }
@@ -520,3 +504,20 @@ aggr_child(MW_PLATE *plate)
   return;
 }
 
+
+void
+dump_plate(MW_PLATE *plate)
+{
+  int k;
+		/* write out the plate */
+		for (k = 0; k < plate->unit; k ++) {
+			if (plate->buffer[k].count != 0) {
+				prt_dim(plate->buffer[k].dim, \
+					"coboid group by result");
+				printf("==============> %d\n", \
+					plate->buffer[k].count);
+			}
+		}
+
+  return;
+}
