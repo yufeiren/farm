@@ -363,7 +363,6 @@ cal_chunkid_offset(int *chunkid, int *offset, int *dim)
 		*chunkid += (dim[i] / chklen[i]) * dimbase;
 		*offset += (dim[i] % chklen[i]) * chunkbase;
 	}
-	printf("chunk id is %d, offset is %d\n", *chunkid, *offset);
 
 	return 0;
 }
@@ -494,7 +493,7 @@ aggr_child(MW_PLATE *plate)
 printf("chunk id is %d offset %d:  count: %d\n", chunkid, offset, group->count);
 				for (n = 0; n < plate->childnum; n ++) {
 					child = plate->child[n];
-					update(group, child);
+					up_plate(group, child);
 				}
 			}
 		}
