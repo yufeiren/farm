@@ -14,6 +14,7 @@
 
 #define MW_FIELD_SEP	' '
 
+extern int debug;
 
 int dimnum;
 int dimlen[MAX_MULTIWAY_DIM];
