@@ -34,25 +34,28 @@ void multiway(MW_ITEM *item)
 	int i, j;
 	MW_PLATE *plate;
 	int tmpdim[MAX_MULTIWAY_DIM];
-	prt_dim(item->dim, "multiway this item");
+	
+	if (debug)
+		prt_dim(item->dim, "multiway this item");
 
 	/* update level(n-1) count */
 	plate = NULL;
 	TAILQ_FOREACH(plate, &mw_level_tqh[dimnum - 1], entries) {
-	  for (i = 0; i < plate->unit; i ++) {
-	    memcpy(tmpdim, item->dim, MAX_MULTIWAY_DIM * sizeof(int));
-
-	    /* set the `*' for group by */
-	    for (j = 0; j < dimnum; j ++)
-	      if (plate->dim[j] == -1)
-		tmpdim[j] = -1;
-
-	    if (memcmp(plate->buffer[i].dim, tmpdim, dimnum * sizeof(int)) == 0) {
-	      plate->buffer[i].count ++;
-	      prt_dim(plate->buffer[i].dim, "group by this cuboids");
-	      break;
-	    }
-	  }
+		for (i = 0; i < plate->unit; i ++) {
+			memcpy(tmpdim, item->dim, MAX_MULTIWAY_DIM * sizeof(int));
+			
+			/* set the `*' for group by */
+			for (j = 0; j < dimnum; j ++)
+				if (plate->dim[j] == -1)
+					tmpdim[j] = -1;
+			
+			if (memcmp(plate->buffer[i].dim, tmpdim, dimnum * sizeof(int)) == 0) {
+				plate->buffer[i].count ++;
+				if (debug)
+					prt_dim(plate->buffer[i].dim, "group by this cuboids");
+				break;
+			}
+		}
 	}
 
 	return;
@@ -160,11 +163,13 @@ build_mmst(MW_PLATE *plate)
 		group_alloc(i, child_plate);
 		child_plate->starpos = i;
 		
-		printf("plate info\n");
-		prt_plate(plate);
-		printf("child plate info\n");
-		prt_plate(child_plate);
-
+		if (debug) {
+			printf("plate info\n");
+			prt_plate(plate);
+			printf("child plate info\n");
+			prt_plate(child_plate);
+		}
+		
 		plate->child[plate->childnum] = child_plate;
 		plate->childnum ++;
 
@@ -173,8 +178,12 @@ build_mmst(MW_PLATE *plate)
 
 		build_mmst(child_plate);
 	}
-	prt_plate(plate);
-	printf("has child: %d\n", plate->childnum);
+	
+	if (debug) {
+		prt_plate(plate);
+		printf("has child: %d\n", plate->childnum);
+	}
+		
 
 	return;
 }
@@ -319,7 +328,8 @@ int parse_define()
 	memset(line, '\0', 1024);
 	if (fgets(line, 1024, fp) != NULL)
 		parseline(line, &dimnum);
-	printf("dimnum: %d\n", dimnum);
+	if (debug)
+		printf("dimnum: %d\n", dimnum);
 
 	/* dimensions */
 	memset(line, '\0', 1024);
@@ -338,7 +348,8 @@ int parse_define()
 			chknum[i] = dimlen[i] / chklen[i];
 		else
 			chknum[i] = (dimlen[i] / chklen[i] + 1);
-		printf("dim-%d: number of chunks %d\n", i, chknum[i]);
+		if (debug)
+			printf("dim-%d: number of chunks %d\n", i, chknum[i]);
 	}
 
 	fclose(fp);
@@ -406,7 +417,8 @@ check_aggregate(int chkseq)
 				break;
 		}
 
-		prt_plate(plate);
+		if (debug)
+			prt_plate(plate);
 
 		/* aggregate the child node one by one */
 		aggr_child(plate);
@@ -492,7 +504,9 @@ aggr_child(MW_PLATE *plate)
 			if ( (seq == chunkid)
 				&& (group->count != 0) ) {
 				/* multiway to child */
-printf("chunk id is %d offset %d:  count: %d\n", chunkid, offset, group->count);
+				if (debug)
+					printf("chunk id is %d offset %d:  count: %d\n", \
+						chunkid, offset, group->count);
 				for (n = 0; n < plate->childnum; n ++) {
 					child = plate->child[n];
 					up_plate(group, child);
@@ -534,12 +548,12 @@ printf("chunk id is %d offset %d:  count: %d\n", chunkid, offset, group->count);
 
 
 PRINT_OUT_PLATE:
+	char buf[128];
 	for (k = 0; k < plate->unit; k ++) {
 		if (plate->buffer[k].count != 0) {
-			prt_dim(plate->buffer[k].dim, \
-				"aggr_child: coboid group by result");
-			printf("==============> %d\n", \
-				plate->buffer[k].count);
+			memset(buf, '\0', 128);
+			sprintf(buf, "group by result: %d", plate->buffer[k].count);
+			prt_dim(plate->buffer[k].dim, buf);
 		}
 	}
 	

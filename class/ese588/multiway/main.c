@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include "multiway.h"
 
+int debug = 0;
+
 int
 main(int argc, char **argv)
 {
@@ -13,6 +15,9 @@ main(int argc, char **argv)
 	TAILQ_INIT(&free_mw_item_tqh);
 	TAILQ_INIT(&mw_item_tqh);
 
+	if (memcmp(argv[1], "-D", 2) == 0)
+		debug = 1;
+
 	/* parse define.txt */
 	parse_define();
 
@@ -24,7 +29,9 @@ main(int argc, char **argv)
 	for (i = 0; i < dimnum; i ++) {
 		totaltrunknum *= chknum[i];
 	}
-	printf("chunk number is %d\n", totaltrunknum);
+	
+	if (debug)
+		printf("chunk number is %d\n", totaltrunknum);
 
 	MW_ITEM *item;
 	for (i = 0; i < totaltrunknum; i ++) {
@@ -36,17 +43,20 @@ main(int argc, char **argv)
 	MW_PLATE plate;
 	memset(&plate, '\0', sizeof(MW_PLATE));
 	plate.level = dimnum;
-	printf("start building the MMST\n");
+	if (debug)
+		printf("start building the MMST\n");
 	build_mmst(&plate);
-	printf("finish building the MMST\n");
+	if (debug)
+		printf("finish building the MMST\n");
 
 	for (i = 0; i < totaltrunknum; i ++) {
 		/* check if the some plate needs to write out
 		 * and reformat
 		 */
 	 	check_aggregate(i);
-
-		printf("start load chunk %d\n", i);
+	 	
+	 	if (debug)
+			printf("start load chunk %d\n", i);
 		load_chunk(i);
 		/* multiway each chunk */
 		while (!TAILQ_EMPTY(&mw_item_tqh)) {
