@@ -15,7 +15,7 @@ main(int argc, char **argv)
 	TAILQ_INIT(&free_mw_item_tqh);
 	TAILQ_INIT(&mw_item_tqh);
 
-	if (memcmp(argv[1], "-D", 2) == 0)
+	if ((argc == 2) && (memcmp(argv[1], "-D", 2) == 0))
 		debug = 1;
 
 	/* parse define.txt */
