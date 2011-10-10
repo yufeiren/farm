@@ -1,0 +1,11 @@
+1. compile the multiway application
+   $ make
+
+2. test
+   2.1 define the raw data format in the sample/define.txt
+   2.2 generate rawdata
+	$ ./sample/buildraw.sh > ./sample/rawdata.txt
+   2.3 multiway the raw data
+	$ ./multiway > ./sample/result.txt
+
+
