@@ -439,16 +439,16 @@ check_aggregate(int chkseq)
 		for (n = 0; n < plate->unit; n ++) {
 			plate->buffer[n].dim[i] = -1;
 		}
-
-	for (m = i + 1; m < dimnum; m ++) {
-	  for (n = 0; n < plate->unit; n ++) {
-	    if (plate->dim[m] == -1)
-	      plate->buffer[n].dim[m] = -1;
-	    else
-	      plate->buffer[n].dim[m] = (n / groupbase) % chklen[i];
-	  }
-	  groupbase *= chklen[m];
-	}
+		
+		for (m = i + 1; m < dimnum; m ++) {
+			for (n = 0; n < plate->unit; n ++) {
+				if (plate->dim[m] == -1)
+					plate->buffer[n].dim[m] = -1;
+				else
+					plate->buffer[n].dim[m] = (n / groupbase) % chklen[i];
+			}
+			groupbase *= chklen[m];
+		}
 
 	/* reset cuboid's count */
 	  for (n = 0; n < plate->unit; n ++) {
@@ -510,9 +510,9 @@ printf("chunk id is %d offset %d:  count: %d\n", chunkid, offset, group->count);
 				base *= chknum[j];
 			}
 			
-			if (seq % base != 0)
+			if (seq % base != (base - 1))
 				break;
-	
+
 			/* update related child, here `i' is the star */
 			memset(tmpdim, 0, MAX_MULTIWAY_DIM * sizeof(int));
 			memcpy(tmpdim, plate->dim, dimnum * sizeof(int));
@@ -567,6 +567,7 @@ PRINT_OUT_PLATE:
 				plate->buffer[j].dim[i] = -1;
 			else
 				plate->buffer[j].dim[i] = j / chklen[i];
+			plate->buffer[j].count = 0;
 		}
 	}
 	
