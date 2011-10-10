@@ -484,7 +484,8 @@ aggr_child(MW_PLATE *plate)
 	int tmpdim[MAX_MULTIWAY_DIM];
 	int length;
 	int iternum;
-
+	char buf[128];
+	
 	/* check if this plate has child */
 	if (plate->childnum == 0) {
 		goto PRINT_OUT_PLATE;
@@ -548,7 +549,6 @@ aggr_child(MW_PLATE *plate)
 
 
 PRINT_OUT_PLATE:
-	char buf[128];
 	for (k = 0; k < plate->unit; k ++) {
 		if (plate->buffer[k].count != 0) {
 			memset(buf, '\0', 128);
