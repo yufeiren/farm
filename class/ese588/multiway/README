@@ -1,3 +1,5 @@
+wget http://hpdtl.cewit.stonybrook.edu/meta/multiway.tar
+
 1. compile the multiway application
    $ make
 
@@ -8,4 +10,5 @@
    2.3 multiway the raw data
 	$ ./multiway > ./sample/result.txt
 
-
+CPU: time ./multiway > ./sample/result.txt
+MEM: top

@@ -206,7 +206,7 @@ load_chunk(int chunkid)
 		exit(EXIT_FAILURE);
 	}
 
-  /* take an item from free_mw_item list */
+	/* take an item from free_mw_item list */
 	memset(line, '\0', 1024);
 	while (fgets(line, 1024, cf) != NULL) {
 	  /* chunkid offset */
@@ -295,21 +295,21 @@ raw2chunk(char *raw, char *chunk)
 
 int parseline(char *buf, int *array)
 {
-  char *start;
-  char *end;
-  char value[16];
-  start = buf;
-  int i;
-
-  for (i = 0; (end = strchr(start, MW_FIELD_SEP)) != NULL; i++) {
+	char *start;
+	char *end;
+	char value[16];
+	start = buf;
+	int i;
+	
+	for (i = 0; (end = strchr(start, MW_FIELD_SEP)) != NULL; i++) {
 		memset(value, '\0', 16);
 		memcpy(value, start, end - start);
 		*(array + i) = atoi(value);
-
+		
 		start = end + 1;
-  }
-
-  return 0;
+	}
+	
+	return 0;
 }
 
 
