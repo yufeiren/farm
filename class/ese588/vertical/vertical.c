@@ -153,6 +153,7 @@ vjoin(CANSET *leftp, CANSET *rightp)
 			leftp->set[leftp->setcap-1];
 	}
 	
+	return newcp;
 }
 
 
