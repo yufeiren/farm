@@ -47,4 +47,4 @@ notes
 -----
 1. reduce the cost of registering long TID_sets: diffset
 
-
+2. if some purchase occures twice, how to handle that?

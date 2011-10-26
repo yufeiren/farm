@@ -1,24 +1,55 @@
 #include <sys/queue.h>
 
-struct Mw_item {
-	int chunkid;
-	int offset;
-	int dim[MAX_MULTIWAY_DIM];
-	void *content;
+#ifndef __VERTICAL_H
+#define __VERTICAL_H
 
-	TAILQ_ENTRY(Mw_item) entries;
+struct tid {
+	int id;
+	TAILQ_ENTRY(tids) entries;	
 };
-typedef struct Mw_item MW_ITEM;
+typedef struct tid TID;
 
-
-
-struct tidset {
-
+struct transac {
+	int	id;
+	int	num;		/* number of items in this transac */
+	int	*itemset;
 };
 
-
-struct patternset {
+/* candidate set */
+struct canset {
+	int setcap;		/* number of items in the set */
+	int *set;		/* set content */
+	int count;		/* # of tid */
+	TAILQ_HEAD(, tid)	tidset_tqh;
 	
-	
-	struct tidset tids;
+	TAILQ_ENTRY(canset) entries;
 };
+typedef struct canset CANSET;
+
+
+TAILQ_HEAD(, canset)	vertical_tqh;
+/* join(vertical-left, vertical-right) => canset_tqh */
+TAILQ_HEAD(, canset)	canset_tqh;
+
+/* insert one transaction into 
+ * the vertical data structure - vertical_tqh
+ */
+void trans_horizontal_2_vertical(struct transac *t);
+
+/* remove infrequent canset from vertical_tqh */
+void find_frequent(int min_sup);
+
+/* generate the candidate from vertical_tqh */
+void apriori_gen();
+
+/* return NULL if fail */
+CANSET *vjoin(CANSET *leftp, CANSET *rightp);
+
+/* check if this candidate set has infrequent subset
+ * 1 - yes
+ * 0 - no 
+ */
+int has_infrequent_subset(CANSET *csp);
+
+#endif	/* __VERTICAL_H */
+
