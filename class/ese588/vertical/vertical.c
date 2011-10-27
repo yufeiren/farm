@@ -104,11 +104,16 @@ apriori_gen()
 	{
 		for ( csrightp = TAILQ_FIRST(&vertical_tqh); \
 			csrightp != NULL; \
-			csrightp = TAILQ_NEXT(csleftp, entries) )
+			csrightp = TAILQ_NEXT(csrightp, entries) )
 		{
-			if () {
+			if ( (newcp = vjoin(csleftp, csrightp)) == NULL)
+				continue;
 			
-			}
+			if (has_infrequent_subset(newcp))
+				continue;
+			
+			/* insert this candidate into the temp list */
+			
 		}
 	}
 
@@ -119,10 +124,7 @@ apriori_gen()
 CANSET *
 vjoin(CANSET *leftp, CANSET *rightp)
 {
-	int setcap;		/* number of items in the set */
-	int *set;		/* set content */
-	int count;		/* # of tid */
-	TAILQ_HEAD(, tid)	tidset_tqh;
+	int cap;
 	
 	/* prefix n-1 are the same && the n-th id is different*/
 	if ( (memcmp(leftp->set, rightp->set, (setcap - 1) * sizeof(int)) != 0)
@@ -136,21 +138,18 @@ vjoin(CANSET *leftp, CANSET *rightp)
 	memset(newcp, '\0', sizeof(CANSET));
 	TAILQ_INIT(&newcp->tidset_tqh);
 
-	newcp->setcap = leftp->setcap + 1;
+	cap = leftp->setcap;
+	newcp->setcap = cap + 1;
 	newcp->set = (int *) malloc(sizeof(int));
 	memset(newcp->set, '\0', sizeof(int));
 	
-	memcpy(newcp->set, leftp->set, (leftp->setcap-1) * sizeof(int));
-	if (leftp->set[leftp->setcap-1] < rightp->set[rightp->setcap-1]) {
-		newcp->set[newcp->setcap-2] = \
-			leftp->set[leftp->setcap-1];
-		newcp->set[newcp->setcap-1] = \
-			rightp->set[rightp->setcap-1];
+	memcpy(newcp->set, leftp->set, (cap - 1) * sizeof(int));
+	if (leftp->set[cap - 1] < rightp->set[cap - 1]) {
+		newcp->set[cap - 1] = leftp->set[cap - 1];
+		newcp->set[cap] = rightp->set[cap - 1];
 	} else {
-		newcp->set[newcp->setcap-2] = \
-			rightp->set[rightp->setcap-1];
-		newcp->set[newcp->setcap-1] = \
-			leftp->set[leftp->setcap-1];
+		newcp->set[cap - 1] = rightp->set[cap - 1];
+		newcp->set[cap] = leftp->set[cap - 1];
 	}
 	
 	return newcp;
@@ -160,5 +159,5 @@ vjoin(CANSET *leftp, CANSET *rightp)
 int
 has_infrequent_subset(CANSET *csp)
 {
-	
+	return;
 }
