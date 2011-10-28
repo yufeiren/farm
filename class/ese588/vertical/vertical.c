@@ -97,7 +97,6 @@ apriori_gen()
 	CANSET	*csleftp, *csrightp;
 	CANSET	*newcp;
 	
-	csrightp = TAILQ_FIRST(&vertical_tqh);
 	for ( csleftp = TAILQ_FIRST(&vertical_tqh); \
 		csleftp != NULL; \
 		csleftp = TAILQ_NEXT(csleftp, entries) )
@@ -112,10 +111,14 @@ apriori_gen()
 			if (has_infrequent_subset(newcp))
 				continue;
 			
-			/* insert this candidate into the temp list */
-			
+			/* insert this candidate into the canset_tqh */
+			TAILQ_INSERT_TAIL(&canset_tqh, newcp, entries);
 		}
 	}
+	
+	/* free all the nodes in the vertical_tqh */
+	
+	/* insert all the nodes from canset to vertical */
 
 	return;
 }
@@ -159,5 +162,5 @@ vjoin(CANSET *leftp, CANSET *rightp)
 int
 has_infrequent_subset(CANSET *csp)
 {
-	return;
+	return 0;
 }
