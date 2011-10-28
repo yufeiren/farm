@@ -94,22 +94,19 @@ find_frequent(int min_sup)
 void
 apriori_gen()
 {
-	CANSET	*csleftp, *csrightp;
+	CANSET	*csleftp, *csrightp, *tmpcsp;
 	CANSET	*newcp;
 	
-	for ( csleftp = TAILQ_FIRST(&vertical_tqh); \
-		csleftp != NULL; \
-		csleftp = TAILQ_NEXT(csleftp, entries) )
-	{
-		for ( csrightp = TAILQ_FIRST(&vertical_tqh); \
-			csrightp != NULL; \
-			csrightp = TAILQ_NEXT(csrightp, entries) )
-		{
+	TAILQ_FOREACH(csleftp, &vertical_tqh, entries) {
+		TAILQ_FOREACH(csrightp, &vertical_tqh, entries) {
 			if ( (newcp = vjoin(csleftp, csrightp)) == NULL)
 				continue;
 			
-			if (has_infrequent_subset(newcp))
+			if (has_infrequent_subset(newcp)) {
+				/* free all the nodes in the candidate set */
+				free_canset(newcp);
 				continue;
+			}
 			
 			/* insert this candidate into the canset_tqh */
 			TAILQ_INSERT_TAIL(&canset_tqh, newcp, entries);
@@ -117,8 +114,26 @@ apriori_gen()
 	}
 	
 	/* free all the nodes in the vertical_tqh */
+	for ( csleftp = TAILQ_FIRST(&vertical_tqh); \
+		csleftp != NULL; \
+		csleftp = TAILQ_NEXT(tmpcsp, entries) )
+	{
+		tmpcsp = csleftp;
+		
+		free_canset(csleftp);
+	}
 	
 	/* insert all the nodes from canset to vertical */
+	for ( csleftp = TAILQ_FIRST(&canset_tqh); \
+		csleftp != NULL; \
+		csleftp = TAILQ_NEXT(tmpcsp, entries) )
+	{
+		tmpcsp = csleftp;
+		
+		TAILQ_REMOVE(&canset_tqh, csleftp, entries);
+		
+		TAILQ_INSERT_TAIL(&vertical_tqh, csleftp, entries);
+	}
 
 	return;
 }
@@ -162,5 +177,55 @@ vjoin(CANSET *leftp, CANSET *rightp)
 int
 has_infrequent_subset(CANSET *csp)
 {
+	int i;
+	int *set;
+	CANSET	*cp;
+	
+	set = (int *) malloc((csp->setcap - 1) * sizeof(int));
+	for (i = 0; i < csp->setcap; i ++) {
+		memset(set, '\0', (csp->setcap - 1) * sizeof(int));
+		
+		/* prefix */
+		memcpy(set, csp->set, i * sizeof(int));
+		/* suffix */
+		memcpy(set + i, csp->set + i + 1, \
+			(csp->setcap - i - 1) * sizeof(int));
+		
+		/* check whether this is contained in the prior knowledge */
+		TAILQ_FOREACH(cp, &vertical_tqh, entries) {
+			if (memcmp(set, cp->set, (csp->setcap - 1) * sizeof(int)) == 0)
+				break;
+		}
+		
+		if (cp == NULL) {
+			free(set);
+			return 1;
+		}
+	}
+	
+	free(set);
 	return 0;
+}
+
+
+void
+free_canset(CANSET *csp)
+{
+	TID *tidp, *tmptidp;
+	
+	if (csp == NULL)
+		return;
+	
+	for ( tidp = TAILQ_FIRST(&csp->tidset_tqh); \
+		tidp != NULL; \
+		tidp = TAILQ_NEXT(tmptidp, entries) )
+	{
+		tmptidp = tidp;
+		
+		free(tidp);
+	}
+	
+	free(csp);
+	
+	return;
 }

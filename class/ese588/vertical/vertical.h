@@ -51,5 +51,7 @@ CANSET *vjoin(CANSET *leftp, CANSET *rightp);
  */
 int has_infrequent_subset(CANSET *csp);
 
+void free_canset(CANSET *csp);
+
 #endif	/* __VERTICAL_H */
 
