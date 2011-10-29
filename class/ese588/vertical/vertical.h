@@ -1,5 +1,6 @@
 #include <sys/queue.h>
 #include <stdlib.h>
+#include "debug.h"
 
 #ifndef __VERTICAL_H
 #define __VERTICAL_H
@@ -65,6 +66,7 @@ void free_canset(CANSET *csp);
  */
 int loaddata_txt(char *filepath);
 
+void prt_canset(CANSET *csp, char *msg);
 
 #endif	/* __VERTICAL_H */
 

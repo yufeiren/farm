@@ -22,7 +22,7 @@ main(int argc, char **argv)
 	DPRINTF(("total trans is %d\n", total_trans));
 	
 	min_sup = (total_trans / 100) * atoi(argv[2]);
-	
+	min_sup = 1;
 	/* construct the level 1 */
 	find_frequent(min_sup);
 	

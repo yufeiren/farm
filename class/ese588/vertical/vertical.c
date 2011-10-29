@@ -43,6 +43,11 @@ trans_horizontal_2_vertical(struct transac *t)
 		if (cp == NULL) {
 			cp = (CANSET *) malloc(sizeof(CANSET));
 			memset(cp, '\0', sizeof(CANSET));
+			
+			cp->set = (int *) malloc(sizeof(int));
+			cp->set[0] = thisid;
+			cp->setcap = 1;
+			
 			TAILQ_INIT(&cp->tidset_tqh);
 			
 			TAILQ_INSERT_TAIL(&vertical_tqh, cp, entries);
@@ -84,6 +89,7 @@ find_frequent(int min_sup)
 			free(cp);
 		} else {
 			/* output this candidate set */
+			prt_canset(cp, "frequent pattern");
 		}
 	}
 	
@@ -116,19 +122,19 @@ apriori_gen()
 	/* free all the nodes in the vertical_tqh */
 	for ( csleftp = TAILQ_FIRST(&vertical_tqh); \
 		csleftp != NULL; \
-		csleftp = TAILQ_NEXT(tmpcsp, entries) )
+		csleftp = tmpcsp )
 	{
-		tmpcsp = csleftp;
-		
+		tmpcsp = TAILQ_NEXT(csleftp, entries);
+		TAILQ_REMOVE(&vertical_tqh, csleftp, entries);
 		free_canset(csleftp);
 	}
 	
 	/* insert all the nodes from canset to vertical */
 	for ( csleftp = TAILQ_FIRST(&canset_tqh); \
 		csleftp != NULL; \
-		csleftp = TAILQ_NEXT(tmpcsp, entries) )
+		csleftp = tmpcsp )
 	{
-		tmpcsp = csleftp;
+		tmpcsp = TAILQ_NEXT(csleftp, entries);
 		
 		TAILQ_REMOVE(&canset_tqh, csleftp, entries);
 		
@@ -144,13 +150,12 @@ vjoin(CANSET *leftp, CANSET *rightp)
 {
 	int cap;
 	CANSET *newcp;
-	
+	TID *lt, *rt, *newt;
 	cap = leftp->setcap;
-		
-	/* prefix n-1 are the same && the n-th id is different*/
+	
+	/* prefix n-1 are the same && the left n-th id is smaller */
 	if ( (memcmp(leftp->set, rightp->set, (cap - 1) * sizeof(int)) != 0)
-		|| (leftp->set[leftp->setcap-1] == \
-			rightp->set[rightp->setcap-1]) )
+		|| !(leftp->set[cap - 1] < rightp->set[cap - 1]) )
 	{
 		return NULL;
 	}
@@ -160,8 +165,8 @@ vjoin(CANSET *leftp, CANSET *rightp)
 	TAILQ_INIT(&newcp->tidset_tqh);
 
 	newcp->setcap = cap + 1;
-	newcp->set = (int *) malloc(sizeof(int));
-	memset(newcp->set, '\0', sizeof(int));
+	newcp->set = (int *) malloc(newcp->setcap * sizeof(int));
+	memset(newcp->set, '\0', newcp->setcap * sizeof(int));
 	
 	memcpy(newcp->set, leftp->set, (cap - 1) * sizeof(int));
 	if (leftp->set[cap - 1] < rightp->set[cap - 1]) {
@@ -170,6 +175,18 @@ vjoin(CANSET *leftp, CANSET *rightp)
 	} else {
 		newcp->set[cap - 1] = rightp->set[cap - 1];
 		newcp->set[cap] = leftp->set[cap - 1];
+	}
+	
+	/* merge tid set */
+	TAILQ_FOREACH(lt, &leftp->tidset_tqh, entries) {
+		TAILQ_FOREACH(rt, &rightp->tidset_tqh, entries) {
+			if (lt->id == rt->id) {
+				newt = (TID *) malloc(sizeof(TID));
+				newt->id = lt->id;
+				TAILQ_INSERT_TAIL(&newcp->tidset_tqh, newt, entries);
+				newcp->count ++;
+			}
+		}
 	}
 	
 	return newcp;
