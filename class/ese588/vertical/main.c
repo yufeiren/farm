@@ -19,6 +19,8 @@ main(int argc, char **argv)
 	TAILQ_INIT(&canset_tqh);
 
 	total_trans = loaddata_txt(argv[1]);
+	DPRINTF(("total trans is %d\n", total_trans));
+	
 	min_sup = (total_trans / 100) * atoi(argv[2]);
 	
 	/* construct the level 1 */
