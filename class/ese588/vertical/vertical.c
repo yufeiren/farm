@@ -22,7 +22,9 @@ trans_horizontal_2_vertical(struct transac *t)
 	int	thisid;
 	CANSET	*cp;
 	TID	*tp;
-
+	
+	CANSET	*pre;
+	
 	/* for each item, go through the vertical_tqh
 	 * if found this item, insert the tid into this canset
 	 * else not found, create a new canset, 
@@ -50,7 +52,15 @@ trans_horizontal_2_vertical(struct transac *t)
 			
 			TAILQ_INIT(&cp->tidset_tqh);
 			
-			TAILQ_INSERT_TAIL(&vertical_tqh, cp, entries);
+			TAILQ_FOREACH(pre, &vertical_tqh, entries) {
+                                if (thisid < pre->set[0]) {
+                                        TAILQ_INSERT_BEFORE(pre, cp, entries);
+                                        break;
+                                }
+                        }
+                        if (pre == NULL)
+                                TAILQ_INSERT_TAIL(&vertical_tqh, cp, entries);
+
 		}
 		
 		TAILQ_INSERT_TAIL(&cp->tidset_tqh, tp, entries);

@@ -36,6 +36,9 @@ loaddata_txt(char *filepath)
 	total_trans = 0;
 	while (fgets(line, 10240, fp) != NULL) {
 DPRINTF(("parse line: %s\n", line));
+		/* replace the last char with seperate */
+		line[strlen(line)] = DATA_FIELD_SEP;
+		
 		total_trans ++;
 		memset(buf, '\0', sizeof(buf));
 		start = line;
