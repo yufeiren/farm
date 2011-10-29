@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <getopt.h>
 #include "vertical.h"
 
@@ -11,17 +12,14 @@ usage(const char *name)
 	printf("usage: %s [-i input_file] [-s min_sup] [-c min_confidence]\n", \
 		name);
 	printf("\t-i\t\tInput File\n");
-	printf("\t-s\t\tMinimum Support\t - default 10\n");
-	printf("\t-c\t\tMinimum Confidence\t - default 20\n");
+	printf("\t-s\t\tMinimum Support - default 10\n");
+	printf("\t-c\t\tMinimum Confidence - default 20\n");
 }
 
 int
 main(int argc, char **argv)
 {
-	char *rawdata, *result;
-	int min_sup;
 	int total_trans;
-	
 	int op;
 	char inputfile[1024];
 	int support;
@@ -33,7 +31,7 @@ main(int argc, char **argv)
 	while ((op=getopt(argc, argv, "i:s:c:")) != -1) {
 		switch (op) {
 		case 'i':
-			memcpy(inputfile, optarg);
+			strcpy(inputfile, optarg);
 			break;
 		case 's':
 			support = atoi(optarg);
@@ -48,7 +46,7 @@ main(int argc, char **argv)
 		}
 	}
 	
-	if (inputfile = NULL) {
+	if (strlen(inputfile) == NULL) {
 		usage(argv[0]);
 		exit(EXIT_FAILURE);
 	}
