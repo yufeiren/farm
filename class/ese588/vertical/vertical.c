@@ -38,7 +38,7 @@ trans_horizontal_2_vertical(struct transac *t)
 		
 		tp = (TID *) malloc(sizeof(TID));
 		memset(tp, '\0', sizeof(TID));
-		tp->id = t.id;
+		tp->id = t->id;
 		
 		if (cp == NULL) {
 			cp = (CANSET *) malloc(sizeof(CANSET));
@@ -143,9 +143,12 @@ CANSET *
 vjoin(CANSET *leftp, CANSET *rightp)
 {
 	int cap;
+	CANSET *newcp;
 	
+	cap = leftp->setcap;
+		
 	/* prefix n-1 are the same && the n-th id is different*/
-	if ( (memcmp(leftp->set, rightp->set, (setcap - 1) * sizeof(int)) != 0)
+	if ( (memcmp(leftp->set, rightp->set, (cap - 1) * sizeof(int)) != 0)
 		|| (leftp->set[leftp->setcap-1] == \
 			rightp->set[rightp->setcap-1]) )
 	{
@@ -156,7 +159,6 @@ vjoin(CANSET *leftp, CANSET *rightp)
 	memset(newcp, '\0', sizeof(CANSET));
 	TAILQ_INIT(&newcp->tidset_tqh);
 
-	cap = leftp->setcap;
 	newcp->setcap = cap + 1;
 	newcp->set = (int *) malloc(sizeof(int));
 	memset(newcp->set, '\0', sizeof(int));

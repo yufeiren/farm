@@ -1,4 +1,5 @@
 #include <sys/queue.h>
+#include <stdlib.h>
 
 #ifndef __VERTICAL_H
 #define __VERTICAL_H
@@ -8,7 +9,7 @@
 
 struct tid {
 	int id;
-	TAILQ_ENTRY(tids) entries;	
+	TAILQ_ENTRY(tid) entries;	
 };
 typedef struct tid TID;
 

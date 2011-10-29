@@ -1,5 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <errno.h>
+#include <string.h>
 #include "vertical.h"
 
 int
@@ -13,6 +15,7 @@ loaddata_txt(char *filepath)
 	char *start;
 	char *end;
 	char buf[64];
+	int total_trans;
 	
 	fp = fopen(filepath, "r");
 	if (fp == NULL) {
@@ -30,7 +33,9 @@ loaddata_txt(char *filepath)
 	
 	/* TransactionID Item1 Item2 ... ItemN */
 	memset(line, '\0', sizeof(line));
+	total_trans = 0;
 	while (fgets(line, 10240, fp) != NULL) {
+		total_trans ++;
 		memset(buf, '\0', sizeof(buf));
 		start = line;
 		end = strchr(start, DATA_FIELD_SEP);
@@ -51,7 +56,7 @@ loaddata_txt(char *filepath)
 		memset(line, '\0', sizeof(line));
 	}
 
-	fclose(cf);
+	fclose(fp);
 	
-	return;
+	return total_trans;
 }
