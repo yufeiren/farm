@@ -3,6 +3,9 @@
 #ifndef __VERTICAL_H
 #define __VERTICAL_H
 
+#define DATA_FIELD_SEP ' '
+#define MAX_NUM_PER	10000
+
 struct tid {
 	int id;
 	TAILQ_ENTRY(tids) entries;	
@@ -52,6 +55,15 @@ CANSET *vjoin(CANSET *leftp, CANSET *rightp);
 int has_infrequent_subset(CANSET *csp);
 
 void free_canset(CANSET *csp);
+
+/* IO Method */
+
+/* return number of items in the dataset
+ * -1:  error
+ * >=0: number of items 
+ */
+int loaddata_txt(char *filepath);
+
 
 #endif	/* __VERTICAL_H */
 

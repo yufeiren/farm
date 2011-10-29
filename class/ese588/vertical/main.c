@@ -15,6 +15,9 @@ main(int argc, char **argv)
 		printf("usage: ./%s rawdata [min_sup_percentage]\n", argv[0]);
 		exit(EXIT_FAILURE);
 	}
+	
+	TAILQ_INIT(&vertical_tqh);
+	TAILQ_INIT(&canset_tqh);
 
 	totalitems = load_data(argv[1]);
 	min_sup = (totalitems / 100) * atoi(argv[2]);
