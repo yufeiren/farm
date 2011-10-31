@@ -19,7 +19,7 @@ loaddata_txt(char *filepath)
 	
 	fp = fopen(filepath, "r");
 	if (fp == NULL) {
-		fprintf(stderr, "can not open chunk file: %s\n", filepath);
+		fprintf(stderr, "can not open file: %s\n", filepath);
 		return -1;
 	}
 

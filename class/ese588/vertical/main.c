@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <getopt.h>
+#include <unistd.h>
 #include "vertical.h"
 
 /* ./vertical [rawdata] [min_sup] [min_confidence] */
@@ -46,7 +46,7 @@ main(int argc, char **argv)
 		}
 	}
 	
-	if (strlen(inputfile) == NULL) {
+	if (strlen(inputfile) == 0) {
 		usage(argv[0]);
 		exit(EXIT_FAILURE);
 	}
@@ -54,7 +54,7 @@ main(int argc, char **argv)
 	TAILQ_INIT(&vertical_tqh);
 	TAILQ_INIT(&canset_tqh);
 
-	total_trans = loaddata_txt(argv[1]);
+	total_trans = loaddata_txt(inputfile);
 	DPRINTF(("total trans is %d\n", total_trans));
 	
 	support = (total_trans * support) / 100;
