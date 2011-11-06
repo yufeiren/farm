@@ -1,0 +1,17 @@
+
+host list:
+
+cvrani01 - cvrani16
+
+128.55.56.224 - 128.55.56.239
+
+cvrani03 is not available
+
+
+./define.sh
+
+
+./batch-nmon.sh
+
+source ./define.sh
+
