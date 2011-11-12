@@ -1,0 +1,13 @@
+
+ssh yren@olcf-ani-test01.ccs.ornl.gov
+ssh yren@olcf-ani-test02.ccs.ornl.gov
+
+# ssh yren@spoon20.ccs.ornl.gov
+
+scp v0.15-rc1.tar yren@olcf-ani-test02.ccs.ornl.gov:~
+
+
+# start server
+env RFTPDRC=/ccs/home/yren/sc11/config/rftpdrc-b128K-p18139-dno /ccs/home/yren/sc11/bin/rftpd -D
+
+

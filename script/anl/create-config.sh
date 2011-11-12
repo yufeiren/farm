@@ -4,11 +4,8 @@ source ./define.sh
 
 rm -rf $configdir/*
 
-cbufsiz="16K 64K 128K 512K 1M 2M"
-rcstreamnum="1 2 4 8 16 32"
-
 # rftpd server
-for c in $cbufsiz
+for c in $cbufsizs
 do
 	touch $configdir/rftpdrc-b$c-p18139-dno
 echo "cbufsiz=" $c > $configdir/rftpdrc-b$c-p18139-dno
@@ -17,9 +14,9 @@ echo "directio=no" >> $configdir/rftpdrc-b$c-p18139-dno
 done
 
 # direct io
-for c in $cbufsiz
+for c in $cbufsizs
 do
-        for s in $rcstreamnum
+        for s in $rcstreamnums
         do
                 touch $configdir/rcftprc-directio-$c-$s
 echo "cbufsiz=" $c > $configdir/rcftprc-directio-$c-$s

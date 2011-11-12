@@ -9,6 +9,8 @@ logdir=/global/u2/s/shudong/rftp/log
 sourcedir=/global/u2/s/shudong/rftp/data/source
 sinkdir=/global/u2/s/shudong/rftp/data/sink
 
+ornlsinkdir=/scratch/yren/rftp/sink
+
 rftpdbin=/global/u2/s/shudong/rftp/rftp-latest-bin/rftpd
 rcftpbin=/global/u2/s/shudong/rftp/rftp-latest-bin/rcftp
 
@@ -55,3 +57,18 @@ cvranieth15=10.200.200.15
 cvranieth16=10.200.200.16
 
 hosteths="$cvranieth01 $cvranieth02 $cvranieth04 $cvranieth05 $cvranieth06 $cvranieth07 $cvranieth08 $cvranieth09 $cvranieth10 $cvranieth11 $cvranieth12 $cvranieth13 $cvranieth14 $cvranieth15 $cvranieth16"
+
+
+ornl01=10.200.200.93
+ornl02=10.200.200.94
+ornl03=10.200.200.95
+ornl04=10.200.200.96
+ornl05=10.200.200.97
+ornl06=10.200.200.98
+ornl07=10.200.200.99
+ornl08=10.200.200.100
+ornl09=10.200.200.101
+ornl10=10.200.200.102
+
+ornlhosts="$ornl01 $ornl02 $ornl03 $ornl04 $ornl05 $ornl06 $ornl07 $ornl08 $ornl09 $ornl10"
+

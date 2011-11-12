@@ -30,3 +30,17 @@ do
 	done
 done
 
+# create put ornl task
+for host in $ornlhosts
+do
+	for dir in 1 2 3 4 5 6 7 8 9 10
+	do
+	echo "open $host 18139" > $taskdir/put-$host-bc$dir
+	echo "user ftp ftp" >> $taskdir/put-$host-bc$dir
+	echo "prompt" >> $taskdir/put-$host-bc$dir
+	echo "lcd $sourcedir" >> $taskdir/put-$host-bc$dir
+	echo "cd $ornlsinkdir" >> $taskdir/put-$host-bc$dir
+	echo "put bell_curve$dir" >> $taskdir/put-$host-bc$dir
+	echo "bye" >> $taskdir/put-$host-bc$dir
+	done
+done
