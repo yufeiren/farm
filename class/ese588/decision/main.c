@@ -5,7 +5,7 @@
 
 #include "dt.h"
 
-/* ./dt [raw-file] */
+/* ./dt [-i raw-file] */
 
 static void
 usage(const char *name)

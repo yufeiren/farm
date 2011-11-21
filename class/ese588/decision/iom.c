@@ -69,16 +69,16 @@ DPRINTF(("parse line: %s\n", line));
 			workclass,
 			&rp->fnlwgt,
 			education,
-			&rp->education-num,
-			marital-status,
+			&rp->education_num,
+			marital_status,
 			occupation,
 			relationship,
 			race,
 			sex,
-			&rp->capital-gain,
-			&rp->capital-loss,
-			&rp->hours-per-week,
-			native-country,
+			&rp->capital_gain,
+			&rp->capital_loss,
+			&rp->hours_per_week,
+			native_country,
 			income_class
 		);
 		

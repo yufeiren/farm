@@ -1,3 +1,7 @@
+#include <sys/queue.h>
+#include <stdlib.h>
+#include <stdio.h>
+
 #include "debug.h"
 
 #ifndef __DECISION_TREE_H
@@ -28,6 +32,7 @@ struct attr_node {
 	char desc[64];		/* description for this attribute */
 	Value_node *vn[DT_MAX_VALUE];
 	double info;
+	
 	TAILQ_ENTRY(attr_node) entries;
 };
 typedef struct attr_node Attr_node;
@@ -68,16 +73,16 @@ struct adult_rec {
 	int workclass;
 	int fnlwgt;
 	int education;
-	int education-num;
-	int marital-status;
+	int education_num;
+	int marital_status;
 	int occupation;
 	int relationship;
 	int race;
 	int sex;
-	int capital-gain;
-	int capital-loss;
-	int hours-per-week;
-	int native-country;
+	int capital_gain;
+	int capital_loss;
+	int hours_per_week;
+	int native_country;
 	int income_class;	/* <=50K - 1, >50K - 2 */
 	
 	TAILQ_ENTRY(adult_rec) entries;

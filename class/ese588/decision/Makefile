@@ -8,7 +8,7 @@ all: dt
 %.o: %.c
 	$(CC) $(CFLAGS) $< -c
 
-vertical: main.o dt.o iom.o
+dt: main.o dt.o iom.o
 	$(CC) $(CFLAGS) -o $@ main.o dt.o iom.o $(EXTRALIBS)
 
 clean:
