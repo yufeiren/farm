@@ -10,3 +10,6 @@ Memory Consumption
 256 * 1024 = 262144 records -> 1 Mbytes
 
 
+
+
+./dt -i /home/ren/tmp2/dt/adult.data
