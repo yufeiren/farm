@@ -21,21 +21,21 @@ loaddata_adult_txt(char *filepath)
 	char workclass[128];
 	char education[128];
 	char education[128];
-	char marital-status[128];
+	char marital_status[128];
 	char occupation[128];
 	char relationship[128];
 	char race[128];
 	char sex[128];
-	char capital-gain[128];
-	char capital-loss[128];
-	char hours-per-week[128];
-	char native-country[128];
+	char capital_gain[128];
+	char capital_loss[128];
+	char hours_per_week[128];
+	char native_country[128];
 	char income_class[128];
 	
 	fp = fopen(filepath, "r");
 	if (fp == NULL) {
 		fprintf(stderr, "can not open file: %s\n", filepath);
-		return -1;
+		return _1;
 	}
 
 	/* TransactionID Item1 Item2 ... ItemN */
@@ -47,21 +47,21 @@ DPRINTF(("parse line: %s\n", line));
 		memset(rp, '\0', sizeof(Adult_rec));
 
 /* sample
-53, Private, 144361, HS-grad, 9, Married-civ-spouse, Machine-op-inspct, Husband,
- White, Male, 0, 0, 38, United-States, <=50K
+53, Private, 144361, HS_grad, 9, Married_civ_spouse, Machine_op_inspct, Husband,
+ White, Male, 0, 0, 38, United_States, <=50K
  */
 
 		memset(workclass, '\0', 128);
 		memset(education, '\0', 128);
-		memset(marital-status, '\0', 128);
+		memset(marital_status, '\0', 128);
 		memset(occupation, '\0', 128);
 		memset(relationship, '\0', 128);
 		memset(race, '\0', 128);
 		memset(sex, '\0', 128);
-		memset(capital-gain, '\0', 128);
-		memset(capital-loss, '\0', 128);
-		memset(hours-per-week, '\0', 128);
-		memset(native-country, '\0', 128);
+		memset(capital_gain, '\0', 128);
+		memset(capital_loss, '\0', 128);
+		memset(hours_per_week, '\0', 128);
+		memset(native_country, '\0', 128);
 		memset(income_class, '\0', 128);
 
 		sscanf(line, "%d, %s, %d, %s, %d, %s, %s, %s, %s, %s, %d, %d, %d, %s, %s\n",
