@@ -319,9 +319,19 @@ native-country: United-States, Cambodia, England, Puerto-Rico, Canada, Germany, 
 			rp->native_country = 41;
 		else
 			rp->native_country = 0;
-		
+
+/*income: <=50K, >50K.*/
+		if (strcmp(income_class, "<=50K") == 0)
+			rp->income_class = 1;
+		else if (strcmp(income_class, ">50K") == 0)
+			rp->income_class = 2;
+		else
+			rp->income_class = 0;
+
 		TAILQ_INSERT_TAIL(&adult_rec_tqh, rp, entries);
 
+		prt_adult_int(rp, "load");
+		
 		memset(line, '\0', sizeof(line));
 		
 		total_trans ++;
@@ -330,4 +340,30 @@ native-country: United-States, Cambodia, England, Puerto-Rico, Canada, Germany, 
 	fclose(fp);
 	
 	return total_trans;
+}
+
+
+void
+prt_adult_int(Adult_rec *rp, char *msg)
+{
+	printf("%s: %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d\n",
+		msg, 
+		rp->age;
+		rp->workclass,
+		rp->fnlwgt,
+		rp->education,
+		rp->education_num,
+		rp->marital_status,
+		rp->occupation,
+		rp->relationship,
+		rp->race,
+		rp->sex,
+		rp->capital_gain,
+		rp->capital_loss,
+		rp->hours_per_week,
+		rp->native_country,
+		rp->income_class
+	);
+	
+	return;
 }

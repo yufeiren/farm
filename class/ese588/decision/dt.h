@@ -97,4 +97,6 @@ TAILQ_HEAD(, adult_rec)		adult_rec_tqh;
  */
 int loaddata_adult_txt(char *filepath);
 
+void prt_adult_int(Adult_rec *rp, char *msg);
+
 #endif
