@@ -63,7 +63,97 @@ loaddata_adult_txt(char *filepath)
 		memset(native_country, '\0', 128);
 		memset(income_class, '\0', 128);
 
-		sscanf(line, "%d, %s, %d, %s, %d, %s, %s, %s, %s, %s, %d, %d, %d, %s, %s\n",
+		start = line;
+		end = strchr(start, ',');
+		memset(buf, '\0', sizeof(buf));
+		memcpy(buf, start, end - start);
+		rp->age = atoi(buf);
+		
+		start = end + 2;
+		end = strchr(start, ',');
+		memset(buf, '\0', sizeof(buf));
+		memcpy(buf, start, end - start);
+		strcpy(workclass, buf);
+
+		start = end + 2;
+		end = strchr(start, ',');
+		memset(buf, '\0', sizeof(buf));
+		memcpy(buf, start, end - start);
+		rp->fnlwgt = atoi(buf);
+		
+		start = end + 2;
+		end = strchr(start, ',');
+		memset(buf, '\0', sizeof(buf));
+		memcpy(buf, start, end - start);
+		strcpy(education, buf);
+		
+		start = end + 2;
+		end = strchr(start, ',');
+		memset(buf, '\0', sizeof(buf));
+		memcpy(buf, start, end - start);
+		rp->education_num = atoi(buf);
+		
+		start = end + 2;
+		end = strchr(start, ',');
+		memset(buf, '\0', sizeof(buf));
+		memcpy(buf, start, end - start);
+		strcpy(marital_status, buf);
+		
+		start = end + 2;
+		end = strchr(start, ',');
+		memset(buf, '\0', sizeof(buf));
+		memcpy(buf, start, end - start);
+		strcpy(occupation, buf);
+		
+		start = end + 2;
+		end = strchr(start, ',');
+		memset(buf, '\0', sizeof(buf));
+		memcpy(buf, start, end - start);
+		strcpy(relationship, buf);
+		
+		start = end + 2;
+		end = strchr(start, ',');
+		memset(buf, '\0', sizeof(buf));
+		memcpy(buf, start, end - start);
+		strcpy(race, buf);
+		
+		start = end + 2;
+		end = strchr(start, ',');
+		memset(buf, '\0', sizeof(buf));
+		memcpy(buf, start, end - start);
+		strcpy(sex, buf);
+		
+		start = end + 2;
+		end = strchr(start, ',');
+		memset(buf, '\0', sizeof(buf));
+		memcpy(buf, start, end - start);
+		rp->capital_gain = atoi(buf);
+
+		start = end + 2;
+		end = strchr(start, ',');
+		memset(buf, '\0', sizeof(buf));
+		memcpy(buf, start, end - start);
+		rp->capital_loss = atoi(buf);
+		
+		start = end + 2;
+		end = strchr(start, ',');
+		memset(buf, '\0', sizeof(buf));
+		memcpy(buf, start, end - start);
+		rp->hours_per_week = atoi(buf);
+		
+		start = end + 2;
+		end = strchr(start, ',');
+		memset(buf, '\0', sizeof(buf));
+		memcpy(buf, start, end - start);
+		strcpy(native_country, buf);
+		
+		start = end + 2;
+		end = strchr(start, ',');
+		memset(buf, '\0', sizeof(buf));
+		memcpy(buf, start, end - start);
+		strcpy(income_class, buf);
+		
+/*		sscanf(line, "%d, %s, %d, %s, %d, %s, %s, %s, %s, %s, %d, %d, %d, %s, %s\n",
 			&rp->age,
 			workclass,
 			&rp->fnlwgt,
@@ -79,7 +169,7 @@ loaddata_adult_txt(char *filepath)
 			&rp->hours_per_week,
 			native_country,
 			income_class
-		);
+		); */
 
 /* workclass: Private, Self-emp-not-inc, Self-emp-inc, Federal-gov, Local-gov, State-gov, Without-pay, Never-worked. */
 		if (strcmp(workclass, "Private") == 0)
@@ -348,7 +438,7 @@ prt_adult_int(Adult_rec *rp, char *msg)
 {
 	printf("%s: %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d\n",
 		msg, 
-		rp->age;
+		rp->age,
 		rp->workclass,
 		rp->fnlwgt,
 		rp->education,
