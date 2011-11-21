@@ -20,7 +20,6 @@ loaddata_adult_txt(char *filepath)
 	
 	char workclass[128];
 	char education[128];
-	char education[128];
 	char marital_status[128];
 	char occupation[128];
 	char relationship[128];
@@ -35,7 +34,7 @@ loaddata_adult_txt(char *filepath)
 	fp = fopen(filepath, "r");
 	if (fp == NULL) {
 		fprintf(stderr, "can not open file: %s\n", filepath);
-		return _1;
+		return -1;
 	}
 
 	/* TransactionID Item1 Item2 ... ItemN */
