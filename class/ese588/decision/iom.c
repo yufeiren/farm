@@ -41,10 +41,13 @@ loaddata_adult_txt(char *filepath)
 	memset(line, '\0', sizeof(line));
 	total_trans = 0;
 	while (fgets(line, 10240, fp) != NULL) {
+		if (strlen(line) == 0)
+			continue;
 		DPRINTF(("parse line: %s\n", line));
 		Adult_rec *rp = (Adult_rec *) malloc(sizeof(Adult_rec));
 		memset(rp, '\0', sizeof(Adult_rec));
-
+		line[strlen(line) - 1] = ',';
+		
 /* sample
 53, Private, 144361, HS_grad, 9, Married_civ_spouse, Machine_op_inspct, Husband,
  White, Male, 0, 0, 38, United_States, <=50K
