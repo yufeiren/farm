@@ -1,0 +1,12 @@
+
+Procedure
+1. Process A read data from file, insert into a database table.
+2. Process B get updates from table periodly and insert these updated data into the data organization tree. Then construct the decision tree.
+
+
+Memory Consumption
+1 record -> 4 bytes
+256 records -> 1 Kbytes
+256 * 1024 = 262144 records -> 1 Mbytes
+
+
