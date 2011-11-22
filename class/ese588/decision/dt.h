@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include <math.h>	/* for log */
+
+
 #include "debug.h"
 
 #ifndef __DECISION_TREE_H
@@ -9,6 +12,11 @@
 
 #define DT_MAX_CLASS	8
 #define DT_MAX_VALUE	8
+
+#define DT_MAX_ATTRIBUTE	20
+#define DT_MAX_ATTRANGE		100
+
+#define ADULT_ATTRIBUTE_NUM	8
 
 /* for each training data, update the following data structure */
 
@@ -39,16 +47,6 @@ typedef struct attr_node Attr_node;
 
 
 /* decision tree data structure */
-
-struct dt_node {
-	int attr_id;
-	int is_class;		/* whether this node is a leaf node */
-	int class_value;
-	struct dt_node *child[DT_MAX_VALUE];
-};
-typedef struct dt_node Dt_node;
-
-void gen_decision_tree();
 
 /* IO Method */
 
@@ -89,7 +87,57 @@ struct adult_rec {
 };
 typedef struct adult_rec Adult_rec;
 
+
+struct attr_list {
+	int attr_id[DT_MAX_ATTRIBUTE];
+	int attr_is_valid[DT_MAX_ATTRIBUTE];
+	int poor_num[DT_MAX_ATTRIBUTE];
+	int rich_num[DT_MAX_ATTRIBUTE];
+	int poor_num_dist[DT_MAX_ATTRIBUTE][DT_MAX_ATTRANGE];
+	int rich_num_dist[DT_MAX_ATTRIBUTE][DT_MAX_ATTRANGE];
+	double info[DT_MAX_ATTRIBUTE];
+	double gain[DT_MAX_ATTRIBUTE];
+};
+typedef struct attr_list Attr_list;
+
+
+struct dt_node {
+	Attr_list node_attr_list;
+	int attr_id;		/* attr_id for this node */
+	int child_val[MAX_ATTRANGE];
+	struct dt_node *children[DT_MAX_ATTRANGE];
+	int child_num;			/* number of children */
+	int classification;
+	TAILQ_HEAD(, adult_rec)		adult_rec_tqh;
+};
+typedef struct dt_node Dt_node;
+
+/* 			workclass,
+			education,
+			marital_status,
+			occupation,
+			relationship,
+			race,
+			sex,
+			native_country,
+			income_class */
+
+int attr_range[9];
+
+/* generate decision tree */
+Dt_node *gen_decision_tree(Dt_node *dtn);
+
 TAILQ_HEAD(, adult_rec)		adult_rec_tqh;
+
+/* check if all the accords belong to the same class */
+int tuples_same_class(Dt_node *dtn);
+
+int get_attribute_num(Attr_list *alist);
+
+int get_majority_class(Dt_node *dtn);
+
+/* return the attribute of splitting */
+int cal_info_gain(Dt_node *dtn);
 
 /* return number of items in the dataset
  * -1:  error

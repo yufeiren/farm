@@ -316,12 +316,12 @@ occupation: Tech-support, Craft-repair, Other-service, Sales, Exec-managerial, P
 			rp->race = 0;
 		
 /*sex: Female, Male.*/
-		if (strcmp(race, "Female") == 0)
+		if (strcmp(sex, "Female") == 0)
 			rp->sex = 1;
-		else if (strcmp(race, "Male") == 0)
-			rp->race = 2;
+		else if (strcmp(sex, "Male") == 0)
+			rp->sex = 2;
 		else
-			rp->race = 0;
+			rp->sex = 0;
 
 /*capital-gain: continuous.
 capital-loss: continuous.
