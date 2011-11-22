@@ -154,9 +154,9 @@ cal_info_gain(Dt_node *dtn)
 			continue;
 		
 		for (j = 0; j < attr_range[i]; j ++) {
-			p_poor = ((double) (dtn->node_attr_list.poor_num_dist[j])) / ((double) (dtn->node_attr_list.poor_num_dist[j] + dtn->node_attr_list.rich_num_dist[j]);
-			p_rich = ((double) (dtn->node_attr_list.rich_num_dist[j])) / ((double) (dtn->node_attr_list.poor_num_dist[j] + dtn->node_attr_list.rich_num_dist[j]);
-			dtn->node_attr_list.info[i] += ((double) (dtn->node_attr_list.poor_num_dist[j] + dtn->node_attr_list.rich_num_dist[j]) / ((double) count) ) * ((double) -1) * (p_poor * log2(p_poor) + p_rich * log2(p_rich));
+			p_poor = ((double) (dtn->node_attr_list.poor_num_dist[i][j])) / ((double) (dtn->node_attr_list.poor_num_dist[i][j] + dtn->node_attr_list.rich_num_dist[i][j]));
+			p_rich = ((double) (dtn->node_attr_list.rich_num_dist[i][j])) / ((double) (dtn->node_attr_list.poor_num_dist[i][j] + dtn->node_attr_list.rich_num_dist[i][j]));
+			dtn->node_attr_list.info[i] += ((double) (dtn->node_attr_list.poor_num_dist[i][j] + dtn->node_attr_list.rich_num_dist[i][j]) / ((double) count) ) * ((double) -1) * (p_poor * log2(p_poor) + p_rich * log2(p_rich));
 		}
 		
 		dtn->node_attr_list.gain[i] = info_whole - dtn->node_attr_list.info[i];

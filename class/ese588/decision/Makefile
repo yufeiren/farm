@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-Wall -O2 -g -DDEBUG
 #CFLAGS=-Wall -O2
-EXTRALIBS=
+EXTRALIBS=-lm
 
 all: dt
 

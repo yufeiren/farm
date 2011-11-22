@@ -104,7 +104,7 @@ typedef struct attr_list Attr_list;
 struct dt_node {
 	Attr_list node_attr_list;
 	int attr_id;		/* attr_id for this node */
-	int child_val[MAX_ATTRANGE];
+	int child_val[DT_MAX_ATTRANGE];
 	struct dt_node *children[DT_MAX_ATTRANGE];
 	int child_num;			/* number of children */
 	int classification;
