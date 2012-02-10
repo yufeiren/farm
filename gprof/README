@@ -1,0 +1,24 @@
+
+glibc profile
+
+
+
+wget http://linuxsoft.cern.ch/cern/slc4X/i386/yum/updates/glibc-profile-2.3.4-2.19.i386.rpm
+
+== compile ==
+
+gcc example1.c -pg -o example1 -O2 -lc
+
+gprof example1 gmon.out -p/-q/-A
+
+glibc profile
+
+gcc example1.c -pg -o example1 -O2 -lc_p
+
+
+
+
+reference
+
+http://www.ibm.com/developerworks/library/l-gnuprof.html
+

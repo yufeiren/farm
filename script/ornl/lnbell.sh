@@ -17,3 +17,5 @@ do
         done
 done
 
+dd if=/dev/zero of=./t2 oflag=direct bs=1M count=1024
+
