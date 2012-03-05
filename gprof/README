@@ -9,7 +9,18 @@ wget http://linuxsoft.cern.ch/cern/slc4X/i386/yum/updates/glibc-profile-2.3.4-2.
 
 gcc example1.c -pg -o example1 -O2 -lc
 
-gprof example1 gmon.out -p/-q/-A
+gprof example1 gmon.out -p/-q
+
+
+
+annotated source
+
+gcc example1.c -g -pg -o example1 -O2 -lc
+
+gprof example1 gmon.out -A
+
+
+
 
 glibc profile
 
@@ -17,8 +28,18 @@ gcc example1.c -pg -o example1 -O2 -lc_p
 
 
 
+gcc profile feedback
+
+gcc example1.c -fprofile-generate -o example1
+
+./example1
+
+gcc example1.c -fprofile-use -o example1
+
+
 
 reference
 
 http://www.ibm.com/developerworks/library/l-gnuprof.html
 
+http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/6/html/Developer_Guide/compilers.html#gcc.profile_feedback
