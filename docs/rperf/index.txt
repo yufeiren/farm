@@ -1,0 +1,72 @@
+rperf - RDMA performance evaluation
+===================================
+Yufei Ren <renyufei83@gmail.com>
+:Author Initials: YFR
+:toc:
+:icons:
+:numbered:
+:website: http://hpdtl.cewit.stonybrook.edu/rperf
+
+Rperf is an RDMA compatible version of
+http://iperf.sourceforge.net/[iperf]. It takes advantage of original
+iperf software architecture, and adds many RDMA extentions into the
+application. Rperf allows tuning of various parameters of RDMA
+characteristics.
+
+Download
+--------
+
+The latest version of rperf is v0.09, you could download it from
+http://hpdtl.cewit.stonybrook.edu/rperf/release/rperf.v0.09.tar.gz[here].
+
+Usage Extention
+---------------
+
+
+------------------------------------------------
+$ rperf -h
+------------------------------------------------
+  -G, --rdma_style[ar/aw/pr/pw] RDMA with active/passive read/write mode
+  -H, --rdma RDMA bw test
+  -l, --len stards for length of buffer to read or write in TCP mode, 
+    and for size of RDMA operation block in RDMA mode.
+
+
+
+Example
+-------
+
+RDMA Server:
+
+
+------------------------------------------------
+$ rperf -s -p [listening port] -l 10M -H
+------------------------------------------------
+
+This will lanuch an RDMA server which will accept 10MB rdma bulk data
+once at most.
+
+RDMA_READ Client:
+
+
+------------------------------------------------
+$ rperf -c [ip addr] -p [port] -H -G pw -l 1M -i 2 -t 100
+------------------------------------------------
+
+This will lanuch an RDMA client which will RDMA_WRITE 1MB bulk data at
+one time, and last for 100 second.
+
+RDMA_WRITE Client:
+
+------------------------------------------------
+$ rperf -c [ip addr] -p [port] -H -G pr -l 1M -i 2 -t 100
+------------------------------------------------
+
+Report Format
+-------------
+
+  [ ID] Interval Transfer Bandwidth 
+  [ 4] 0.0- 2.0 sec 4.47 GBytes 19.2 Gbits/sec 
+  [ 4] 2.0- 4.0 sec 3.47 GBytes 14.9 Gbits/sec
+
+
