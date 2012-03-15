@@ -1,0 +1,25 @@
+
+Verilog Tutorial
+
+http://www.asic-world.com/verilog/veritut.html
+http://www.asic-world.com/verilog/intro1.html
+
+RTL - Register Transfer Level
+
+driver
+	1. reg
+	2. wire
+
+ mux implementation
+
+
+example 9 and 10
+combinational logic
+=  is blocking assignment
+
+sequential logic
+<= is non-blocking
+
+
+
+
