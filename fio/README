@@ -1,0 +1,21 @@
+
+
+In nersc side:
+
+
+make prefix=$HOME/opt install
+
+Compile
+
+export C_INCLUDE_PATH=/global/u1/r/renyufei/opt/include
+export LIBRARY_PATH=$LIBRARY_PATH:/global/u1/r/renyufei/opt/lib
+
+
+
+Runtime
+
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/global/u1/r/renyufei/opt/lib
+
+
+
+
