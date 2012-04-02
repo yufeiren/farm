@@ -39,12 +39,16 @@ else
 	echo "size="$DataSize >> $script
 fi
 echo "bs="$bs >> $script
-echo "iodepth=1" >> $script
+if [ $mode = "SEND" ]
+	echo "iodepth=128" >> $script
+else
+	echo "iodepth=1" >> $script
+fi
 echo "" >> $script
 ServPort=$(($ServPort+1))
 		done
 	done
 done
 
-$Fio --minimal $script
+$Fio --minimal $script > $Logdir/rdma-test-server.log
 
