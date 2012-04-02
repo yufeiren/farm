@@ -33,7 +33,7 @@ echo $job >> $script
 #echo "thread" >> $script
 echo "filename="$ServIP/$ServPort >> $script
 echo "rw=read" >> $script
-if [ $bs = "512" || $bs = "1k" || $bs = "2k" ]; then
+if [ $bs = "512" ] || [ $bs = "1k" ] || [ $bs = "2k" ]; then
 	echo "size=20g" >> $script
 else
 	echo "size="$DataSize >> $script
