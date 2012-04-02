@@ -22,6 +22,8 @@ $ cut -f x -d ";" [file]
 
 cut -f 48 -d ";" rdma-test.log > bandwidth-col.log
 
+
+
 In nersc side:
 
 
