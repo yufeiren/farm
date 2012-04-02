@@ -1,4 +1,26 @@
 
+parse terse file 2.0.6
+
+WRITE
+IO(kb) - 47
+BW(kb) - 48
+runtime(ms) - 49
+
+total latency:
+	mean: 81 - microsecond
+
+cpu user - 88
+cpu sys - 89
+context switches - 90
+
+IO latency distribution
+	microseconds: 100 - 109
+	milliseconds: 110 - 121
+
+get write bandwidth
+$ cut -f x -d ";" [file]
+
+cut -f 48 -d ";" rdma-test.log > bandwidth-col.log
 
 In nersc side:
 
