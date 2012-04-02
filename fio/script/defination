@@ -12,8 +12,8 @@ ServIP=192.168.3.5
 ServPort=19001
 
 
-# # is 16
-bss=512 1k 2k 4k 8k 16k 32k 64k 128k 256k 512k 1m 2m 4m 8m 16m
-# # is 7
-iodepths=1 2 4 8 16 32 64
+# is 16
+bss="512 1k 2k 4k 8k 16k 32k 64k 128k 256k 512k 1m 2m 4m 8m 16m"
+# is 7
+iodepths="1 2 4 8 16 32 64"
 
