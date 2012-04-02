@@ -39,7 +39,7 @@ else
 	echo "size="$DataSize >> $script
 fi
 echo "bs="$bs >> $script
-if [ $mode = "SEND" ]
+if [ $mode = "SEND" ]; then
 	echo "iodepth=128" >> $script
 else
 	echo "iodepth=1" >> $script
