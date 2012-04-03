@@ -43,6 +43,8 @@ echo "iodepth="$iodepth >> $script
 ServPort=$(($ServPort+1))
 
 $Fio --minimal $script >> $LogFile
+
+sleep 5
 		done
 	done
 done
