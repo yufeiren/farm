@@ -17,9 +17,9 @@ test -e $LogFile || touch $LogFile
 # server
 for mode in RDMA_WRITE RDMA_READ SEND
 do
-	for bs in $bss
+	for iodepth in $iodepths
 	do
-		for iodepth in $iodepths
+		for bs in $bss
 		do
 script=$Taskdir/$mode-$bs-$iodepth
 touch $script
@@ -40,7 +40,7 @@ fi
 echo "bs="$bs >> $script
 echo "iodepth="$iodepth >> $script
 
-ServPort=$(($ServPort+1))
+ServPort=$(($ServPort+10))
 
 $Fio --minimal $script >> $LogFile
 

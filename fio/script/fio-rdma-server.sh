@@ -14,23 +14,23 @@ test -d $Logdir || mkdir -p $Logdir
 test -d $Taskdir || mkdir -p $Taskdir
 test -e $LogFile || touch $LogFile
 
-script=$Taskdir/rdma-server
+# server
+for mode in RDMA_WRITE RDMA_READ SEND
+do
+	for iodepth in $iodepths
+	do
+		for bs in $bss
+		do
+script=$Taskdir/server-$mode-$bs-$iodepth
 touch $script
 echo "[global]" > $script
 echo "ioengine=rdma" >> $script
 echo "" >> $script
 
-# server
-for mode in RDMA_WRITE RDMA_READ SEND
-do
-	for bs in $bss
-	do
-		for iodepth in $iodepths
-		do
 # task
 job=[$mode-$bs-$iodepth]
 echo $job >> $script
-#echo "thread" >> $script
+echo "thread" >> $script
 echo "filename="$ServIP/$ServPort >> $script
 echo "rw=read" >> $script
 if [ $bs = "512" ] || [ $bs = "1k" ] || [ $bs = "2k" ]; then
@@ -40,15 +40,16 @@ else
 fi
 echo "bs="$bs >> $script
 if [ $mode = "SEND" ]; then
-	echo "iodepth=128" >> $script
+	echo "iodepth=256" >> $script
 else
 	echo "iodepth=1" >> $script
 fi
 echo "" >> $script
-ServPort=$(($ServPort+1))
+ServPort=$(($ServPort+10))
+
+$Fio --minimal $script >> $Logdir/rdma-test-server.log
 		done
 	done
 done
 
-$Fio --minimal $script > $Logdir/rdma-test-server.log
 
