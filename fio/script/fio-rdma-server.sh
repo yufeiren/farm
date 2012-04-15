@@ -40,7 +40,11 @@ else
 fi
 echo "bs="$bs >> $script
 if [ $mode = "SEND" ]; then
-	echo "iodepth=256" >> $script
+	if [ $bs = "8m" ] || [ $bs = "16m" ]; then
+		echo "iodepth=64" >> $script
+	else
+		echo "iodepth=256" >> $script
+	fi
 else
 	echo "iodepth=1" >> $script
 fi
