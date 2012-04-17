@@ -51,7 +51,7 @@ fi
 echo "" >> $script
 ServPort=$(($ServPort+10))
 
-$Fio --minimal $script >> $Logdir/rdma-test-server.log 2>&1 &
+$Fio --minimal $script >> $Logdir/rdma-test-server.log 2>&1
 		done
 	done
 done
