@@ -111,7 +111,8 @@ Implementation
 Compiler
 ~~~~~~~~
 
-In this project, a compiler program is implemented for translating the code in assembly-level code into binary code.
+In this project, a compiler program is implemented for translating the
+code in assembly-level code into binary code.
 
 % sample
 % a	rt,ra,tb
@@ -125,6 +126,8 @@ loop:
 	write the translated binary code (32bits - 4Bytes) into the binary file
 
 
+
+
 % mnomonic	
 
 
@@ -132,12 +135,38 @@ loop:
 
 
 
-Convert SPU Assemble Code to Binary Code
-----------------------------------------
+Architecture Design
+-------------------
 
-For testing and evaluation of the processor implementation, the project uses a separate C program to translate the assemble text file into the true binary code file. The binary code follows the principle of the cell processor.
+There are six basic instruction formats. These instructions are all 32
+bits long.
 
-Here is the logic for converting assemble code to binary code. Each instruction contains OpCode, register number, immediate data and/or reserved fields. The OpCode field is translated according to the Cell Manual. There are 128 registers in total, and each register is assigned a unique number. The program translates the ascii string, 'r1' for example, into the binary bits - '0000001', which stands for the first register. The same thing is with the immediate data. The immediate might be various length, so the program should cut or extends the proper bits.
+The SPU architecture defines a set of 128 general-purpose registers (GPRs), each of which contains 128 data bits.
 
-Another important issue is that the instruction fields is not 8 bit alignment. The program needs offer bit operation binary combination or splitting. Because all the instruction in this project is 32 bits, it is a not hard for program to translate a 32 bytes ascii into a 32 bits - 4 bytes instruction.
+The SPU loads and stores transfer quadwords between GPRs and local storage.
+
+Byte ordering defines how the bytes that make up halfwords, words,
+doublewords, and quadwords are ordered in memory. The SPU supports
+most-significant byte (MSB) ordering. With MSB ordering, also called
+big endian, the most-significant byte is located in the lowest
+addressed byte position in a storage unit (byte 0). Instructions are
+described in this document as they appear in memory, with successively
+higher addressed bytes appearing toward the right.
+
+
+
+Development Toolkit
+-------------------
+
+icarus verilog - iverilog
+
+
+
+iverilog -o obj src1 src2
+
+vvp obj
+
+using GTKWave to dignose problems
+
+
 
