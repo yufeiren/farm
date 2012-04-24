@@ -1,0 +1,9 @@
+
+For fedora
+
+default installed a2ping doesn't work
+
+wget http://www.math.bme.hu/~pts/cvsget.cgi/u=magyar/p=/M=lakk/c=f1/n=/lakk/texmf/hbin/a2ping.pl
+
+
+
