@@ -96,6 +96,10 @@ Design
 
 128 registers in total
 32bits fixed length instructions
+all GPRs are 128 bits wide.
+
+Figure 2-5 register layout.
+
 
 Data Hazard
 ~~~~~~~~~~~
@@ -167,6 +171,15 @@ iverilog -o obj src1 src2
 vvp obj
 
 using GTKWave to dignose problems
+
+
+$display
+
+$finish
+
+$readmemh
+$readmemb
+
 
 
 
