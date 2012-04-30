@@ -10,7 +10,8 @@ module top #(parameter WIDTH = 32, REGBITS = 7)();
    cellspu #(WIDTH,REGBITS) spulite(clk, reset, memdata, memread, memwrite, adr, writedata);
 
    // external memory for code and data
-   exmemory #(WIDTH) exmem(clk, memwrite, adr, writedata, memdata);
+//   exmemory #(WIDTH) exmem(clk, memread, memwrite, adr, writedata, memdata);
+   exmemory #(WIDTH) exmem(clk, 1, memwrite, adr, writedata, memdata);
    
    // initialize test
    initial

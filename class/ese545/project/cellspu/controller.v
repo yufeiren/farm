@@ -1,6 +1,6 @@
 // controller
 module controller(input clk, reset, 
-                  input      [5:0] op, 
+                  input      [10:0] op, 
                   input            zero, 
                   output reg       memread, memwrite, alusrca, memtoreg, iord, 
                   output           pcen, 
@@ -8,11 +8,10 @@ module controller(input clk, reset,
                   output reg [1:0] pcsource, alusrcb, aluop, 
                   output reg [3:0] irwrite);
 
-   parameter   FETCH1  =  4'b0001;
-   parameter   FETCH2  =  4'b0010;
-   parameter   FETCH3  =  4'b0011;
-   parameter   FETCH4  =  4'b0100;
-   parameter   DECODE  =  4'b0101;
+   // stages defination
+   parameter   FETCH   =  4'b0001;
+   parameter   DECODE  =  4'b0010;
+   parameter   ROUTE   =  4'b0011;
    parameter   MEMADR  =  4'b0110;
    parameter   LBRD    =  4'b0111;
    parameter   LBWR    =  4'b1000;
@@ -28,46 +27,106 @@ module controller(input clk, reset,
    parameter   BEQ     =  6'b000100;
    parameter   J       =  6'b000010;
 
+   // Even pipe execution
+   parameter   EVFP    =  4'b1001;   // fix point in even pipe
+   parameter   EVFX    =  4'b1010;   // float point in even pipe
+   parameter   EVBY    =  4'b1011;   // byte
+   // Odd pipe execution
+   parameter   ODLS    =  4'b1101;   // load store
+   parameter   ODPM    =  4'b1110;   // permute
+   parameter   ODBR    =  4'b1111;   // branch
+   
+   // Instruction Opcode
+   parameter   LQX     = 11'b00111000100;     // load quadword (x-form)
+   parameter   STQX    = 11'b00101000100;     // store quadword (x-form)
+   parameter   IL      =  9'b010000001;       // immediate load word
+   parameter   ILEX    = 11'b01000000100;     // immediate load word
+   parameter   AH      = 11'b00011001000;     // add halfword
+   parameter   A       = 11'b00011000000;     // add word
+   parameter   AI      =  8'b00011100;        // add word immediate
+   parameter   AIEX    = 11'b00011100000;     // add word immediate
+   parameter   SF      = 11'b00010000000;     // subtract from word
+   parameter   SFI     =  8'b00001100;        // subtract from word immediate
+   parameter   SFIEX   = 11'b00001100000;     // subtract from word immediate
+   parameter   MPY     = 11'b01111000100;     // multiply
+   parameter   MPYI    =  8'b01110100;        // multiply immediate
+   parameter   MPYIEX  = 11'b01110100000;     // multiply immediate
+   parameter   AVGB    = 11'b00011010011;     // average bytes
+   parameter   ABSDB   = 11'b00001010011;     // absolute differences of bytes
+   parameter   GBB     = 11'b00110110010;     // gather bits from bytes
+   parameter   AND     = 11'b00011000001;     // and
+   parameter   OR      = 11'b00001000001;     // or
+   parameter   XOR     = 11'b01001000001;     // exclusive or
+   parameter   NAND    = 11'b00011001001;     // nand
+   parameter   NOR     = 11'b00001001001;     // nor
+   parameter   SHL     = 11'b00001011011;     // shift left word
+   parameter   ROT     = 11'b00001011000;     // rotate word
+
+   parameter   BR      =  9'b001100100;       // branch relative
+   parameter   BREX    = 11'b00110010000;       // branch relative
+   parameter   BRA     =  9'b001100000;       // branch absolute
+   parameter   BRNZ    =  9'b001000010;       // branch if not zero word
+   parameter   BRHNZ   =  9'b001000110;       // branch if not zero halfword
+   parameter   HBR     = 11'b00110101100;     // hint for branch (r-form)
+
+   parameter   FA      = 11'b01011000100;     // floating add
+   parameter   FS      = 11'b01011000101;     // floating subtract
+   parameter   FM      = 11'b01011000110;     // floating multiply
+   parameter   FCEQ    = 11'b01111000010;     // floating compare equal
+   parameter   FCGT    = 11'b01011000010;     // floating compare greater than
+   
    reg [3:0] state, nextstate;
    reg       pcwrite, pcwritecond;
 
+   reg	[10:0]	    newop;
+
    // state register
    always @(posedge clk)
-      if(reset) state <= FETCH1;
+      if(reset) state <= FETCH;
       else state <= nextstate;
 
    // next state logic
    always @(*)
       begin
+         // set all the opcode to 11 bits
+         case(op[10:2])
+           IL:    newop <= {IL, 2'b0};
+           AI:    newop <= {AI, 3'b0};
+	   SFI:   newop <= {SFI, 3'b0};
+	   MPYI:  newop <= {MPYI, 3'b0};
+	   BR:    newop <= {BR, 2'b0};
+         endcase  
+
          case(state)
-            FETCH1:  nextstate <= FETCH2;
-            FETCH2:  nextstate <= FETCH3;
-            FETCH3:  nextstate <= FETCH4;
-            FETCH4:  nextstate <= DECODE;
-            DECODE:  case(op)
+            FETCH:   nextstate <= DECODE;
+            DECODE:  case(newop)
+		        ILEX:    nextstate <= MEMADR;
+                        A:       nextstate <= EVFX;
                         LB:      nextstate <= MEMADR;
                         SB:      nextstate <= MEMADR;
                         RTYPE:   nextstate <= RTYPEEX;
                         BEQ:     nextstate <= BEQEX;
                         J:       nextstate <= JEX;
-                        default: nextstate <= FETCH1; // should never happen
+                        default: nextstate <= FETCH; // should never happen
                      endcase
-            MEMADR:  case(op)
+            EVFX:    nextstate <= FETCH;
+            MEMADR:  case(newop)
+		        ILEX:    nextstate <= LBRD;
                         LB:      nextstate <= LBRD;
                         SB:      nextstate <= SBWR;
-                        default: nextstate <= FETCH1; // should never happen
+                        default: nextstate <= FETCH; // should never happen
                      endcase
             LBRD:    nextstate <= LBWR;
-            LBWR:    nextstate <= FETCH1;
+            LBWR:    nextstate <= FETCH;
             SBWR:    begin
-nextstate <= FETCH1;
-	       $display("next is SBWR");
-	       end
+                     nextstate <= FETCH;
+                     $display("next is SBWR");
+	             end
             RTYPEEX: nextstate <= RTYPEWR;
-            RTYPEWR: nextstate <= FETCH1;
-            BEQEX:   nextstate <= FETCH1;
-            JEX:     nextstate <= FETCH1;
-            default: nextstate <= FETCH1; // should never happen
+            RTYPEWR: nextstate <= FETCH;
+            BEQEX:   nextstate <= FETCH;
+            JEX:     nextstate <= FETCH;
+            default: nextstate <= FETCH; // should never happen
          endcase
       end
 
@@ -82,33 +141,12 @@ nextstate <= FETCH1;
             pcsource <= 2'b00;
             iord <= 0; memtoreg <= 0;
             case(state)
-               FETCH1: 
+               FETCH:
                   begin
                      memread <= 1; 
                      irwrite <= 4'b0001; // change to reflect new memory
                      alusrcb <= 2'b01;   // get the IR bits in the right spots
                      pcwrite <= 1;       // FETCH 2,3,4 also changed... 
-                  end
-               FETCH2: 
-                  begin
-                     memread <= 1;
-                     irwrite <= 4'b0010;
-                     alusrcb <= 2'b01;
-                     pcwrite <= 1;
-                  end
-               FETCH3:
-                  begin
-                     memread <= 1;
-                     irwrite <= 4'b0100;
-                     alusrcb <= 2'b01;
-                     pcwrite <= 1;
-                  end
-               FETCH4:
-                  begin
-                     memread <= 1;
-                     irwrite <= 4'b1000;
-                     alusrcb <= 2'b01;
-                     pcwrite <= 1;
                   end
                DECODE: alusrcb <= 2'b11;
                MEMADR:

@@ -4,7 +4,7 @@
 // a 32 bit word to the out world
 module exmemory #(parameter WIDTH = 32)
    (input clk,
-    input memwrite,
+    input memread, memwrite,
     input [WIDTH-1:0] adr, writedata,
     output reg [WIDTH-1:0] memdata);
 
@@ -19,11 +19,15 @@ module exmemory #(parameter WIDTH = 32)
 
    // read and write bytes from 32-bit word
    always @(posedge clk)
+     begin
      if (memwrite)
        RAM[adr>>2] <= writedata;
+     if (memread)
+       memdata <= RAM[adr>>2];
+     end
    
-   assign word = RAM[adr>>2];
-   always @(*)
-     memdata <= word[31:0]; // non-block mode
+//   assign word = RAM[adr>>2];
+//   always @(*)
+//     memdata <= word[31:0];  non-block mode
 endmodule // exmemory
 

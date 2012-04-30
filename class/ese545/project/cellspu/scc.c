@@ -44,7 +44,7 @@ setbits(uint32 *ip, int start, int length, uint32 value)
   }
 
   return;
-  }
+}
 
 static uint32_t op2hex(char *op)
 {
@@ -53,7 +53,7 @@ static uint32_t op2hex(char *op)
   instr = 0;
   if (strcmp(op[0], "a") == 0) {
     instr |= 0x18000000;
-    instr |= atoi(op[3]) << 13;
+    instr |= atoi(op[3]) << 14;
     instr |= atoi(op[2]) << 7;
     instr |= atoi(op[1]);
   }
@@ -86,12 +86,13 @@ static int cellspu2hex(char *obj, const char *src)
 
   uint32_t instr;
 
-  printf("src is: %s\n", src);
+  printf("=======================\n");
+  printf("original instruction is: \t%s\n", src);
 
   /* remove all seperator to a Space */
   rmsep(newsrc, src);
 
-  printf("newsrc is: %s\n", newsrc);
+  printf("new instruction is: \t%s\n", newsrc);
 
   memset(&instr, '\0', 4);
 
@@ -111,17 +112,24 @@ static int cellspu2hex(char *obj, const char *src)
   printf("op[%d] = %s\n", i, op[i]);
 
   /*  instr = op2hex(op);*/
-  instr = 0;
+	instr = 0;
   if (strcmp(op[0], "a") == 0) { /* Add Word */
     instr |= 0x18000000;
-    instr |= atoi(op[3]) << 13;
+    instr |= atoi(op[3]) << 14;
     instr |= atoi(op[2]) << 7;
     instr |= atoi(op[1]);
+  } else if (strcmp(op[0], "il") == 0) { /* immediate load word */
+    instr |= 0x40800000;
+    instr |= atoi(op[2]) << 7;
+    instr |= atoi(op[1]);
+  } else {
+    printf("unrecgonized opcode: %s\n", op[0]);
+    return -1;
   }
 
-  sprintf(obj, "%08x\n", instr);
+  sprintf(obj, "%08x", instr);
 
-  char *bcode[4][9];
+  char bcode[4][9];
 
   memcpy(bcode[0], byte_to_binary(((instr&0xff000000)>>24)&0x00ff), 8);
   memcpy(bcode[1], byte_to_binary(((instr&0x00ff0000)>>16)&0x00ff), 8);
