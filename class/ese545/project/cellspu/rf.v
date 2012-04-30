@@ -2,9 +2,9 @@
 // module regfile #(parameter WIDTH = 128, REGBITS = 7)
 module regfile #(parameter WIDTH = 32, REGBITS = 7)
                 (input                clk, 
-                 input                regwrite, 
+                 input                regwrite,
                  input  [REGBITS-1:0] ra1, ra2, rt, wa,
-                 input  [WIDTH-1:0]   wd,
+                 input  [127:0]       wd,
 		 input                i10_en, i16_en,
                  input  [9:0]         i10,
 		 input  [15:0]        i16,
@@ -15,6 +15,9 @@ module regfile #(parameter WIDTH = 32, REGBITS = 7)
    reg  [127:0] RAM [127:0];
    wire	[127:0]	    imm;
 
+   // previous instruction rt
+   reg [6:0] 	    pre_rt;
+   
    assign imm = {112'b0, i16};
 
    // three ported register file
@@ -26,7 +29,7 @@ module regfile #(parameter WIDTH = 32, REGBITS = 7)
 	if (i16_en)
 	  begin
 	     RAM[rt] <= imm;
-	     $display("load imm %d into reg %b", imm, rt);
+	     $display("load imm %d into reg %d", imm, rt);
 	  end
 	
         if (regwrite) RAM[wa] <= wd;
@@ -35,7 +38,9 @@ module regfile #(parameter WIDTH = 32, REGBITS = 7)
 	rd2 <= RAM[ra2];
 
 	evencont <= 3'b010;
-	
+
+	if (~wd[127]) RAM[pre_rt] = wd;
+	pre_rt = rt;
      end
 
 //   assign rd1 = ra1 ? RAM[ra1] : 0;

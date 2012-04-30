@@ -86,14 +86,15 @@ module datapath #(parameter WIDTH = 32, REGBITS = 7)
    flop       #(WIDTH)  areg(clk, rd1, a);	
    flop       #(WIDTH)  wrd(clk, rd2, writedata);
    flop       #(WIDTH)  res(clk, aluresult, aluout);
-   mux2       #(WIDTH)  adrmux(pc, aluout, iord, adr);
+//   mux2       #(WIDTH)  adrmux(pc, aluout, iord, adr);
+   mux2       #(WIDTH)  adrmux(pc, aluout, 0, adr);
    mux2       #(WIDTH)  src1mux(pc, a, alusrca, src1);
    mux4       #(WIDTH)  src2mux(writedata, CONST_ONE, instr[WIDTH-1:0], 
                                 constx4, alusrcb, src2);
 //   mux4       #(WIDTH)  pcmux(aluresult, aluout, constx4, CONST_ZERO, pcsource, nextpc);
    mux2       #(WIDTH)  wdmux(aluout, md, memtoreg, wd);
    // register file
-   regfile    #(WIDTH,REGBITS) rf(clk, regwrite, reg_ra, reg_rb, reg_rt, wa, wd, i10_en, i16_en, i10, i16, evencont, oddcont, reg_rd1, reg_rd2);
+   regfile    #(WIDTH,REGBITS) rf(clk, regwrite, reg_ra, reg_rb, reg_rt, wa, ep_result, i10_en, i16_en, i10, i16, evencont, oddcont, reg_rd1, reg_rd2);
 //   regfile    #(WIDTH,REGBITS) rf(clk, regwrite, ra1, ra2, wa, wd, rd1, rd2);
    // even pipe integer unit
    epfx       #(128) evenpipe(reg_rd1, reg_rd2, evencont, ep_result);
