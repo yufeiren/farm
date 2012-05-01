@@ -122,6 +122,138 @@ static int cellspu2hex(char *obj, const char *src)
     instr |= 0x40800000;
     instr |= atoi(op[2]) << 7;
     instr |= atoi(op[1]);
+  } else if (strcmp(op[0], "lqx") == 0) { /* load quadword x-form */
+    instr |= 0x38800000;
+    instr |= atoi(op[3]) << 14;
+    instr |= atoi(op[2]) << 7;
+    instr |= atoi(op[1]);
+  } else if (strcmp(op[0], "stqx") == 0) { /* store quadword x-form */
+    instr |= 0x28800000;
+    instr |= atoi(op[3]) << 14;
+    instr |= atoi(op[2]) << 7;
+    instr |= atoi(op[1]);
+  } else if (strcmp(op[0], "ah") == 0) { /* add halfword */
+    instr |= 0x19000000;
+    instr |= atoi(op[3]) << 14;
+    instr |= atoi(op[2]) << 7;
+    instr |= atoi(op[1]);
+  } else if (strcmp(op[0], "ai") == 0) { /* add word immediate */
+    instr |= 0x1C000000;
+    instr |= atoi(op[3]) << 14;
+    instr |= atoi(op[2]) << 7;
+    instr |= atoi(op[1]);
+  } else if (strcmp(op[0], "sf") == 0) { /* subtract from word */
+    instr |= 0x08000000;
+    instr |= atoi(op[3]) << 14;
+    instr |= atoi(op[2]) << 7;
+    instr |= atoi(op[1]);
+  } else if (strcmp(op[0], "sfi") == 0) { /* subtract from word immediate */
+    instr |= 0x08000000;
+    instr |= atoi(op[3]) << 14;
+    instr |= atoi(op[2]) << 7;
+    instr |= atoi(op[1]);
+  } else if (strcmp(op[0], "mpy") == 0) { /* multiply */
+    instr |= 0x78800000;
+    instr |= atoi(op[3]) << 14;
+    instr |= atoi(op[2]) << 7;
+    instr |= atoi(op[1]);
+  } else if (strcmp(op[0], "mpyi") == 0) { /* multiply immediate */
+    instr |= 0x74000000;
+    instr |= atoi(op[3]) << 14;
+    instr |= atoi(op[2]) << 7;
+    instr |= atoi(op[1]);
+  } else if (strcmp(op[0], "avgb") == 0) { /* average bytes */
+    instr |= 0x1A600000;
+    instr |= atoi(op[3]) << 14;
+    instr |= atoi(op[2]) << 7;
+    instr |= atoi(op[1]);
+  } else if (strcmp(op[0], "avgb") == 0) { /* average bytes */
+    instr |= 0x1A600000;
+    instr |= atoi(op[3]) << 14;
+    instr |= atoi(op[2]) << 7;
+    instr |= atoi(op[1]);
+  } else if (strcmp(op[0], "absdb") == 0) { /* absolute differences of bytes */
+    instr |= 0x0A600000;
+    instr |= atoi(op[3]) << 14;
+    instr |= atoi(op[2]) << 7;
+    instr |= atoi(op[1]);
+  } else if (strcmp(op[0], "gbb") == 0) { /* gather bits from bytes */
+    instr |= 0x36400000;
+    instr |= atoi(op[2]) << 7;
+    instr |= atoi(op[1]);
+  } else if (strcmp(op[0], "and") == 0) { /* and */
+    instr |= 0x18200000;
+    instr |= atoi(op[3]) << 14;
+    instr |= atoi(op[2]) << 7;
+    instr |= atoi(op[1]);
+  } else if (strcmp(op[0], "or") == 0) { /* or */
+    instr |= 0x08200000;
+    instr |= atoi(op[3]) << 14;
+    instr |= atoi(op[2]) << 7;
+    instr |= atoi(op[1]);
+  } else if (strcmp(op[0], "xor") == 0) { /* xor */
+    instr |= 0x48200000;
+    instr |= atoi(op[3]) << 14;
+    instr |= atoi(op[2]) << 7;
+    instr |= atoi(op[1]);
+  } else if (strcmp(op[0], "nand") == 0) { /* nand */
+    instr |= 0x19200000;
+    instr |= atoi(op[3]) << 14;
+    instr |= atoi(op[2]) << 7;
+    instr |= atoi(op[1]);
+  } else if (strcmp(op[0], "nor") == 0) { /* nor */
+    instr |= 0x09200000;
+    instr |= atoi(op[3]) << 14;
+    instr |= atoi(op[2]) << 7;
+    instr |= atoi(op[1]);
+  } else if (strcmp(op[0], "shl") == 0) { /* shift left word */
+    instr |= 0x0B600000;
+    instr |= atoi(op[3]) << 14;
+    instr |= atoi(op[2]) << 7;
+    instr |= atoi(op[1]);
+  } else if (strcmp(op[0], "rot") == 0) { /* rotate word */
+    instr |= 0x0B000000;
+    instr |= atoi(op[3]) << 14;
+    instr |= atoi(op[2]) << 7;
+    instr |= atoi(op[1]);
+    /*  } else if (strcmp(op[0], "br") == 0) { branch relative */
+  } else if (strcmp(op[0], "bra") == 0) { /* branch absolute */
+    instr |= 0x30000000;
+    instr |= atoi(op[1]) << 7;
+  } else if (strcmp(op[0], "brnz") == 0) { /* branch if not zero word */
+    instr |= 0x21000000;
+    instr |= atoi(op[2]) << 7;
+    instr |= atoi(op[1]);
+  } else if (strcmp(op[0], "brhnz") == 0) { /* branch if not zero word */
+    instr |= 0x23000000;
+    instr |= atoi(op[2]) << 7;
+    instr |= atoi(op[1]);
+    /*  } else if (strcmp(op[0], "hbf") == 0) { hit for branch r-form */
+  } else if (strcmp(op[0], "fa") == 0) { /* floating add */
+    instr |= 0x58800000;
+    instr |= atoi(op[3]) << 14;
+    instr |= atoi(op[2]) << 7;
+    instr |= atoi(op[1]);
+  } else if (strcmp(op[0], "fs") == 0) { /* floating subtract */
+    instr |= 0x58A00000;
+    instr |= atoi(op[3]) << 14;
+    instr |= atoi(op[2]) << 7;
+    instr |= atoi(op[1]);
+  } else if (strcmp(op[0], "fm") == 0) { /* floating multiply */
+    instr |= 0x58C00000;
+    instr |= atoi(op[3]) << 14;
+    instr |= atoi(op[2]) << 7;
+    instr |= atoi(op[1]);
+  } else if (strcmp(op[0], "fceq") == 0) { /* floating compare equal */
+    instr |= 0x78400000;
+    instr |= atoi(op[3]) << 14;
+    instr |= atoi(op[2]) << 7;
+    instr |= atoi(op[1]);
+  } else if (strcmp(op[0], "fcgt") == 0) { /* floating compare greater than */
+    instr |= 0x58400000;
+    instr |= atoi(op[3]) << 14;
+    instr |= atoi(op[2]) << 7;
+    instr |= atoi(op[1]);
   } else {
     printf("unrecgonized opcode: %s\n", op[0]);
     return -1;
