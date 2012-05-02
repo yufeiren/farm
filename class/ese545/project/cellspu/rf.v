@@ -2,22 +2,22 @@
 module regfile #(parameter RFWIDTH = 128, WIDTH = 32, REGBITS = 7)
                 (input                clk, 
                  input                regwrite,
-//                 input  [REGBITS-1:0] ra1, ra2, rt, wa,
 		 input  i_en_0, i_en_1, even_or_odd_0, even_or_odd_1,
                  input  [REGBITS-1:0] ra_0, ra_1, rb_0, rb_1, rt_0, rt_1, wa,
-                 input  [RFWIDTH-1:0] wd,
+                 input  [RFWIDTH-1:0] wd_even, wd_odd,
 		 input                i10_en_0, i10_en_1, i16_en_0, i16_en_1,
                  input  [9:0]         i10_0, i10_1,
 		 input  [15:0]        i16_0, i16_1,
-		 output reg [2:0]     evencont, oddcont,
-                 output reg [RFWIDTH-1:0]   rd1, rd2);
+		 output reg [2:0]     cont0, cont1,
+                 output [RFWIDTH-1:0]   rd00, rd01, rd10, rd11,
+                 output even_mux_sel, odd_mux_sel);
 
    // 128 bits * 128 GPRs
    reg  [RFWIDTH-1:0] RAM [127:0];
-   wire	[RFWIDTH-1:0]	    imm_0, imm_1;
+   wire	[RFWIDTH-1:0]	    imm0, imm1;
 
    // previous instruction rt
-   reg [6:0] 	    pre_rt_0, pre_rt_1;
+   reg [6:0] 	    pre_rt_even, pre_rt_odd;
    
    assign imm0 = {112'b0, i16_0};
    assign imm1 = {112'b0, i16_1};
@@ -37,21 +37,30 @@ module regfile #(parameter RFWIDTH = 128, WIDTH = 32, REGBITS = 7)
 	if (i16_en_1)
 	  begin
 	     RAM[rt_1] <= imm1;
-	     $display("load imm1 %d into reg %d", imm_1, rt_1);
+	     $display("load imm1 %d into reg %d", imm1, rt_1);
 	  end
 	
-        if (regwrite) RAM[wa] <= wd;
+        // if (regwrite) RAM[wa] <= wd;
 
-	rd1 <= RAM[ra_0];
-	rd2 <= RAM[rb_0];
+	cont0 <= 3'b010;
+	cont1 <= 3'b010;
 
-	evencont <= 3'b010;
+	if (~wd_even[127]) RAM[pre_rt_even] = wd_even;
+	if (~wd_odd[127]) RAM[pre_rt_odd] = wd_odd;
 
-	if (~wd[127]) RAM[pre_rt_0] = wd;
-	pre_rt_0 = rt_0;
+	pre_rt_even = rt_0;
+	pre_rt_odd = rt_1;
      end
 
-//   assign rd1 = ra1 ? RAM[ra1] : 0;
-//   assign rd2 = ra2 ? RAM[ra2] : 0;
+     // first instruction output
+     assign rd00 = ra_0 ? RAM[ra_0] : 0;
+     assign rd01 = rb_0 ? RAM[rb_0] : 0;
+     assign even_mux_sel = 0;
+   
+     // second instruction output
+     assign rd10 = ra_1 ? RAM[ra_1] : 0;
+     assign rd11 = rb_1 ? RAM[rb_1] : 0;
+     assign odd_mux_sel = 1;
+
 endmodule
 

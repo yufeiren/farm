@@ -3,8 +3,8 @@ all: scc cellspu
 scc: scc.c
 	gcc scc.c -o scc
 
-cellspu: cellspu.v rf.v exmemory.v controller.v top.v
-	iverilog -o cellspu cellspu.v rf.v exmemory.v controller.v top.v
+cellspu: cellspu.v rf.v exmemory.v controller.v top.v decode.v
+	iverilog -o cellspu cellspu.v rf.v exmemory.v controller.v top.v decode.v
 
 clean:
 	rm -rf scc cellspu
