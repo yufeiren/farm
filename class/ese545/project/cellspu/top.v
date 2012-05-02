@@ -1,24 +1,24 @@
 // top level design for testing
-module top #(parameter WIDTH = 32, REGBITS = 7)();
+module top #(parameter RFWIDTH = 128, WIDTH = 32, REGBITS = 7)();
    reg clk;
    reg reset;
    wire memread, memwrite;
-   wire [WIDTH-1:0] adr, writedata;
-   wire [WIDTH-1:0] memdata;
+   wire [WIDTH-1:0] adr;
+   wire [WIDTH-1:0] instr0, instr1;
+   wire [RFWIDTH-1:0] memdata, writedata;
 
    // instantiate devices to be tested
-   cellspu #(WIDTH,REGBITS) spulite(clk, reset, memdata, memread, memwrite, adr, writedata);
+   cellspu #(RFWIDTH, WIDTH,REGBITS) spulite(clk, reset, instr0, instr1, memdata, writedata, memread, memwrite, adr);
 
-   // external memory for code and data
-//   exmemory #(WIDTH) exmem(clk, memread, memwrite, adr, writedata, memdata);
-   exmemory #(WIDTH) exmem(clk, 1, memwrite, adr, writedata, memdata);
+   // external memory for instruction and data
+   exmemory #(RFWIDTH, WIDTH) exmem(clk, 1, 0, 0, adr, writedata, instr0, instr1, memdata);
    
    // initialize test
    initial
      begin
         $dumpfile("top.vcd");
         $dumpvars(0,top);
-	reset <= 1; # 22; reset <=0;
+	reset <= 1; # 7; reset <=0;
      end
 
    //generate clock to sequence tests
