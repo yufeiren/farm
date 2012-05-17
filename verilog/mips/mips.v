@@ -12,6 +12,83 @@
 //-------------------------------------------------------
 
 
+// top level design for testing
+module top #(parameter WIDTH = 8, REGBITS = 3)();
+   reg clk;
+   reg reset;
+   wire memread, memwrite;
+   wire [WIDTH-1:0] adr, writedata;
+   wire [WIDTH-1:0] memdata;
+
+   // instantiate devices to be tested
+   mips #(WIDTH,REGBITS) dut(clk, reset, memdata, memread, memwrite, adr, writedata);
+
+   // external memory for code and data
+   exmemory #(WIDTH) exmem(clk, memwrite, adr, writedata, memdata);
+   
+   // initialize test
+   initial
+     begin
+        $dumpfile("top.vcd");
+        $dumpvars(0,top);
+	reset <= 1; # 22; reset <=0;
+     end
+
+   //generate clock to sequence tests
+    always
+      begin
+	 clk <= 1; # 5; clk <= 0; # 5;
+      end
+
+   always@(negedge clk)
+     begin
+	if (memwrite)
+	  if (adr == 5 & writedata == 7)
+	    $display("Simulation complete successful");
+	  else $display("Simulation failed");
+     end
+endmodule // top
+
+//external memory accessed by MIPS
+module exmemory #(parameter WIDTH = 8)
+   (input clk,
+    input memwrite,
+    input [WIDTH-1:0] adr, writedata,
+    output reg [WIDTH-1:0] memdata);
+
+   reg [31:0] 		   RAM[20:0];
+   wire [31:0] 		   word;
+	integer i;
+
+   initial
+     begin
+	$readmemh("memfile.dat",RAM);
+	$display("rdata:");
+	for (i=0;i<21;i=i+1)
+	  $display("%d:%h",i,RAM[i]);
+     end
+
+   // read and write bytes from 32-bit word
+   always @(posedge clk)
+     if (memwrite)
+       case (adr[1:0])
+	 2'b00: RAM[adr>>2][7:0] <= writedata;
+	 2'b01: RAM[adr>>2][15:8] <= writedata;
+	 2'b10: RAM[adr>>2][23:16] <= writedata;
+	 2'b11: RAM[adr>>2][31:24] <= writedata;
+       endcase // case (adr[1:0])
+
+   assign word = RAM[adr>>2];
+   always @(*)
+     case (adr[1:0])
+       2'b00: memdata <= word[31:24];
+       2'b01: memdata <= word[23:16];
+       2'b10: memdata <= word[15:8];
+       2'b11: memdata <= word[7:0];
+     endcase // case (adr[1:0])
+endmodule // exmemory
+
+
 // simplified MIPS processor
 module mips #(parameter WIDTH = 8, REGBITS = 3)
              (input              clk, reset, 
@@ -95,7 +172,10 @@ module controller(input clk, reset,
                      endcase
             LBRD:    nextstate <= LBWR;
             LBWR:    nextstate <= FETCH1;
-            SBWR:    nextstate <= FETCH1;
+            SBWR:    begin
+nextstate <= FETCH1;
+	       $display("next is SBWR");
+	       end
             RTYPEEX: nextstate <= RTYPEWR;
             RTYPEWR: nextstate <= FETCH1;
             BEQEX:   nextstate <= FETCH1;
