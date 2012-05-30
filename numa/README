@@ -14,3 +14,37 @@ perferred: falls back to other nodes.
 bind: swapping
 
 
+[ren@Srv365-09 source]$ numademo -t 1g memset
+2 nodes available
+memory with no policy memset              Avg 5795.64 MB/s Max 5796.15 MB/s Min 5794.96 MB/s
+local memory memset                       Avg 5795.52 MB/s Max 5796.27 MB/s Min 5794.86 MB/s
+memory interleaved on all nodes memset    Avg 4478.74 MB/s Max 4479.06 MB/s Min 4478.05 MB/s
+memory on node 0 memset                   Avg 3647.09 MB/s Max 3647.25 MB/s Min 3646.96 MB/s
+memory on node 1 memset                   Avg 5795.67 MB/s Max 5796.18 MB/s Min 5795.05 MB/s
+memory interleaved on 0 1 memset          Avg 4478.93 MB/s Max 4479.22 MB/s Min 4478.61 MB/s
+setting preferred node to 0
+memory without policy memset              Avg 3647.04 MB/s Max 3647.34 MB/s Min 3646.22 MB/s
+setting preferred node to 1
+memory without policy memset              Avg 5795.54 MB/s Max 5796.15 MB/s Min 5794.68 MB/s
+manual interleaving to all nodes memset   Avg 4478.86 MB/s Max 4479.24 MB/s Min 4478.48 MB/s
+manual interleaving on node 0/1 memset    Avg 4479.07 MB/s Max 4479.30 MB/s Min 4478.89 MB/s
+current interleave node 1
+running on node 0, preferred node 0
+local memory memset                       Avg 5761.16 MB/s Max 5762.02 MB/s Min 5756.09 MB/s
+memory interleaved on all nodes memset    Avg 4458.46 MB/s Max 4458.76 MB/s Min 4457.88 MB/s
+memory interleaved on node 0/1 memset     Avg 4457.87 MB/s Max 4458.75 MB/s Min 4454.84 MB/s
+alloc on node 1 memset                    Avg 3638.39 MB/s Max 3638.85 MB/s Min 3635.81 MB/s
+local allocation memset                   Avg 5761.17 MB/s Max 5762.18 MB/s Min 5754.77 MB/s
+setting wrong preferred node memset       Avg 3638.16 MB/s Max 3638.89 MB/s Min 3633.21 MB/s
+setting correct preferred node memset     Avg 5761.85 MB/s Max 5762.18 MB/s Min 5760.66 MB/s
+running on node 1, preferred node 0
+local memory memset                       Avg 5795.62 MB/s Max 5796.18 MB/s Min 5794.77 MB/s
+memory interleaved on all nodes memset    Avg 4478.82 MB/s Max 4479.15 MB/s Min 4478.37 MB/s
+memory interleaved on node 0/1 memset     Avg 4478.94 MB/s Max 4479.24 MB/s Min 4478.35 MB/s
+alloc on node 0 memset                    Avg 3647.18 MB/s Max 3647.36 MB/s Min 3646.82 MB/s
+local allocation memset                   Avg 5795.75 MB/s Max 5796.33 MB/s Min 5795.33 MB/s
+setting wrong preferred node memset       Avg 3647.16 MB/s Max 3647.31 MB/s Min 3646.84 MB/s
+setting correct preferred node memset     Avg 5795.77 MB/s Max 5796.18 MB/s Min 5795.08 MB/s
+
+
+

@@ -41,5 +41,9 @@ Runtime
 LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/global/u1/r/renyufei/opt/lib
 
 
+Using fio to generate file
+
+fio --ioengine=libaio --buffered=0 --rw=write --bs=512k --size=100g --name=test --filename=/home/ren/rftp/data/source/disk/hg --iodepth=16
+
 
 
