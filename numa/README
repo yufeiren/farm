@@ -1,0 +1,16 @@
+
+$ numactl --cpunodebind=0 --membind=0 command args...
+
+$ numademo -t 1g memset
+
+http://oss.sgi.com/projects/libnuma/
+
+$ numastat
+
+bind: will fail the allocation when the memory cannot be allocated on
+the specified nodes.
+perferred: falls back to other nodes.
+
+
+
+
