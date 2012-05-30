@@ -11,6 +11,6 @@ bind: will fail the allocation when the memory cannot be allocated on
 the specified nodes.
 perferred: falls back to other nodes.
 
-
+bind: swapping
 
 
