@@ -1,4 +1,4 @@
-all: gcd gcdmod
+all: gcd gcdmod reducefraction binary prob9
 
 clean:
-	rm -rf gcd gcdmod
+	rm -rf gcd gcdmod reducefraction binary prob9
