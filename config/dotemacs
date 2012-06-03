@@ -26,4 +26,24 @@
 (setq-default default-tab-width 8)
 (setq-default tab-width 8)
 (setq-default c-basic-indent 8)
+(setq-default c-basic-offset 8)
 
+;;;;;;;;;;;;;;;;;
+;; APPEARANCE
+;;;;;;;;;;;;;;;;;
+(setq font-lock-maximum-decoration t)
+(setq visible-bell t)
+(setq require-final-newline t)
+(setq resize-minibuffer-frame t)
+(setq column-number-mode t)
+(setq-default transient-mark-mode t)
+(setq next-line-add-newlines nil)
+(setq blink-matching-paren nil)
+(global-font-lock-mode 1 t)
+(blink-cursor-mode -1)
+(tool-bar-mode -1)
+(tooltip-mode -1)
+
+(set-foreground-color "#dbdbdb")
+(set-background-color "#000000")
+(set-cursor-color "#ff0000")
