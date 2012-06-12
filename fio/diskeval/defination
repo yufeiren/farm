@@ -14,7 +14,7 @@ LogFile=$Logdir/$TestSuite-test.log
 ioengines="libaio sync"
 # rw
 rws="read write randread randwrite"
-# is 16
+# is 9
 bss="16k 32k 64k 128k 256k 512k 1m 2m 4m"
 # is 7
 iodepths="1 4 16 64"
