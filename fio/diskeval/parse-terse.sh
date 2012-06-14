@@ -2,7 +2,7 @@
 
 # version 2.0.7
 
-./defination
+source ./defination
 
 Tersedir=/home/ren/fio/terse
 test -d $Tersedir || mkdir -p $Tersedir
