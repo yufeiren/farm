@@ -2,8 +2,8 @@
 
 logdir=/home/ren/numa/numademo
 
-mss=512m 1g 2g 4g
-ts=memset memcpy stream
+mss="512m 1g 2g 4g"
+ts="memset memcpy stream"
 iters=5
 
 i=0
