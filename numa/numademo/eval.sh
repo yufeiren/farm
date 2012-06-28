@@ -13,8 +13,10 @@ do
 	do
 		for t in $ts
 		do
+			touch $logdir/iter$i-$t-$mss.log
 			numademo -t -c $ms $t > $logdir/iter$i-$t-$mss.log
 		done
 	done
+	(( i++ ))
 done
 
