@@ -22,7 +22,7 @@ do
 		do
 			for ps in $pss
 			do
-numactl --cpunodebind=$cpunode --membind=$memnode time -a -o $CpuLogFile iperf -c $servip -i 2 -l $bs -P $ps > $Logdir/iperf-c$cpunode-m$memnode-$bs-$ps.log
+numactl --cpunodebind=$cpunode --membind=$memnode time -a -o $CpuLogFile iperf -c $servip -i 2 -t $timeperiod -l $bs -p $servport -P $ps > $Logdir/iperf-c$cpunode-m$memnode-$bs-$ps.log
 
 sleep 3
 			done

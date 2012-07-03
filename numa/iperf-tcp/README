@@ -2,6 +2,8 @@
 1. Server(dantong-02) is in the best case
 large socket receive buffer by sysctl
 
+nohup numactl --cpunodebind=0 --membind=0 iperf -s -p 1234 > /home/ren/numa/iperf/iperf-server.log 2>&1 &
+
 2. Client(dantong-01)
 local
 same socket
