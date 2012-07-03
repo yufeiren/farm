@@ -1,0 +1,11 @@
+
+1. Server(dantong-02) is in the best case
+large socket receive buffer by sysctl
+
+2. Client(dantong-01)
+local
+same socket
+1hop remote * 2
+2hop remote
+
+
