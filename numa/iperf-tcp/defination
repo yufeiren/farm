@@ -9,6 +9,7 @@ TestSuite=iperf-tcp
 Iperf=/usr/local/bin/iperf
 
 Logdir=/home/ren/numa/iperf/log
+Parsedir=/home/ren/numa/iperf/parse
 
 LogFile=$Logdir/$TestSuite-test.log
 CpuLogFile=$Logdir/$TestSuite-cpu.log
