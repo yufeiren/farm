@@ -17,7 +17,7 @@ for cpunode in $cpunodes
 do
 	for memnode in $memnodes
 	do
-		numactl --cpunodebind=$cpunode --membind=$memnode iperf -p $servport > $Logdir/iperf-server-c$cpunode-m$memnode.log 2&>1 &
+		numactl --cpunodebind=$cpunode --membind=$memnode $Iperf -s -p $servport > $Logdir/iperf-server-c$cpunode-m$memnode.log 2>&1 &
 		(( servport++ ))
 	done
 done

@@ -16,7 +16,7 @@ for cpunode in $cpunodes
 do
 	for memnode in $memnodes
 	do
-		numactl --cpunodebind=0 --membind=0 iperf -c $servip -t $timeperiod -l 128k -p $servport > /dev/null 2&>1 &
+		numactl --cpunodebind=0 --membind=0 iperf -c $servip -t $timeperiod -l 128k -p $servport > /dev/null 2>&1
 		(( servport++ ))
 	done
 done
