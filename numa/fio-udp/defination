@@ -1,0 +1,21 @@
+#! /bin/bash
+
+Fio=/usr/local/bin/fio
+
+DataSize=100g
+Logdir=/home/ren/numa/fio-udp/log
+Taskdir=/home/ren/numa/fio-udp/task
+
+LogFile=$Logdir/fio-udp-test.log
+
+ServIP=192.168.53.17
+ServPort=19001
+
+
+# is 4
+bss="1k 2k 4k 8k"
+
+# numa node to be tested
+cpunodes="0 1 2 4 6"
+memnodes="0 1 2 4 6"
+
