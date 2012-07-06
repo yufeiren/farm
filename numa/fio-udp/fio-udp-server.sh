@@ -22,7 +22,7 @@ do
 	do
 		for memnode in $memnodes
 		do
-script=$Taskdir/server-$bs
+script=$Taskdir/fio-udp-server-$bs
 touch $script
 echo "[global]" > $script
 echo "ioengine=net" >> $script
@@ -36,12 +36,12 @@ echo "thread" >> $script
 echo "rw=read" >> $script
 echo "size="$DataSize >> $script
 echo "bs="$bs >> $script
-echo "hostname="$ServIP >> $script
+# echo "hostname="$ServIP >> $script
 echo "port="$ServPort >> $script
 
 ServPort=$(($ServPort+10))
 
-numactl --cpunodebind=0 --membind=0 $Fio --minimal $script >> $Logdir/rdma-test-server.log 2>&1
+numactl --cpunodebind=0 --membind=0 $Fio --minimal $script >> $Logdir/fio-udp-test-server.log 2>&1
 		done
 	done
 done

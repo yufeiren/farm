@@ -22,7 +22,7 @@ do
 		for memnode in $memnodes
 		do
 
-script=$Taskdir/$mode-$bs
+script=$Taskdir/fio-udp-client-$bs
 touch $script
 echo "[global]" > $script
 echo "ioengine=net" >> $script

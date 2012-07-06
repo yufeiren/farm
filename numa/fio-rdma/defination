@@ -13,7 +13,7 @@ ServPort=19001
 
 
 # is 4
-bss="64k 256k 1m 4m "
+bss="64k 256k 1m 4m"
 # is 7
 iodepths="1 16 64"
 
