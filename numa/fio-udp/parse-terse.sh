@@ -1,10 +1,10 @@
 #! /bin/bash
 
-# version 2.0.6
+# version 2.0.8
 
-logfile=/home/ren/fio/log/rdma-test.log
+logfile=/home/ren/numa/fio-udp/log/fio-udp-test.log
 
-Tersedir=/home/ren/fio/terse
+Tersedir=/home/ren/numa/fio-udp/terse
 test -d $Tersedir || mkdir -p $Tersedir
 
 
