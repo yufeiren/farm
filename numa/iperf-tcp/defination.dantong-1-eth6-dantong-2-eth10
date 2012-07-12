@@ -1,0 +1,31 @@
+#! /bin/bash
+
+# for HP/AMD architecture
+
+# one to one: from eth6(datong-01) to eth10(dantong-02)
+
+TestSuite=iperf-tcp-eth6-eth10
+
+Iperf=/usr/local/bin/iperf
+
+Logdir=/home/ren/numa/iperf/log
+Parsedir=/home/ren/numa/iperf/parse
+
+LogFile=$Logdir/$TestSuite-test.log
+CpuLogFile=$Logdir/$TestSuite-cpu.log
+
+# numa node to be tested
+cpunodes="0 1 2 3 4 5 6 7 8"
+memnodes="0 1 2 4 4 5 6 7 8"
+
+# --length
+bss="128k"
+# parallel stream
+pss="1"
+
+servip="192.168.41.17"
+
+servport=1234
+
+timeperiod=60
+

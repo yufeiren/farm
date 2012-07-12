@@ -14,13 +14,13 @@ rm -rf $Logdir
 test -d $Logdir || mkdir -p $Logdir
 test -e $LogFile || touch $LogFile
 
-for cpunode in $cpunodes
+for bs in $bss
 do
-	for memnode in $memnodes
+	for ps in $pss
 	do
-		for bs in $bss
+		for cpunode in $cpunodes
 		do
-			for ps in $pss
+			for memnode in $memnodes
 			do
 numactl --cpunodebind=$cpunode --membind=$memnode time -a -o $CpuLogFile iperf -c $servip -i 2 -t $timeperiod -l $bs -p $servport -P $ps > $Logdir/iperf-c$cpunode-m$memnode-$bs-$ps.log
 
