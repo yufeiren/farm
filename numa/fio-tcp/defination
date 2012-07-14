@@ -1,0 +1,24 @@
+#! /bin/bash
+
+Fio=/usr/local/bin/fio
+
+DataSize=100g
+Logdir=/home/ren/numa/fio-tcp/log
+Taskdir=/home/ren/numa/fio-tcp/fio/task
+
+LogFile=$Logdir/rdma-test.log
+
+ServIP=192.168.41.17
+ServPort=19001
+
+# is 4
+# bss="32K 64K 128K 256K 512K 1M 2M 4M"
+bss="64K 256K 1M 4M"
+
+# parallel streams
+pss="1 2 4 8 16"
+
+# numa node to be tested
+cpunodes="0 1 2 3 4 5 6 7"
+memnodes="0 1 2 3 4 5 6 7"
+
