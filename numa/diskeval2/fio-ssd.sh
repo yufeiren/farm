@@ -30,7 +30,7 @@ do
 		for bs in $bss
 		do
 
-$Fio --direct=1 --minimal --filesize=$DataSize --ioengine=$ioengine --rw=$rw --bs=$bs --iodepth=$iodepth --thread --time_based --runtime=$runtime --name=/dev/sdc >> $suitelog
+$Fio --direct=1 --minimal --filesize=$DataSize --ioengine=$ioengine --rw=$rw --bs=$bs --iodepth=$iodepth --thread --time_based --runtime=$runtime --name=/dev/sdc --numa_cpu_nodes=$cpunode --numa_mem_nodes=$memnode >> $suitelog
 
 sleep 3
 		done
