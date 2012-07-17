@@ -4,7 +4,7 @@
 
 source ./defination
 
-script_home=/home/ren/git/farm/numa/evaldisk2
+script_home=/home/ren/git/farm/numa/diskeval2
 
 for ioengine in $ioengines
 do
