@@ -38,10 +38,12 @@ echo "size="$DataSize >> $script
 echo "bs="$bs >> $script
 # echo "hostname="$ServIP >> $script
 echo "port="$ServPort >> $script
+echo "numa_cpu_nodes="$cpunode >> $script
+echo "numa_mem_nodes="$memnode >> $script
 
 ServPort=$(($ServPort+10))
 
-numactl --cpunodebind=0 --membind=0 $Fio --minimal $script >> $Logdir/fio-udp-test-server.log 2>&1
+$Fio --minimal $script >> $Logdir/fio-udp-test-server.log 2>&1
 		done
 	done
 done

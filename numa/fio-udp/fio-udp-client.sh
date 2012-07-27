@@ -37,12 +37,16 @@ echo "size="$DataSize >> $script
 echo "bs="$bs >> $script
 echo "hostname="$ServIP >> $script
 echo "port="$ServPort >> $script
+echo "time_based" >> $script
+echo "runtime="$Runtime >> $script
+echo "numa_bind_nodes="$Clientlocalnode >> $script
+echo "rate="$SendingRate >> $script
 
 ServPort=$(($ServPort+10))
 
-numactl --cpunodebind=$cpunode --membind=$memnode $Fio --minimal $script >> $LogFile
+$Fio --minimal $script >> $LogFile
 
-sleep 5
+sleep 3
 		done
 	done
 done

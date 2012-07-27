@@ -8,14 +8,20 @@ Taskdir=/home/ren/numa/fio-udp/task
 
 LogFile=$Logdir/fio-udp-test.log
 
-ServIP=192.168.53.17
+ServIP=192.168.31.17
 ServPort=19001
 
+Runtime=60
+
+SendingRate=1g
+
+# bnl-dantong-1 eth10 - bnl-dantong-2 eth10
+Clientlocalnode=2
 
 # is 4
 bss="1k 2k 4k 8k"
 
 # numa node to be tested
-cpunodes="0 1 2 4 6"
-memnodes="0 1 2 4 6"
+cpunodes="0 1 2 3 4 5 6 7"
+memnodes="0 1 2 3 4 5 6 7"
 
