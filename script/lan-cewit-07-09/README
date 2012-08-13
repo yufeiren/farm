@@ -1,0 +1,45 @@
+Evaluation Between srv365-07 and srv365-09
+
+from 192.168.101.7 to 192.168.101.9
+
+RFTP test
+=========
+
+NMON log in both hosts
+----------------------
+
+Log system status for one day,
+
+for RFTP rdma:
+  $ nmon -T -s 5 -c 17280 -F /home/ren/rftp/nmonlog/rftp-rdma-rput.nmon
+
+for RFTP tcp:
+
+Using Time
+----------
+
+  $ time -a -o /home/ren/cpu.log command args
+
+
+Start server on tera05
+----------------------
+
+env RCFTPRC=/home/ren/rftp/config/rftpdrc rftpd -D
+
+Start client on tera04
+----------------------
+
+  $ env RCFTPRC=$RFTP_HOME/config/rcftprc $RFTP_HOME/bin/rcftp -n -i -v < $RFTP_HOME/task/rput-zero
+
+
+
+
+GridFTP example:
+
+[root@tera05 ~]# globus-gridftp-server -password-file /etc/grid-security/pwfile -p 50000 -control-interface 192.84.86.190 -data-interface 192.84.86.190
+
+tera04 client:
+    globus-url-copy -t 60 -vb -p 8  file:///dev/zero ftp://root:123@192.84.86.190:50000/dev/null
+
+
+
