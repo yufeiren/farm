@@ -1,0 +1,8 @@
+awk '{if(NR%2==0)print}' tcp-test-server-128K-1-affinity_local.log > tcp-test-server-128K-1-affinity_local-confirm.log
+
+cut -f 88 -d ";" tcp-test-server-128K-1-affinity_local-confirm.log > cpuuser.log
+
+cut -f 89 -d ";" tcp-test-server-128K-1-affinity_local-confirm.log > cpusys.log
+
+cut -f 45 -d ";" tcp-test-server-128K-1-affinity_local-confirm.log > bw.log
+

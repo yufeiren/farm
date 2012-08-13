@@ -1,0 +1,48 @@
+
+tera04 - tera05
+
+from 192.84.86.189 to 192.84.86.190
+
+
+
+RFTP test
+=========
+
+NMON log in both hosts
+----------------------
+
+Log system status for one day,
+  $ nmon -fT -s 5 -c 17280
+
+  $ nmon -T -s 5 -c 17280 -F /home/ren/rftp/nmonlog/rftp-rput.nmon
+
+Using Time
+----------
+
+  $ time -a -o /home/ren/cpu.log command args
+
+
+Start server on tera05
+----------------------
+
+RFTP_HOME=/home/ren/rftp
+env RCFTPRC=$RFTP_HOME/config/rftpdrc $RFTP_HOME/bin/rftpd -D
+env RCFTPRC=/home/ren/rftp/config/rftpdrc /home/ren/rftp/bin/rftpd -D
+
+Start client on tera04
+----------------------
+
+  $ env RCFTPRC=$RFTP_HOME/config/rcftprc $RFTP_HOME/bin/rcftp -n -i -v < $RFTP_HOME/task/rput-zero
+
+
+
+
+GridFTP example:
+
+[root@tera05 ~]# globus-gridftp-server -password-file /etc/grid-security/pwfile -p 50000 -control-interface 192.84.86.190 -data-interface 192.84.86.190
+
+tera04 client:
+    globus-url-copy -t 60 -vb -p 8  file:///dev/zero ftp://root:123@192.84.86.190:50000/dev/null
+
+
+

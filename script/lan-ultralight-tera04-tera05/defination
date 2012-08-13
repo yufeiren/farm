@@ -1,0 +1,22 @@
+#! /bin/bash
+
+RFTP_HOME=/home/ren/rftp
+
+Rcftp=$RFTP_HOME/bin/rcftp
+Configdir=$RFTP_HOME/config
+Taskdir=$RFTP_HOME/task
+Logdir=$RFTP_HOME/log
+SourceDir=$RFTP_HOME/data/source
+SinkDir=$RFTP_HOME/data/sink
+
+Iter=35
+
+ServIP=192.84.86.190
+ServPort=9987
+
+cbufsizs="2M"
+cbufnums="10"
+rcstreamnums="1"
+
+numofclients="1 2 4 8 16 32"
+

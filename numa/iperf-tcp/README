@@ -40,3 +40,12 @@ sh $cmd
 cat iperf-tcp-cpu.log | sed -n -e 1p -e 7p
 
 
+
+nohup numactl --cpunodebind=0 --membind=0 iperf -s -p 1234 > /home/ren/numa/iperf/iperf-server-node0.log 2>&1 &
+
+nohup numactl --cpunodebind=2 --membind=2 iperf -s -p 1244 > /home/ren/numa/iperf/iperf-server-node2.log 2>&1 &
+
+nohup numactl --cpunodebind=4 --membind=4 iperf -s -p 1254 > /home/ren/numa/iperf/iperf-server-node4.log 2>&1 &
+
+nohup numactl --cpunodebind=7 --membind=7 iperf -s -p 1264 > /home/ren/numa/iperf/iperf-server-node7.log 2>&1 &
+
