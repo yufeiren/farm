@@ -2,12 +2,12 @@
 
 Testsuite=rdma
 
-RFTP_HOME=/home/ren/rftp/jss/
+RFTP_HOME=/home/ren/rftp
 
 Rcftp=/usr/bin/rcftp
-Configdir=$RFTP_HOME/$Testsuite/config
-Taskdir=$RFTP_HOME/$Testsuite/task
-Logdir=$RFTP_HOME/$Testsuite/log
+Configdir=$RFTP_HOME/jss/$Testsuite/config
+Taskdir=$RFTP_HOME/jss/$Testsuite/task
+Logdir=$RFTP_HOME/jss/$Testsuite/log
 SourceDir=$RFTP_HOME/data/source
 SinkDir=$RFTP_HOME/data/sink
 
