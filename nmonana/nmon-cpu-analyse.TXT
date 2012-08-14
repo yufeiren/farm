@@ -1,0 +1,107 @@
+Analyse application's CPU utilization by "nmon" analyser
+========================================================
+
+Install mysql on CentOS 6
+-------------------------
+
+## Remi Dependency on CentOS 6 and Red Hat (RHEL) 6 ##
+  # rpm -Uvh http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-7.noarch.rpm
+  
+  # yum --enablerepo=remi,remi-test list mysql mysql-server
+  
+install mysql
+  # yum install mysql mysql-server
+
+start mysql service
+  # service mysqld start
+
+set mysql server startup status
+  # chkconfig --levels 2345 mysqld on
+
+MySQL Secure Installation
+-------------------------
+
+/usr/bin/mysql_secure_installation
+
+
+Create database and tables for nmon
+-----------------------------------
+
+Create 'nmon' data base and user
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  # mysql -u root -p
+
+mysql> CREATE USER nmon IDENTIFIED BY 'nmon';
+
+database name: nmon
+
+mysql> CREATE DATABASE nmon;
+
+mysql> GRANT ALL PRIVILEGES ON nmon.* TO nmon;
+
+mysql> quit
+
+mysql -u nmon -p
+
+mysql> USE nmon;
+
+mysql> show TABLES;
+
+Create tables
+~~~~~~~~~~~~~
+
+
+CREATE TABLE `testcase` (
+`id` INT(4) NOT NULL auto_increment,
+`start` DATETIME NOT NULL default '1000-01-01',
+`end` DATETIME NOT NULL default '1000-01-01',
+`cpu` DOUBLE,
+PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `nmon_zzzz` (
+`id` INT(4) NOT NULL auto_increment,
+`zzzz_tag` VARCHAR(16) NOT NULL default '',
+`zzzz_date` DATETIME NOT NULL default '1000-01-01',
+PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `nmon_top` (
+`id` INT(4) NOT NULL auto_increment,
+`top_tag` VARCHAR(16) NOT NULL REFERENCES nmon_zzzz(zzzz_tag),
+`top_cpu` DOUBLE,
+PRIMARY KEY (`id`)
+);
+
+
+Manupulate nmon log to fit database format
+==========================================
+
+  $ nmon2db.sh [nmon log file name] [application name]
+
+Input
+-----
+	nmon log file: example.nmon - from 'nmon -fT -s 5 -c 17280' (total log period is 5s * 17280 = 1day)
+	application name: sample
+	testcases time period
+
+Output
+------
+	$appname-top.log
+	$appname-zzzz-ori.log
+	$appname-ori.log
+
+
+	cpu usage of each time period
+
+Script
+------
+
+
+
+
+
+
+
+
