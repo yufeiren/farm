@@ -35,7 +35,7 @@ zzzzformat()
 
 grep -e $appname $fnmonlog | grep "TOP" | cut -f 3,4 -d ',' > $appname-top.log
 
-grep -e "ZZZZ" $fnmonlog | cut -f 2,3,4 -d ',' > $appzzzzoriname
+grep -e "ZZZZ" $fnmonlog | cut -f 2,3,4 -d ',' > $appzzzzorilog
 
 zzzzformat
 
