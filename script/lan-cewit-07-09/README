@@ -10,10 +10,9 @@ NMON log in both hosts
 
 Log system status for one day,
 
-for RFTP rdma:
-  $ nmon -T -s 5 -c 17280 -F /home/ren/rftp/nmonlog/rftp-rdma-rput.nmon
+Please do not use '-F',
 
-for RFTP tcp:
+  $ nmon -fT -s 5 -c 17280
 
 Using Time
 ----------
@@ -21,12 +20,12 @@ Using Time
   $ time -a -o /home/ren/cpu.log command args
 
 
-Start server on tera05
+Start server on srv365-09
 ----------------------
 
-env RCFTPRC=/home/ren/rftp/config/rftpdrc rftpd -D
+  $ numactl --cpunodebind=0 --membind=0 env RCFTPRC=/home/ren/rftp/config/rftpdrc rftpd -D
 
-Start client on tera04
+Start client on srv365-07
 ----------------------
 
   $ env RCFTPRC=$RFTP_HOME/config/rcftprc $RFTP_HOME/bin/rcftp -n -i -v < $RFTP_HOME/task/rput-zero

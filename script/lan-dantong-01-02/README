@@ -1,0 +1,36 @@
+Evaluation Between dantong-01 and dantong-02
+
+from 192.168.52.16(node 0) to 192.168.52.17(node 7)
+
+RFTP test
+=========
+
+NMON log in both hosts
+----------------------
+
+Log system status for one day,
+
+Please do not use '-F',
+
+  $ nmon -fT -s 5 -c 17280
+
+Using Time
+----------
+
+  $ time -a -o /home/ren/cpu.log command args
+
+
+Start server on dantong-02
+--------------------------
+
+  $ env RFTPDRC=/home/ren/rftp/config/rftpdrc rftpd -D
+
+  $ numactl --cpunodebind=7 --preferred=7 env RFTPDRC=/home/ren/rftp/config/rftpdrc rftpd -D
+
+Start client on dantong-01
+--------------------------
+
+  $ env RCFTPRC=/home/ren/rftp/config/rcftprc rcftp -n -i -v < /home/ren/rftp/task/rput-zero
+
+  $ numactl --cpunodebind=0 --preferred=0 env RCFTPRC=/home/ren/rftp/config/rcftprc rcftp -n -i -v < /home/ren/rftp/task/rput-zero
+
