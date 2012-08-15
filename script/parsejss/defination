@@ -1,0 +1,18 @@
+#! /bin/bash
+
+testsuite=rdma
+
+Parsedir=./parse-$testsuite
+Logdir=./log
+
+Iter=35
+
+ServIP=192.168.101.9
+ServPort=9987
+
+cbufsizs="256K"
+cbufnums="100"
+rcstreamnums="1"
+
+numofclients="1 2 4 8 16 32"
+
