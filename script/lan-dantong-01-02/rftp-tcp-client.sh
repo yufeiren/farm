@@ -103,7 +103,7 @@ config=$Configdir/rcftp-$cbufsiz-$cbufnum-$rcstreamnum-$nc
 	while [ $tmp -le $nc ]
 	do
 	# log: $Logdir/mem2mem-$cbufsiz-$cbufnum-$rcstreamnum-nc$nc-c$tmp-iter$i.log
-	env RCFTPRC=$config $Rcftp -n -i -v < $task >> $Logdir/mem2mem-$cbufsiz-$cbufnum-$rcstreamnum-nc$nc-c$tmp-iter$i.log 2>&1 &
+	numactl --cpunodebind=7 --preferred=7 env RCFTPRC=$config $Rcftp -n -i -v < $task >> $Logdir/mem2mem-$cbufsiz-$cbufnum-$rcstreamnum-nc$nc-c$tmp-iter$i.log 2>&1 &
 	pid=$!
 	pids=$pids" "$pid
 	(( tmp++ ))
