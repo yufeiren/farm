@@ -7,20 +7,26 @@ delete from testcase;
 LOAD DATA LOCAL INFILE 'example-zzzz.log'
 INTO TABLE nmon.nmon_zzzz
 FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n'
+LINES TERMINATED BY '\n'
 (zzzz_tag, zzzz_date);
 
 LOAD DATA LOCAL INFILE 'example-top.log'
 INTO TABLE nmon.nmon_top
 FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n'
+LINES TERMINATED BY '\n'
 (top_tag, top_cpu);
 
-LOAD DATA LOCAL INFILE 'testcase-date-start-end.log'
+LOAD DATA LOCAL INFILE 'testcase-date-start.log'
 INTO TABLE nmon.testcase
 FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-LINES TERMINATED BY '\r\n'
-(start, end);
+LINES TERMINATED BY '\n'
+(start);
+
+LOAD DATA LOCAL INFILE 'testcase-date-end.log'
+INTO TABLE nmon.testcase
+FIELDS TERMINATED BY ',' ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+(end);
 
 UPDATE nmon_top, nmon_zzzz
  SET top_date = zzzz_date
