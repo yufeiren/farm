@@ -16,17 +16,11 @@ FIELDS TERMINATED BY ',' ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 (top_tag, top_cpu);
 
-LOAD DATA LOCAL INFILE 'testcase-date-start.log'
+LOAD DATA LOCAL INFILE 'testcase-date-start-end.log'
 INTO TABLE nmon.testcase
 FIELDS TERMINATED BY ',' ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
-(start);
-
-LOAD DATA LOCAL INFILE 'testcase-date-end.log'
-INTO TABLE nmon.testcase
-FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
-(end);
+(start, end);
 
 UPDATE nmon_top, nmon_zzzz
  SET top_date = zzzz_date

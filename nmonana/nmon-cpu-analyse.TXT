@@ -71,9 +71,9 @@ CREATE TABLE `nmon_top` (
 `id` INT(4) NOT NULL auto_increment,
 `top_tag` VARCHAR(16) NOT NULL REFERENCES nmon_zzzz(zzzz_tag),
 `top_cpu` DOUBLE,
+`top_date` DATETIME NOT NULL default '1000-01-01',
 PRIMARY KEY (`id`)
 );
-
 
 Manupulate nmon log to fit database format
 ==========================================
@@ -92,16 +92,20 @@ Output
 	$appname-zzzz-ori.log
 	$appname-ori.log
 
-
 	cpu usage of each time period
 
 Script
 ------
 
 
+Log start time and end time of specified application
+----------------------------------------------------
 
-
-
+----
+date "+%F %H:%M:%S" >> start.log
+run specified application
+date "+%F %H:%M:%S" >> end.log
+----
 
 
 
