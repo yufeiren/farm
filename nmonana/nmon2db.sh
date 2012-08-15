@@ -7,6 +7,8 @@ apptoplog=$appname-top.log
 appzzzzorilog=$appname-ori-zzzz.log
 appzzzzlog=$appname-zzzz.log
 
+# test -d ./log || mkdir -p log
+
 zzzzformat()
 {
 	while read line
