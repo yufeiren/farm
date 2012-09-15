@@ -30,7 +30,7 @@ Start server on tera05
 ----------------------
 
 RFTP_HOME=/home/ren/rftp
-env RCFTPRC=$RFTP_HOME/config/rftpdrc $RFTP_HOME/bin/rftpd -D
+env RFTPDRC=$RFTP_HOME/config/rftpdrc $RFTP_HOME/bin/rftpd -D
 env RCFTPRC=/home/ren/rftp/config/rftpdrc /home/ren/rftp/bin/rftpd -D
 
 Start client on tera04

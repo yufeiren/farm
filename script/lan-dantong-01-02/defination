@@ -13,7 +13,7 @@ SinkDir=$RFTP_HOME/data/sink
 
 Iter=35
 
-ServIP=192.168.14.17
+ServIP=192.168.52.17
 ServPort=9987
 
 cbufsizs="2M"
