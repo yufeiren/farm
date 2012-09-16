@@ -610,9 +610,9 @@ function run_fio()
 	fi
 
 	if [[ ${total_sz} -gt 0 ]]; then
-		size_arg="--size=${total_sz}k"
+		size_arg="--size=${total_sz}"
 	else
-		size_arg="--size=${TEST_TOTAL_SZ}k"
+		size_arg="--size=${TEST_TOTAL_SZ}"
 	fi
 
 	fio_cmd="fio \
@@ -1032,7 +1032,6 @@ function check_files()
 			PROC_DEVS="${PROC_DEVS} ${proc_d}"
 			# calculate file size and add to the list
 			sz=`ls -lH ${f} | awk '{printf $5}'`
-			sz=`expr $sz / 1024`
 			DEV_SZ="$DEV_SZ${sz} ";
 		else
 			usage "file: ${f} does not exist";

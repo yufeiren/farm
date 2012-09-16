@@ -5,7 +5,7 @@
 # eval node0 sdd1 sde1 sdg1
 
 RunIOTests=/home/ren/git/farm/fio/run_io_tests.sh
-Logdir=~/ipdps13/
+Logdir=/home/ren/ipdps13/
 
 if [ ! -d $Logdir ]; then
 	mkdir -p $Logdir
@@ -17,31 +17,31 @@ bs="64 256 512 1024 4096 8192"
 ts="1 2 4 8 16"
 timeperiod=30
 
-# sync 1 file over ext4
-flist="/home/ren/iser/d0/f00"
+# sync 1 raw device
+devlist="/dev/sdd"
 engine="sync"
 iodepths="1"
 
-numactl --cpunodebind=0 --membind=0 $RunIOTests -x "$expet" -f "$flist" -p -I -a fio -e "$engine" -b "$bs" -t "$ts" -i "$iodepths" -l $timeperiod -z 3 -o $Logdir/iser-sync-f1.log > $Logdir/script.log 2>&1
+numactl --cpunodebind=0 --membind=0 $RunIOTests -x "$expet" -d "$devlist" -p -I -a fio -e "$engine" -b "$bs" -t "$ts" -i "$iodepths" -l $timeperiod -z 3 -v -o $Logdir/iser-sync-f1.log > $Logdir/script.log 2>&1
 
-# libaio 1 file over ext4
-flist="/home/ren/iser/d0/f00"
+# libaio 1 raw device
+devlist="/dev/sdd"
 engine="libaio"
 iodepths="1 4 16 32"
 
-numactl --cpunodebind=0 --membind=0 $RunIOTests -x "$expet" -f "$flist" -p -I -a fio -e "$engine" -b "$bs" -t "$ts" -i "$iodepths" -l $timeperiod -z 3 -o $Logdir/iser-libaio-f1.log > $Logdir/script.log 2>&1
+numactl --cpunodebind=0 --membind=0 $RunIOTests -x "$expet" -d "$devlist" -p -I -a fio -e "$engine" -b "$bs" -t "$ts" -i "$iodepths" -l $timeperiod -z 3 -v -o $Logdir/iser-libaio-f1.log > $Logdir/script.log 2>&1
 
 # sync 6 files over ext4
-flist="/home/ren/iser/d0/f00 /home/ren/iser/d0/f01 /home/ren/iser/d1/f00 /home/ren/iser/d1/f01 /home/ren/iser/d2/f00 /home/ren/iser/d2/f01"
+devlist="/dev/sdd /dev/sde /dev/sdg /dev/sdc /dev/sdf /dev/sdh"
 engine="sync"
 iodepths="1"
 
-numactl --cpunodebind=0 --membind=0 $RunIOTests -x "$expet" -f "$flist" -p -I -a fio -e "$engine" -b "$bs" -t "$ts" -i "$iodepths" -l $timeperiod -z 3 -o $Logdir/iser-sync-f6.log > $Logdir/script.log 2>&1
+$RunIOTests -x "$expet" -d "$devlist" -p -I -a fio -e "$engine" -b "$bs" -t "$ts" -i "$iodepths" -l $timeperiod -z 3 -v -o $Logdir/iser-sync-f6.log > $Logdir/script.log 2>&1
 
 # libaio 6 file over ext4
-flist="/home/ren/iser/d0/f00 /home/ren/iser/d0/f01 /home/ren/iser/d1/f00 /home/ren/iser/d1/f01 /home/ren/iser/d2/f00 /home/ren/iser/d2/f01"
+devlist="/dev/sdd /dev/sde /dev/sdg /dev/sdc /dev/sdf /dev/sdh"
 engine="libaio"
 iodepths="1 4 16 32"
 
-numactl --cpunodebind=0 --membind=0 $RunIOTests -x "$expet" -f "$flist" -p -I -a fio -e "$engine" -b "$bs" -t "$ts" -i "$iodepths" -l $timeperiod -z 3 -o $Logdir/iser-libaio-f6.log > $Logdir/script.log 2>&1
+$RunIOTests -x "$expet" -d "$devlist" -p -I -a fio -e "$engine" -b "$bs" -t "$ts" -i "$iodepths" -l $timeperiod -z 3 -v -o $Logdir/iser-libaio-f6.log > $Logdir/script.log 2>&1
 

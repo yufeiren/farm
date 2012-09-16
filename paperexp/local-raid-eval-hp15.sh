@@ -23,11 +23,11 @@ timeperiod=60
 engine="sync"
 iodepths="1"
 
-numactl --cpunodebind=0 --membind=0 $RunIOTests -x "$expet" -d "$devlist" -p -I -a fio -e "$engine" -b "$bs" -t "$ts" -i "$iodepths" -l $timeperiod -z 3 -o $Logdir/local-sync-f1.log > $Logdir/script.log 2>&1
+numactl --cpunodebind=0 --membind=0 $RunIOTests -x "$expet" -d "$devlist" -p -I -a fio -e "$engine" -b "$bs" -t "$ts" -i "$iodepths" -l $timeperiod -z 3 -v -o $Logdir/local-sync-f1.log > $Logdir/script.log 2>&1
 
 # libaio 1 file over ext4
 engine="libaio"
 iodepths="1 4 16 32"
 
-numactl --cpunodebind=0 --membind=0 $RunIOTests -x "$expet" -d "$devlist" -p -I -a fio -e "$engine" -b "$bs" -t "$ts" -i "$iodepths" -l $timeperiod -z 3 -o $Logdir/iser-libaio-f1.log > $Logdir/script.log 2>&1
+numactl --cpunodebind=0 --membind=0 $RunIOTests -x "$expet" -d "$devlist" -p -I -a fio -e "$engine" -b "$bs" -t "$ts" -i "$iodepths" -l $timeperiod -z 3 -v -o $Logdir/local-libaio-f1.log > $Logdir/script.log 2>&1
 
