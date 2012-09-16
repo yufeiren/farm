@@ -597,7 +597,7 @@ function run_fio()
 		fio_names="${fio_names} --name ${test_name}"
 		fio_names="${fio_names} --filename=${d}"
 		if [ -f ${d} ]; then
-			fio_names="${fio_names} --direct=0"
+			fio_names="${fio_names} --direct=1"
 		fi
 	done
 
@@ -1032,6 +1032,7 @@ function check_files()
 			PROC_DEVS="${PROC_DEVS} ${proc_d}"
 			# calculate file size and add to the list
 			sz=`ls -lH ${f} | awk '{printf $5}'`
+			sz=`expr $sz / 1024`
 			DEV_SZ="$DEV_SZ${sz} ";
 		else
 			usage "file: ${f} does not exist";
