@@ -7,6 +7,10 @@
 RunIOTests=/home/ren/git/farm/fio/run_io_tests.sh
 Logdir=~/ipdps13/
 
+if [ ! -d $Logdir ]; then
+	mkdir -p $Logdir
+fi
+
 # unchanged
 expet="read randread write randwrite"
 bs="64 256 512 1024 4096 8192"
