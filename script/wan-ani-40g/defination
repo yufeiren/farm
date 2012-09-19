@@ -1,0 +1,22 @@
+#! /bin/bash
+
+Testsuite=rdma
+
+RFTP_HOME=/home/ren/rftp
+
+Rcftp=/home/ren/rftp/bin/rcftp
+Configdir=$RFTP_HOME/ipdps13/$Testsuite/config
+Taskdir=$RFTP_HOME/ipdps13/$Testsuite/task
+Logdir=$RFTP_HOME/ipdps13/$Testsuite/log
+SourceDir=$RFTP_HOME/data/source
+SinkDir=$RFTP_HOME/data/sink
+
+ServIP=192.168.101.9
+ServPort=9987
+
+# BDP is 500MB
+
+cbufsizs="1M 2M 4M 8M 16M"
+maxbufpoolsiz="2G"
+rcstreamnums="1 2 4 8 16"
+

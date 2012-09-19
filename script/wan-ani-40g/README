@@ -1,0 +1,48 @@
+Evaluation Between nersc-diskpt-6 and nersc-diskpt-7
+
+from 192.168.101.8 to 192.168.101.9
+
+RFTP test
+=========
+
+NMON log in both hosts
+----------------------
+
+Log system status for one day,
+
+Please do not use '-F',
+
+  $ nmon -fT -s 5 -c 17280
+
+Using Time
+----------
+
+  $ time -a -o /home/ren/cpu.log command args
+
+
+Start server on nersc-diskpt-7
+----------------------
+
+  $ cat /home/ren/rftp/config/rftpdrc
+-----------------------
+maxbufpoolsiz = 2G
+srvcomport = 9987
+devzerosiz = 100G
+readernum = 1
+writernum = 2
+ioengine = sync
+directio = yes
+rdma_qp_sq_depth = 1280
+rdma_qp_rq_depth = 1280
+rdma_cq_depth = 2000
+wcthreadnum = 4
+-----------------------
+
+  $ numactl --cpunodebind=1 --membind=1 env RFTPDRC=/home/ren/rftp/config/rftpdrc /home/ren/rftp/bin/rftpd -D
+
+Start client on nersc-diskpt-6
+------------------------------
+
+  $ env RCFTPRC=$RFTP_HOME/config/rcftprc $RFTP_HOME/bin/rcftp -n -i -v < $RFTP_HOME/task/rput-zero
+
+
