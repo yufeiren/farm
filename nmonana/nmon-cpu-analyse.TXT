@@ -75,10 +75,21 @@ CREATE TABLE `nmon_top` (
 PRIMARY KEY (`id`)
 );
 
+Log start time and end time of specified application
+====================================================
+
+----
+datestart=`date "+%F %H:%M:%S"`
+run specified application
+dateend=`date "+%F %H:%M:%S"`
+echo $datestart","$dateend >> testcase-date-start-end.log
+----
+
 Manupulate nmon log to fit database format
 ==========================================
 
   $ nmon2db.sh [nmon log file name] [application name]
+  $ mysql -u nmon -p < nmonana.sql
 
 Input
 -----
@@ -97,15 +108,4 @@ Output
 Script
 ------
 
-
-Log start time and end time of specified application
-----------------------------------------------------
-
-----
-date "+%F %H:%M:%S" >> start.log
-run specified application
-date "+%F %H:%M:%S" >> end.log
-----
-
-
-
+	$

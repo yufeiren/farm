@@ -45,4 +45,7 @@ Start client on nersc-diskpt-6
 
   $ env RCFTPRC=$RFTP_HOME/config/rcftprc $RFTP_HOME/bin/rcftp -n -i -v < $RFTP_HOME/task/rput-zero
 
+Start client on nersc-diskpt-7
+------------------------------
+  $ env RCFTPRC=/home/ren/rftp/config/rcftprc /home/ren/rftp/bin/rcftp -n -i -v < /home/ren/rftp/task/rput-zero 
 
