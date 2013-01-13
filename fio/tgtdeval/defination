@@ -1,0 +1,26 @@
+#! /bin/bash
+
+TestSuite=tgt
+
+Fio=/usr/local/bin/fio
+
+DataSize=400g
+Runtime=60
+Logdir=/home/ren/fio/log/tgt
+Taskdir=/home/ren/fio/task/tgt
+
+LogFile=$Logdir/$TestSuite-test.log
+
+nr_initiator="1 2 4"
+
+# ioengine
+ioengines="sync"
+# rw
+rws="randread"
+# is 9
+bss="16k 32k 64k 128k 256k 512k 1m 2m 4m"
+# is 1
+iodepths="1"
+# is 6
+numjobss="1 2 4 8 16 32"
+
