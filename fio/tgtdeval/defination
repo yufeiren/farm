@@ -6,8 +6,8 @@ Fio=/usr/local/bin/fio
 
 DataSize=400g
 Runtime=60
-Logdir=/home/ren/fio/log/tgt
-Taskdir=/home/ren/fio/task/tgt
+Logdir=/home/ren/fio/tgt/log
+Taskdir=/home/ren/fio/tgt/task
 
 LogFile=$Logdir/$TestSuite-test.log
 
