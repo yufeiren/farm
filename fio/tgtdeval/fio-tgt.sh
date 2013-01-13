@@ -34,26 +34,40 @@ if [ $ioengine = "sync" ] && [ $iodepth -gt 1 ]; then
 fi
 
 # generate jobfile
-for disk in "sdc sdd"
-do
-	task=c$cli-$ioengine-$rw-$bs-$iodepth-$numjobs-$disk
+task1=c$cli-$ioengine-$rw-$bs-$iodepth-$numjobs-sdc
+task2=c$cli-$ioengine-$rw-$bs-$iodepth-$numjobs-sdd
 
-	echo "[global]" > $Taskdir/$task
-	echo "ioengine="$ioengine >> $Taskdir/$task
-	echo "direct=1" >> $Taskdir/$task
-	echo "rw="$rw >> $Taskdir/$task
-	echo "bs="$bs >> $Taskdir/$task
-	echo "time_based" >> $Taskdir/$task
-	echo "runtime="$Runtime >> $Taskdir/$task
-	echo "size="$DataSize >> $Taskdir/$task
-	echo "iodepth="$iodepth >> $Taskdir/$task
-	echo "" >> $Taskdir/$task
+echo "[global]" > $Taskdir/$task1
+echo "ioengine="$ioengine >> $Taskdir/$task1
+echo "direct=1" >> $Taskdir/$task1
+echo "rw="$rw >> $Taskdir/$task1
+echo "bs="$bs >> $Taskdir/$task1
+echo "time_based" >> $Taskdir/$task1
+echo "runtime="$Runtime >> $Taskdir/$task1
+echo "size="$DataSize >> $Taskdir/$task1
+echo "iodepth="$iodepth >> $Taskdir/$task1
+echo "" >> $Taskdir/$task1
 
-	echo "[/dev/"$disk"]" >> $Taskdir/$task
-	echo "numa_cpu_nodes=0" >> $Taskdir/$task
-	echo "numa_mem_policy=bind:0" >> $Taskdir/$task
-	echo "numjobs="$numjobs >> $Taskdir/$task
-done
+echo "[/dev/sdc]" >> $Taskdir/$task1
+echo "numa_cpu_nodes=0" >> $Taskdir/$task1
+echo "numa_mem_policy=bind:0" >> $Taskdir/$task1
+echo "numjobs="$numjobs >> $Taskdir/$task1
+
+echo "[global]" > $Taskdir/$task2
+echo "ioengine="$ioengine >> $Taskdir/$task2
+echo "direct=1" >> $Taskdir/$task2
+echo "rw="$rw >> $Taskdir/$task2
+echo "bs="$bs >> $Taskdir/$task2
+echo "time_based" >> $Taskdir/$task2
+echo "runtime="$Runtime >> $Taskdir/$task2
+echo "size="$DataSize >> $Taskdir/$task2
+echo "iodepth="$iodepth >> $Taskdir/$task2
+echo "" >> $Taskdir/$task2
+
+echo "[/dev/sdd]" >> $Taskdir/$task2
+echo "numa_cpu_nodes=0" >> $Taskdir/$task2
+echo "numa_mem_policy=bind:0" >> $Taskdir/$task2
+echo "numjobs="$numjobs >> $Taskdir/$task2
 
 log=$Logdir/c$cli-$ioengine-$rw-$bs-$iodepth-$numjobs.log
 if [ $cli -eq 1 ]; then
