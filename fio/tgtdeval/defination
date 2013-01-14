@@ -8,6 +8,7 @@ DataSize=400g
 Runtime=60
 Logdir=/home/ren/fio/tgt/log-$TestSuite
 Taskdir=/home/ren/fio/tgt/task-$TestSuite
+Parsedir=/home/ren/fio/tgt/parse-$TestSuite
 
 LogFile=$Logdir/$TestSuite-test.log
 
