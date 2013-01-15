@@ -1,25 +1,26 @@
 #! /bin/bash
 
-TestSuite=tgt-default-t16
+TestSuite=tgt-default-t16-dual
 
 Fio=/usr/local/bin/fio
 
 DataSize=400g
-Runtime=60
+Runtime=300
 Logdir=/home/ren/fio/tgt/log-$TestSuite
 Taskdir=/home/ren/fio/tgt/task-$TestSuite
 Parsedir=/home/ren/fio/tgt/parse-$TestSuite
 
 LogFile=$Logdir/$TestSuite-test.log
 
-nr_initiator="1 2 4"
+#nr_initiator="1 2 4"
+nr_initiator="4"
 
 # ioengine
 ioengines="sync"
 # rw
 rws="randread"
-# is 9
-bss="16k 32k 64k 128k 256k 512k 1m 2m 4m"
+# is 7
+bss="16k 32k 64k 128k 256k 512k 1m"
 # is 1
 iodepths="1"
 # is 6
