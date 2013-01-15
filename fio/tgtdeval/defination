@@ -11,6 +11,7 @@ Taskdir=/home/ren/fio/tgt/task-$TestSuite
 Parsedir=/home/ren/fio/tgt/parse-$TestSuite
 
 LogFile=$Logdir/$TestSuite-test.log
+DateFile=$Logdir/testcase-date-start-end.log
 
 #nr_initiator="1 2 4"
 nr_initiator="4"

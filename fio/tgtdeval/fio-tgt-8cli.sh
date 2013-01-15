@@ -15,6 +15,7 @@ rm -rf $Taskdir
 
 test -d $Logdir || mkdir -p $Logdir
 test -d $Taskdir || mkdir -p $Taskdir
+test -e $DateFile || touch $DateFile
 
 for cli in $nr_initiator
 do
@@ -73,6 +74,8 @@ echo "[/dev/sdd]" >> $Taskdir/$task2
 
 echo "[/dev/sde]" >> $Taskdir/$task2
 
+datestart=`date "+%F %H:%M:%S"`
+
 log=$Logdir/c$cli-$ioengine-$rw-$bs-$iodepth-$numjobs.log
 if [ $cli -eq 1 ]; then
 	job=$Taskdir/c$cli-$ioengine-$rw-$bs-$iodepth-$numjobs-sdc
@@ -86,6 +89,9 @@ elif [ $cli -eq 4 ]; then
 	$Fio --client=srv365-09.cewit.stonybrook.edu $job1 --client=srv365-07.cewit.stonybrook.edu $job1 --client=srv365-15.cewit.stonybrook.edu $job2 --client=srv365-13.cewit.stonybrook.edu $job2 > $log
 fi
 
+dateend=`date "+%F %H:%M:%S"`
+echo $datestart","$dateend >> $DateFile
+
 sleep 5
 
 					done
@@ -94,3 +100,4 @@ sleep 5
 		done
 	done
 done
+
