@@ -4,7 +4,7 @@ TestSuite=tgt-default-t16-dual
 
 Fio=/usr/local/bin/fio
 
-DataSize=400g
+DataSize=200g
 Runtime=300
 Logdir=/home/ren/fio/tgt/log-$TestSuite
 Taskdir=/home/ren/fio/tgt/task-$TestSuite
