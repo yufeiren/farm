@@ -13,5 +13,6 @@ do
 	touch $file2
 	fio --direct=1 --size=$fsize --bs=512k --ioengine=libaio --iodepth=4 --rw=write --name=j0 --filename=$file1
 	fio --direct=1 --size=$fsize --bs=512k --ioengine=libaio --iodepth=4 --rw=write --name=j0 --filename=$file2
+	(( i++ ))
 done
 
