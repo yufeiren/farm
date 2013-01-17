@@ -3,13 +3,14 @@
 fsize=50g
 i=0
 dir1=/mnt/sdb1
-dir2=/mnt/sdb2
+dir2=/mnt/sdb4
 
 while [ $i -lt 18 ];
 do
 	file1=/mnt/$dir1/f$i
 	file2=/mnt/$dir2/f$i
-	touch $file
+	touch $file1
+	touch $file2
 	fio --size=$fsize --bs=512k --ioengine=libaio --iodepth=4 --rw=write --name=j0 --filename=$file1
 	fio --size=$fsize --bs=512k --ioengine=libaio --iodepth=4 --rw=write --name=j0 --filename=$file2
 done
