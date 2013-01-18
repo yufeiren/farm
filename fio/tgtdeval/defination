@@ -1,10 +1,10 @@
 #! /bin/bash
 
-TestSuite=tgt-default-t16-dual
+TestSuite=tgt-default-t16-zipf
 
 Fio=/usr/local/bin/fio
 
-DataSize=200g
+DataSize=300g
 Runtime=300
 Logdir=/home/ren/fio/tgt/log-$TestSuite
 Taskdir=/home/ren/fio/tgt/task-$TestSuite
@@ -21,11 +21,12 @@ ioengines="sync"
 # rw
 rws="randread"
 # is 7
-bss="16k 32k 64k 128k 256k 512k 1m"
+#bss="16k 32k 64k 128k 256k 512k 1m"
+bss="32k 128k 512k"
 # is 1
 iodepths="1"
 # is 6
-numjobss="1 2 4 8 16 32"
-
-zipfs="0.3 0.5 1.1 1.2 1.5 2.0 3.0 4.0"
+numjobss="1 2 4 8"
+# is 9
+zipfs="0.1 0.2 0.5 0.8 1 1.2 1.5 2.0 2.5"
 
