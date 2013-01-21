@@ -28,5 +28,6 @@ iodepths="1"
 # is 6
 numjobss="1 2 4 8"
 # is 9
-zipfs="0.1 0.2 0.5 0.8 1 1.2 1.5 2.0 2.5"
+# fio: zipf theta must different than 1.0
+zipfs="0.1 0.2 0.5 0.8 1.2 1.5 2.0 2.5"
 
