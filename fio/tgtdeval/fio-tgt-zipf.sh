@@ -53,6 +53,7 @@ echo "numa_cpu_nodes=0" >> $Taskdir/$task1
 echo "numa_mem_policy=bind:0" >> $Taskdir/$task1
 echo "numjobs="$numjobs >> $Taskdir/$task1
 echo "random_distribution=zipf:"$zipf >> $Taskdir/$task1
+echo "randrepeat=0" >> $Taskdir/$task1
 echo "" >> $Taskdir/$task1
 
 echo "[/dev/sdc]" >> $Taskdir/$task1
@@ -72,6 +73,7 @@ echo "numa_cpu_nodes=0" >> $Taskdir/$task2
 echo "numa_mem_policy=bind:0" >> $Taskdir/$task2
 echo "numjobs="$numjobs >> $Taskdir/$task2
 echo "random_distribution=zipf:"$zipf >> $Taskdir/$task2
+echo "randrepeat=0" >> $Taskdir/$task2
 echo "" >> $Taskdir/$task2
 
 echo "[/dev/sdd]" >> $Taskdir/$task2
