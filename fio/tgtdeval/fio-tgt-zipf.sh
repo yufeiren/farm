@@ -45,8 +45,6 @@ echo "ioengine="$ioengine >> $Taskdir/$task1
 echo "direct=1" >> $Taskdir/$task1
 echo "rw="$rw >> $Taskdir/$task1
 echo "bs="$bs >> $Taskdir/$task1
-echo "time_based" >> $Taskdir/$task1
-echo "runtime="$Runtime >> $Taskdir/$task1
 echo "size="$DataSize >> $Taskdir/$task1
 echo "iodepth="$iodepth >> $Taskdir/$task1
 echo "numa_cpu_nodes=0" >> $Taskdir/$task1
@@ -65,8 +63,6 @@ echo "ioengine="$ioengine >> $Taskdir/$task2
 echo "direct=1" >> $Taskdir/$task2
 echo "rw="$rw >> $Taskdir/$task2
 echo "bs="$bs >> $Taskdir/$task2
-echo "time_based" >> $Taskdir/$task2
-echo "runtime="$Runtime >> $Taskdir/$task2
 echo "size="$DataSize >> $Taskdir/$task2
 echo "iodepth="$iodepth >> $Taskdir/$task2
 echo "numa_cpu_nodes=0" >> $Taskdir/$task2
