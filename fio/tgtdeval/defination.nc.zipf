@@ -1,10 +1,11 @@
 #! /bin/bash
 
-TestSuite=tgt-nc-t16-zipf-without-runtime
+TestSuite=tgt-nc-t16-zipf-heat
 
 Fio=/usr/local/bin/fio
 
-DataSize=100g
+DataSize=300g
+FileSize=300g
 Logdir=/home/ren/fio/tgt/log-$TestSuite
 Taskdir=/home/ren/fio/tgt/task-$TestSuite
 Parsedir=/home/ren/fio/tgt/parse-$TestSuite
@@ -28,5 +29,5 @@ iodepths="1"
 numjobss="1 2 4 8"
 # is 9
 # fio: zipf theta must different than 1.0
-zipfs="0.1 0.2 0.5 0.8 1.2 1.5 2.0 2.5"
+zipfs="0.2 0.5 0.8"
 

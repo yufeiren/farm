@@ -46,12 +46,12 @@ echo "direct=1" >> $Taskdir/$task1
 echo "rw="$rw >> $Taskdir/$task1
 echo "bs="$bs >> $Taskdir/$task1
 echo "size="$DataSize >> $Taskdir/$task1
+echo "filesize="$FileSize >> $Taskdir/$task1
 echo "iodepth="$iodepth >> $Taskdir/$task1
 echo "numa_cpu_nodes=0" >> $Taskdir/$task1
 echo "numa_mem_policy=bind:0" >> $Taskdir/$task1
 echo "numjobs="$numjobs >> $Taskdir/$task1
 echo "random_distribution=zipf:"$zipf >> $Taskdir/$task1
-echo "randrepeat=0" >> $Taskdir/$task1
 echo "" >> $Taskdir/$task1
 
 echo "[/dev/sdc]" >> $Taskdir/$task1
@@ -64,21 +64,21 @@ echo "direct=1" >> $Taskdir/$task2
 echo "rw="$rw >> $Taskdir/$task2
 echo "bs="$bs >> $Taskdir/$task2
 echo "size="$DataSize >> $Taskdir/$task2
+echo "filesize="$FileSize >> $Taskdir/$task2
 echo "iodepth="$iodepth >> $Taskdir/$task2
 echo "numa_cpu_nodes=0" >> $Taskdir/$task2
 echo "numa_mem_policy=bind:0" >> $Taskdir/$task2
 echo "numjobs="$numjobs >> $Taskdir/$task2
 echo "random_distribution=zipf:"$zipf >> $Taskdir/$task2
-echo "randrepeat=0" >> $Taskdir/$task2
 echo "" >> $Taskdir/$task2
 
 echo "[/dev/sdd]" >> $Taskdir/$task2
 
 echo "[/dev/sde]" >> $Taskdir/$task2
 
-datestart=`date "+%F %H:%M:%S"`
 
 log=$Logdir/c$cli-$ioengine-$rw-$bs-$iodepth-$numjobs-$zipf.log
+heatlog=$Logdir/heat-c$cli-$ioengine-$rw-$bs-$iodepth-$numjobs-$zipf.log
 if [ $cli -eq 1 ]; then
 	job=$Taskdir/c$cli-$ioengine-$rw-$bs-$iodepth-$numjobs-$zipf-sdc
 	$Fio --client=srv365-09.cewit.stonybrook.edu $job > $log
@@ -88,6 +88,10 @@ elif [ $cli -eq 2 ]; then
 elif [ $cli -eq 4 ]; then
 	job1=$Taskdir/c$cli-$ioengine-$rw-$bs-$iodepth-$numjobs-$zipf-sdc
 	job2=$Taskdir/c$cli-$ioengine-$rw-$bs-$iodepth-$numjobs-$zipf-sdd
+# warm cache data
+	$Fio --client=srv365-09.cewit.stonybrook.edu $job1 --client=srv365-07.cewit.stonybrook.edu $job1 --client=srv365-15.cewit.stonybrook.edu $job2 --client=srv365-13.cewit.stonybrook.edu $job2 > $heatlog
+
+datestart=`date "+%F %H:%M:%S"`
 	$Fio --client=srv365-09.cewit.stonybrook.edu $job1 --client=srv365-07.cewit.stonybrook.edu $job1 --client=srv365-15.cewit.stonybrook.edu $job2 --client=srv365-13.cewit.stonybrook.edu $job2 > $log
 fi
 
