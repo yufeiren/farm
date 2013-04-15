@@ -1,0 +1,18 @@
+
+wget http://fsbench.filesystems.org/bench/postmark-1_5.c
+
+gcc postmark-1_5.c -o postmark
+
+vi pm.run
+set size 100000000
+set number 100
+set transactions 100
+set location /mnt/sdc/postmark
+set read 100000
+set write 100000
+set buffering false
+run
+
+./postmark < pm.run
+
+

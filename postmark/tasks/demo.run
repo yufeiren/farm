@@ -1,0 +1,11 @@
+set size 100000000
+set number 1000
+set transactions 100
+set location /mnt/sdc/postmark
+set read 100000
+set write 100000
+set bias read 10
+set buffering false
+show
+run
+
