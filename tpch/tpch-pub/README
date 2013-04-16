@@ -6,15 +6,16 @@ dbgen  -s <scale factor 10| 100>
 
 Create schema
 
-mysql> CREATE USER 'tpch'@'%' IDENTIFIED BY 'tpch';
+mysql> CREATE USER 'tpch'@'localhost' IDENTIFIED BY 'tpch';
 mysql> CREATE DATABASE tpch;
-mysql> GRANT ALL ON tpch.* to 'tpch'@'%';
+mysql> GRANT ALL ON tpch.* to 'tpch'@'localhost';
 mysql> USE tpch;
 
 mysql -u tpch -p tpch < mysql_tpch_create_table.sql
 
 Load data with
-load_mysql.sh 
+mysql -u tpch -p tpch < load_data.sql
+
 
 Startup mysql (adjust paths before)
 start_mysql60.sh
