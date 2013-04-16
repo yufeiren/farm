@@ -1,0 +1,29 @@
+DBGEN is available here
+http://www.tpc.org/tpch/spec/tpch_2_6_3.tar.gz
+
+Generate data
+dbgen  -s <scale factor 10| 100>
+
+Create schema
+
+mysql> CREATE USER 'tpch'@'%' IDENTIFIED BY 'tpch';
+mysql> CREATE DATABASE tpch;
+mysql> GRANT ALL ON tpch.* to 'tpch'@'%';
+mysql> USE tpch;
+
+mysql -u tpch -p tpch < mysql_tpch_create_table.sql
+
+Load data with
+load_mysql.sh 
+
+Startup mysql (adjust paths before)
+start_mysql60.sh
+
+Perform benchmark:
+
+export AUDIT_DIR=/usb/rawdata                                                                                                       
+python tpch_run.py -p -s 100 --leave_server_up
+
+where -s = scale factor
+
+Paths and run parameters should be agjusted in  tpch_run.py before run
