@@ -5,6 +5,7 @@ set location /mnt/sdc/postmark
 set read 100000
 set write 100000
 set bias read 9
+set bias create -1
 set buffering false
 show
 run
