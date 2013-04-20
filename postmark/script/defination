@@ -1,0 +1,19 @@
+#! /bin/bash
+
+Testcase=nc
+#Testcase=default
+
+Pm=~/git/farm/postmark/src/postmark
+
+Logdir=~/postmark/log-$Testcase
+Taskdir=~/postmark/task
+
+loc=/mnt/sdc/postmark
+readbias=10
+createbias=-1
+
+# 500G 1000G
+fnumber=(1000 10000 1000 10000)
+fsize=(524288000 52428800 1048576000 104857600)
+trans=(3000000 3000000 6000000 6000000)
+
