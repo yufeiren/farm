@@ -1,6 +1,6 @@
 #! /bin/bash
 
-Testcase=nc-500g
+Testcase=mongodb-nc-500g
 #Testcase=default-500g
 
 YCSBHOME=~/ycsb/YCSB
