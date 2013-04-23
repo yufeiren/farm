@@ -1,0 +1,11 @@
+#! /bin/bash
+
+Testcase=nc-500g
+#Testcase=default-500g
+
+YCSBHOME=~/ycsb/YCSB
+
+Logdir=~/ycsb/log-$Testcase
+Taskdir=~/git/farm/ycsb/workloads
+
+wls="wl500g-read100-up0 wl500g-read90-up10 wl500g-read80-up20 wl500g-read50-up50"
