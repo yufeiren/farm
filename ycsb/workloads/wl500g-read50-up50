@@ -16,4 +16,4 @@ insertproportion=0
 #uniform, zipfian and latest
 requestdistribution=uniform
 
-table=t500g-fc10-fl1000
+mongodb.database=t500g-fc10-fl1000
