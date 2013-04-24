@@ -1,0 +1,19 @@
+fieldcount=100
+fieldlength=1000
+# 100K per record
+recordcount=10000000
+# 1TB in total
+operationcount=10000000
+workload=com.yahoo.ycsb.workloads.CoreWorkload
+
+readallfields=true
+
+readproportion=1
+updateproportion=0
+scanproportion=0
+insertproportion=0
+
+#uniform, zipfian and latest
+requestdistribution=uniform
+
+mongodb.database=tonet-fc100-fl1000
