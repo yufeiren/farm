@@ -26,7 +26,9 @@ mysql -u tpch -p tpch < load_data.sql
 
 # create primary key
 
-\. dss.ri
+mysql> \. dss.ri
+
+# downcase for table names
 
 alter table NATION rename nation;
 alter table SUPPLIER rename supplier;
@@ -64,7 +66,8 @@ python tpch_run.py -p -s 1 --leave_server_up --db=tpch
 
 cp dists.dss queries
 cd queries
-../qgen -c tpch -s 1 1 
+
+../qgen -c -s 1 1 
 
 
 where -s = scale factor
