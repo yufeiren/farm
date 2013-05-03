@@ -1,11 +1,11 @@
 #! /bin/bash
 
-Testcase=mongodb-nc-500g
-#Testcase=default-500g
+#Testcase=mongodb-nc-onet
+Testcase=mongodb-default-onet
 
 YCSBHOME=~/ycsb/YCSB
 
 Logdir=~/ycsb/log-$Testcase
 Taskdir=~/git/farm/ycsb/workloads
 
-wls="wl500g-read100-up0 wl500g-read90-up10 wl500g-read80-up20 wl500g-read50-up50"
+wls="wlonet-read100-up0 wlonet-read90-up10 wlonet-read80-up20 wlonet-read50-up50"
