@@ -1,4 +1,4 @@
-FSPATH="/mnt/data/vadim/bin/mysqldata60"
+FSPATH="/mnt/sdc/mysql"
 
 PARAM="--no-defaults --port=330 \
 --socket=/tmp/mysql.sock \
@@ -22,9 +22,8 @@ PARAM="--no-defaults --port=330 \
 --transaction_isolation=REPEATABLE-READ \
 --tmp_table_size=64M \
 --skip-locking \
---key_buffer_size=26G --myisam_sort_buffer_size=2G --tmpdir=/usb/rawdata --myisam_use_mmap=1"
+--key_buffer_size=26G --tmpdir=/usb/rawdata"
 
 MYSQL_PATH=/mnt/data/vadim/bin/mysql6.0.4
 $MYSQL_PATH/libexec/mysqld $PARAM 
-
 

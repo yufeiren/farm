@@ -1,8 +1,12 @@
 DBGEN is available here
-http://www.tpc.org/tpch/spec/tpch_2_6_3.tar.gz
+http://www.tpc.org/tpch/spec/tpch_2_15.0.zip
 
 Generate data
-dbgen  -s <scale factor 10| 100>
+dbgen  -s <scale factor 1 | 10 | 100>
+
+start mysql:
+
+cd /usr; /usr/bin/mysqld_safe
 
 Create schema
 
@@ -11,10 +15,38 @@ mysql> CREATE DATABASE tpch;
 mysql> GRANT ALL ON tpch.* to 'tpch'@'localhost';
 mysql> USE tpch;
 
-mysql -u tpch -p tpch < mysql_tpch_create_table.sql
+create table:
 
-Load data with
+mysql> \. dss.ddl
+
+
+Truncate data and Load data with
+
 mysql -u tpch -p tpch < load_data.sql
+
+# create primary key
+
+\. dss.ri
+
+alter table NATION rename nation;
+alter table SUPPLIER rename supplier;
+alter table REGION rename region;
+alter table PARTSUPP rename partsupp;
+alter table PART rename part;
+alter table ORDERS rename orders;
+alter table LINEITEM rename lineitem;
+alter table CUSTOMER rename customer;
+
+
+drop table  nation;
+drop table  supplier;
+drop table region;
+drop table partsupp;
+drop table part;
+drop table orders;
+drop table lineitem;
+drop table customer;
+
 
 
 Startup mysql (adjust paths before)
@@ -22,9 +54,20 @@ start_mysql60.sh
 
 Perform benchmark:
 
-export AUDIT_DIR=/usb/rawdata                                                                                                       
-python tpch_run.py -p -s 100 --leave_server_up
+export AUDIT_DIR=./
+python tpch_run.py -p -s 10 --leave_server_up
+
+python tpch_run.py -p -s 1 --leave_server_up --db=tpch 
+
+
+
+
+cp dists.dss queries
+cd queries
+../qgen -c tpch -s 1 1 
+
 
 where -s = scale factor
 
 Paths and run parameters should be agjusted in  tpch_run.py before run
+
