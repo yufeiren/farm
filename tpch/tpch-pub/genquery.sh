@@ -1,11 +1,12 @@
 #! /bin/bash
 
 Bindir=/home/ren/git/farm/tpch/tpch_2_15.0/dbgen
+Querydir=$Bindir/queries
 Qgen=$Bindir/qgen
 
 scales="1 10 100 500 1000"
 
-cd $Bindir
+cd $Querydir
 
 i=1
 
