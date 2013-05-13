@@ -17,7 +17,10 @@ do
 	i=1
 	while [ $i -le 22 ]; do
 		$Qgen -c -s $scale $i > $Targetdir/mysql-s$scale-q$i.sql
-		cat $Targetdir/mysql-s$scale-q$i.sql >> $Targetdir/mysql-s$scale-all.sql
+		if [ ($i -ne 1) && ($i -ne 3) && ($i -ne 13) && ($i -le 15) ]
+		then
+			cat $Targetdir/mysql-s$scale-q$i.sql >> $Targetdir/mysql-s$scale-all.sql
+		fi
 		(( i++ ))
 	done
 done

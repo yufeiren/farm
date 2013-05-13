@@ -26,7 +26,7 @@ mysql> \. dss.ddl
 
 Truncate data and Load data with
 
-mysql -u tpch -p tpch < load_data.sqlp
+mysql -u tpch -p tpch < load_data.sql
 
 # create primary key
 
@@ -77,4 +77,20 @@ cd queries
 where -s = scale factor
 
 Paths and run parameters should be agjusted in  tpch_run.py before run
+
+
+Evaluation standard sql:
+
+mysql -vvv -u root -p tpch_hg < mysql-s100-all.sql > all.log
+
+
+sql problem:
+
+1.sql:
+3.sql: too long
+
+13.sql:
+16.sql:
+17.sql:
+
 
