@@ -18,5 +18,5 @@ ioengines="sync"
 # rw
 rws="randread"
 # is 7
-bss="4k 8k 16k 32k 64k 128k 256k 512k"
+bss="512 1k 2k 4k 8k 16k 32k 64k 128k 256k 512k"
 
