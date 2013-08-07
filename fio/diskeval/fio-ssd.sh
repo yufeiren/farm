@@ -20,19 +20,20 @@ for ioengine in $ioengines
 do
 	for rw in $rws
 	do
-		for bs in $bss
+		for iodepth in $iodepths
 		do
-			for iodepth in $iodepths
+			for bs in $bss
 			do
 # iodepth is meaningless for sync engine
 if [ $ioengine = "sync" ] && [ $iodepth -gt 1 ]; then
 	continue;
 fi
 
-numactl --cpunodebind=0 --preferred=0 $Fio --direct=1 --minimal --filesize=$DataSize --ioengine=$ioengine --rw=$rw --bs=$bs --iodepth=$iodepth --name=/dev/sda --thread >> $LogFile
+$Fio --time_based --runtime=$Runtime --thread --direct=1 --minimal --filesize=$DataSize --ioengine=$ioengine --rw=$rw --bs=$bs --iodepth=$iodepth --name=$Disk >> $LogFile
 
-sleep 10
+sleep 5
 			done
 		done
 	done
 done
+
