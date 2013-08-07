@@ -8,14 +8,15 @@ Disk=/dev/sdb
 DataSize=500g
 Logdir=/home/ren/fio/log
 Taskdir=/home/ren/fio/task
-Runtime=120
+Runtime=60
 
 LogFile=$Logdir/$TestSuite-test.log
 
 # ioengine
 ioengines="sync libaio posixaio"
 # rw
-rws="read write randread randwrite"
+#rws="read write randread randwrite"
+rws="read write"
 # block size of direct I/O must be larger than 512 bytes
 bss="512 1k 2k 4k 8k 16k 32k 64k 128k 256k 512k 1m 2m 4m"
 # is 7
