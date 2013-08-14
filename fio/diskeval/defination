@@ -1,9 +1,10 @@
 #! /bin/bash
-TestSuite=raid-sdb-13
-
 Fio=/usr/local/bin/fio
 
+TestSuite=raid-sdb-13
 Disk=/dev/sdb
+
+Numanode=0
 
 DataSize=500g
 Logdir=/home/ren/fio/log
@@ -13,10 +14,9 @@ Runtime=60
 LogFile=$Logdir/$TestSuite-test.log
 
 # ioengine
-ioengines="sync libaio posixaio"
+ioengines="sync libaio"
 # rw
-#rws="read write randread randwrite"
-rws="read write"
+rws="read randread write randwrite"
 # block size of direct I/O must be larger than 512 bytes
 bss="512 1k 2k 4k 8k 16k 32k 64k 128k 256k 512k 1m 2m 4m"
 # is 7

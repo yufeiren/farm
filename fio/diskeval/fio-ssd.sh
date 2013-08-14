@@ -9,9 +9,6 @@ if [ ! -x $Fio ]; then
         exit 1
 fi
 
-rm -rf $Logdir
-rm -rf $Taskdir
-
 test -d $Logdir || mkdir -p $Logdir
 test -d $Taskdir || mkdir -p $Taskdir
 test -e $LogFile || touch $LogFile
@@ -29,7 +26,7 @@ if [ $ioengine = "sync" ] && [ $iodepth -gt 1 ]; then
 	continue;
 fi
 
-$Fio --time_based --runtime=$Runtime --thread --direct=1 --minimal --filesize=$DataSize --ioengine=$ioengine --rw=$rw --bs=$bs --iodepth=$iodepth --name=$Disk >> $LogFile
+$Fio --time_based --runtime=$Runtime --thread --direct=1 --minimal --filesize=$DataSize --ioengine=$ioengine --rw=$rw --bs=$bs --iodepth=$iodepth --name=$Disk --numa_cpu_nodes=$Numanode --numa_mem_policy=bind:$Numanode >> $LogFile
 
 sleep 5
 			done
