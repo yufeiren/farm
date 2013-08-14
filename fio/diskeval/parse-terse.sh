@@ -4,7 +4,7 @@
 
 source ./defination
 
-Tersedir=/home/ren/fio/terse
+Tersedir=/home/ren/fio/terse-$TestSuite
 test -d $Tersedir || mkdir -p $Tersedir
 
 logfile=$LogFile
