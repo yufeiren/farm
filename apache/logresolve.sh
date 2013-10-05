@@ -5,6 +5,7 @@ rlog=/home/ren/yufeiren.com/access.log
 tlog=$rlog.tmp
 
 logresolve < $alog > $tlog
-tac $tlog > $rlog
+# exclude access from hpdtl.cewit.stonybrook.edu
+tac $tlog | sed '/hpdtl.cewit.stonybrook.edu/d' > $rlog
 rm -f $tlog
 
