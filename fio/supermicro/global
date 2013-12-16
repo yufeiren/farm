@@ -1,0 +1,8 @@
+[global]
+buffered=0
+bs=512k
+size=1000g
+time_based
+runtime=60
+thread
+
