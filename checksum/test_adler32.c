@@ -1,7 +1,10 @@
+/* gcc test_adler32.c -lz -o adler32 */
+
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <zlib.h>
 
 int main()
