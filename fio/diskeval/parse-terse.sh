@@ -45,3 +45,7 @@ cut -f 40 -d ";" $logfile > $Tersedir/terse-read-totallatencymean.log
 # BW(kb) mean - 45
 cut -f 45 -d ";" $logfile > $Tersedir/terse-read-bandwidth.log
 
+# for group information: if `--group_reporting' enabled
+cut -f 7 -d ";" $logfile > $Tersedir/terse-group-read-bandwidth.log
+cut -f 48 -d ";" $logfile > $Tersedir/terse-group-write-bandwidth.log
+

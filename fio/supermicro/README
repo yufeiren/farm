@@ -1,0 +1,57 @@
+Disk /dev/sdb: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdc: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdf: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdh: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdl: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdg: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdk: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdj: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdm: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdn: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdo: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sde: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdq: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdd: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdy: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdi: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdab: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdt: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdac: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdaf: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sds: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdp: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdah: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdv: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdr: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdad: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdz: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdw: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdai: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdx: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdak: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdae: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdaj: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdal: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdam: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdag: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdan: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdap: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdar: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdao: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdaq: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdat: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdau: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdav: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdu: 1000.2 GB, 1000204886016 bytes
+Disk /dev/sdas: 1000.2 GB, 1000204886016 bytes
+
+
+
+
+[global]
+ioengine=sync
+buffered=0
+rw=write
+bs=512k
+size=23g
+
