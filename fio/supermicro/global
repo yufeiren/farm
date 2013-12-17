@@ -5,4 +5,5 @@ size=1000g
 time_based
 runtime=60
 thread
+iodepth=4
 
