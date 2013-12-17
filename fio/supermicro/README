@@ -58,6 +58,20 @@ size=23g
 create:
 mdadm --create /dev/md/md-raid0-0 --level=0 --raid-devices=2 /dev/sdc1 /dev/sdd1
 
+/dev/sdb1 /dev/sdc1 /dev/sdd1 /dev/sde1 /dev/sdf1 /dev/sdg1 /dev/sdh1 /dev/sdi1 /dev/sdj1 /dev/sdk1 /dev/sdl1 /dev/sdm1 /dev/sdn1 /dev/sdo1 /dev/sdp1 /dev/sdq1 /dev/sdr1 /dev/sds1 /dev/sdt1 /dev/sdu1 /dev/sdv1 /dev/sdw1 /dev/sdx1 /dev/sdy1 /dev/sdz1 
+
+/dev/sdab1 /dev/sdac1 /dev/sdad1 /dev/sdae1 /dev/sdaf1 /dev/sdag1 /dev/sdah1 /dev/sdai1 /dev/sdaj1 /dev/sdak1 /dev/sdal1 /dev/sdam1 /dev/sdan1 /dev/sdao1 /dev/sdap1 /dev/sdaq1 /dev/sdar1 /dev/sdas1 /dev/sdat1 /dev/sdau1 /dev/sdav1
+
+11
+mdadm --create /dev/md/md-raid0-b-l --level=0 --raid-devices=11 /dev/sdb1 /dev/sdc1 /dev/sdd1 /dev/sde1 /dev/sdf1 /dev/sdg1 /dev/sdh1 /dev/sdi1 /dev/sdj1 /dev/sdk1 /dev/sdl1
+11
+mdadm --create /dev/md/md-raid0-m-w --level=0 --raid-devices=11 /dev/sdm1 /dev/sdn1 /dev/sdo1 /dev/sdp1 /dev/sdq1 /dev/sdr1 /dev/sds1 /dev/sdt1 /dev/sdu1 /dev/sdv1 /dev/sdw1
+12
+mdadm --create /dev/md/md-raid0-x-aj --level=0 --raid-devices=12 /dev/sdx1 /dev/sdy1 /dev/sdz1 /dev/sdab1 /dev/sdac1 /dev/sdad1 /dev/sdae1 /dev/sdaf1 /dev/sdag1 /dev/sdah1 /dev/sdai1 /dev/sdaj1
+12
+mdadm --create /dev/md/md-raid0-ak-av --level=0 --raid-devices=12 /dev/sdak1 /dev/sdal1 /dev/sdam1 /dev/sdan1 /dev/sdao1 /dev/sdap1 /dev/sdaq1 /dev/sdar1 /dev/sdas1 /dev/sdat1 /dev/sdau1 /dev/sdav1
+
+
 delete:
 https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/5/html/Deployment_Guide/s2-raid-manage-removing.html
 
