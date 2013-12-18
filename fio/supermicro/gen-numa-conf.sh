@@ -44,3 +44,23 @@ do
 	done
 done
 
+# for raid test
+for ioengine in sync libaio
+do
+	for rw in read randread write randwrite
+	do
+		config=raid-$ioengine-$rw.fio
+		echo > $config
+		cat global >> $config
+		echo "ioengine=$ioengine" >> $config
+		echo "rw=$rw" >> $config
+		echo "" >> $config
+
+		for raid in b-l m-w x-ai ak-av
+		do
+			echo "[/dev/md/md-raid0-$raid]" >> $config
+			echo "" >> $config
+		done
+	done
+done
+
