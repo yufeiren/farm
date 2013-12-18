@@ -28,6 +28,14 @@ mdadm --remove /dev/md/md-raid0-0
 
 
 
+The default chunk size is 512kb
+
+minimum chunk size in software raid is 1kb
+
+
+
+fio --buffered=0 --bs=512k --size=1000g --time_based --runtime=60 --thread --iodepth=4 --ioengine=libaio --rw=read --name=/dev/md/md-raid0-x-ai
+
 
 
 
