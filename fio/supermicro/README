@@ -34,12 +34,12 @@ minimum chunk size in software raid is 1kb
 
 
 
-fio --buffered=0 --bs=512k --size=1000g --time_based --runtime=60 --thread --iodepth=4 --ioengine=libaio --rw=read --name=/dev/md/md-raid0-x-ai
+fio --buffered=0 --bs=512k --size=1000g --time_based --runtime=60 --thread --iodepth=4 --ioengine=libaio --rw=read --name=/dev/md/md-raid0-x-aj
 
 
 /dev/md/md-raid0-b-l
 /dev/md/md-raid0-m-w
-/dev/md/md-raid0-x-ai
+/dev/md/md-raid0-x-aj
 /dev/md/md-raid0-ak-av
 
 
