@@ -1,0 +1,27 @@
+#! /bin/bash
+Fio=/usr/local/bin/fio
+
+TestSuite=software-raid
+
+# http://tldp.org/LDP/abs/html/arrays.html
+# echo ${#array[*]} #  Number of elements in array.
+RAIDarr=( /dev/md/md-raid0-b-l /dev/md/md-raid0-m-w /dev/md/md-raid0-x-aj /dev/md/md-raid0-ak-av )
+NUMAnodearr=( 0 0 1 1 )
+
+DataSize=11000g
+Logdir=/home/ren/fio/log
+Taskdir=/home/ren/fio/task/$TestSuite
+Runtime=60
+
+LogFile=$Logdir/$TestSuite-test.log
+
+# ioengine
+ioengines="sync libaio"
+# rw
+rws="read randread write randwrite"
+# block size of direct I/O must be larger than 512 bytes
+#bss="512 1k 2k 4k 8k 16k 32k 64k 128k 256k 512k 1m 2m 4m"
+bss="1k 4k 16k 64k 256k 1m 4m"
+# is 7
+iodepths="1 2 4 8 16 32 64 128"
+
