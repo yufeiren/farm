@@ -46,14 +46,15 @@ fi
 i=0
 while [ $i -lt ${#RAIDarr[*]} ]
 do
+	echo "" >> $task
 	echo "["${RAIDarr[$i]}"]" >> $task
 	echo "numa_cpu_nodes="${NUMAnodearr[$i]} >> $task
 	echo "numa_mem_policy=bind:"${NUMAnodearr[$i]} >> $task
 	(( i++ ))
 done
 
-#$Fio --minimal $task
-#sleep 3
+$Fio --minimal $task >> $LogFile
+sleep 3
 			done
 		done
 	done
