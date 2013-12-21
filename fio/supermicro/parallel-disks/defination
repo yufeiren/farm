@@ -1,0 +1,27 @@
+#! /bin/bash
+Fio=/usr/local/bin/fio
+
+TestSuite=parallel-disks
+
+# http://tldp.org/LDP/abs/html/arrays.html
+# echo ${#array[*]} #  Number of elements in array.
+Diskarr0=( /dev/sdb /dev/sdc /dev/sdd /dev/sde /dev/sdf /dev/sdg /dev/sdh /dev/sdi /dev/sdj /dev/sdk /dev/sdl /dev/sdm /dev/sdn /dev/sdo /dev/sdp /dev/sdq /dev/sdr /dev/sds /dev/sdt /dev/sdu /dev/sdv /dev/sdw )
+Diskarr1=( /dev/sdx /dev/sdy /dev/sdz /dev/sdab /dev/sdac /dev/sdad /dev/sdae /dev/sdaf /dev/sdag /dev/sdah /dev/sdai /dev/sdaj /dev/sdak /dev/sdal /dev/sdam /dev/sdan /dev/sdao /dev/sdap /dev/sdaq /dev/sdar /dev/sdas /dev/sdat /dev/sdau /dev/sdav )
+
+DataSize=1000g
+Logdir=/home/ren/fio/log
+Taskdir=/home/ren/fio/task/$TestSuite
+Runtime=60
+
+LogFile=$Logdir/$TestSuite-test.log
+
+# ioengine
+ioengines="sync libaio"
+# rw
+rws="read randread write randwrite"
+# block size of direct I/O must be larger than 512 bytes
+#bss="512 1k 2k 4k 8k 16k 32k 64k 128k 256k 512k 1m 2m 4m"
+bss="1k 4k 16k 64k 256k 1m 4m"
+# is 7
+iodepths="1 2 4 8 16 32 64 128"
+
