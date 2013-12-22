@@ -1,0 +1,138 @@
+/dev/md124:
+        Version : 1.2
+  Creation Time : Sat Dec 21 19:34:23 2013
+     Raid Level : raid0
+     Array Size : 11721117696 (11178.13 GiB 12002.42 GB)
+   Raid Devices : 12
+  Total Devices : 12
+    Persistence : Superblock is persistent
+
+    Update Time : Sat Dec 21 19:34:23 2013
+          State : clean 
+ Active Devices : 12
+Working Devices : 12
+ Failed Devices : 0
+  Spare Devices : 0
+
+     Chunk Size : 512K
+
+           Name : md-raid0-ak-av
+           UUID : 4ed7e409:30e9eed5:c53ae47b:d8504e08
+         Events : 0
+
+    Number   Major   Minor   RaidDevice State
+       0      66       65        0      active sync   /dev/sdak1
+       1      66       81        1      active sync   /dev/sdal1
+       2      66       97        2      active sync   /dev/sdam1
+       3      66      113        3      active sync   /dev/sdan1
+       4      66      129        4      active sync   /dev/sdao1
+       5      66      145        5      active sync   /dev/sdap1
+       6      66      161        6      active sync   /dev/sdaq1
+       7      66      177        7      active sync   /dev/sdar1
+       8      66      193        8      active sync   /dev/sdas1
+       9      66      209        9      active sync
+      10      66      225       10      active sync   /dev/sdau1
+      11      66      241       11      active sync   /dev/sdav1
+/dev/md125:
+        Version : 1.2
+  Creation Time : Sat Dec 21 19:34:19 2013
+     Raid Level : raid0
+     Array Size : 11721117696 (11178.13 GiB 12002.42 GB)
+   Raid Devices : 12
+  Total Devices : 12
+    Persistence : Superblock is persistent
+
+    Update Time : Sat Dec 21 19:34:19 2013
+          State : clean 
+ Active Devices : 12
+Working Devices : 12
+ Failed Devices : 0
+  Spare Devices : 0
+
+     Chunk Size : 512K
+
+           Name : md-raid0-x-aj
+           UUID : 0133d478:7c53d1cc:b134b17b:ed6445e7
+         Events : 0
+
+    Number   Major   Minor   RaidDevice State
+       0      65      113        0      active sync   /dev/sdx1
+       1      65      129        1      active sync   /dev/sdy1
+       2      65      145        2      active sync   /dev/sdz1
+       3      65      177        3      active sync   /dev/sdab1
+       4      65      193        4      active sync   /dev/sdac1
+       5      65      209        5      active sync   /dev/sdad1
+       6      65      225        6      active sync   /dev/sdae1
+       7      65      241        7      active sync   /dev/sdaf1
+       8      66        1        8      active sync   /dev/sdag1
+       9      66       17        9      active sync
+      10      66       33       10      active sync   /dev/sdai1
+      11      66       49       11      active sync   /dev/sdaj1
+/dev/md126:
+        Version : 1.2
+  Creation Time : Sat Dec 21 19:34:16 2013
+     Raid Level : raid0
+     Array Size : 10744357888 (10246.62 GiB 11002.22 GB)
+   Raid Devices : 11
+  Total Devices : 11
+    Persistence : Superblock is persistent
+
+    Update Time : Sat Dec 21 19:34:16 2013
+          State : clean 
+ Active Devices : 11
+Working Devices : 11
+ Failed Devices : 0
+  Spare Devices : 0
+
+     Chunk Size : 512K
+
+           Name : md-raid0-m-w
+           UUID : cd7a496b:8807c71a:28b6d851:188f3c43
+         Events : 0
+
+    Number   Major   Minor   RaidDevice State
+       0       8      193        0      active sync
+       1       8      209        1      active sync   /dev/sdn1
+       2       8      225        2      active sync   /dev/sdo1
+       3       8      241        3      active sync   /dev/sdp1
+       4      65        1        4      active sync   /dev/sdq1
+       5      65       17        5      active sync   /dev/sdr1
+       6      65       33        6      active sync   /dev/sds1
+       7      65       49        7      active sync   /dev/sdt1
+       8      65       65        8      active sync   /dev/sdu1
+       9      65       81        9      active sync   /dev/sdv1
+      10      65       97       10      active sync   /dev/sdw1
+/dev/md127:
+        Version : 1.2
+  Creation Time : Sat Dec 21 19:34:14 2013
+     Raid Level : raid0
+     Array Size : 10744357888 (10246.62 GiB 11002.22 GB)
+   Raid Devices : 11
+  Total Devices : 11
+    Persistence : Superblock is persistent
+
+    Update Time : Sat Dec 21 19:34:14 2013
+          State : clean 
+ Active Devices : 11
+Working Devices : 11
+ Failed Devices : 0
+  Spare Devices : 0
+
+     Chunk Size : 512K
+
+           Name : md-raid0-b-l
+           UUID : b02d2082:02670a78:e39f816e:cc189c6e
+         Events : 0
+
+    Number   Major   Minor   RaidDevice State
+       0       8       17        0      active sync   /dev/sdb1
+       1       8       33        1      active sync
+       2       8       49        2      active sync   /dev/sdd1
+       3       8       65        3      active sync   /dev/sde1
+       4       8       81        4      active sync   /dev/sdf1
+       5       8       97        5      active sync   /dev/sdg1
+       6       8      113        6      active sync   /dev/sdh1
+       7       8      129        7      active sync   /dev/sdi1
+       8       8      145        8      active sync   /dev/sdj1
+       9       8      161        9      active sync   /dev/sdk1
+      10       8      177       10      active sync   /dev/sdl1

@@ -48,6 +48,13 @@ fio --buffered=0 --bs=512k --size=1000g --time_based --runtime=60 --thread --iod
 
 
 
+== error logs ==
+
+mdadm --detail /dev/md124 /dev/md125 /dev/md126 /dev/md127
+
+miss one disk in each array
+reappear as a new disk
+
 
 
 
@@ -111,4 +118,7 @@ buffered=0
 rw=write
 bs=512k
 size=23g
+
+
+
 
