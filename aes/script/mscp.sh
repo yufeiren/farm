@@ -7,7 +7,7 @@ ms="1 2 4 8 16 32 64"
 cipher=aes128-cbc
 file=/mnt/tmp0/f60g
 period=600
-dest=192.168.1.9
+dest=192.168.150.9
 
 for m in $ms
 do
