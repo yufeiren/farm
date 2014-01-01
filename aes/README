@@ -1,0 +1,5 @@
+Demo of aes encryption/decryption integration using openssl
+
+usage:
+	aes_test [key]
+
