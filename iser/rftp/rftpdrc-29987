@@ -1,0 +1,62 @@
+# This is a demo configuration for rftpd
+# To overwrite these configurations for your account, copy this
+# file into your home directory as $HOME/.rftpdrc. Then, change
+# some of them for better performance according to your system
+# configurations, such as RNIC, memory, disk, etc.
+
+# Memory configuration
+# rftp designs a ring buffer to match RDMA asynchronize IO mechanism.
+# 'maxbufpoolsiz' sets up the ceiling size of memory used for data transfer.
+# Note: memory block size is determined by client side's configuration.
+maxbufpoolsiz = 500M
+# pending list <= 1/2 * cbufnum
+pendinglistnum = 10
+
+# Communication configuration
+# 'srvcomport' specifies the listening port for incoming connection.
+# Note: the number of data transfer streams is determined by client side.
+srvcomport = 29987
+
+# RDMA related configuration
+# 'rdma_qp_sq_depth', 'rdma_qp_sq_depth' and 'rdma_cq_depth' setup
+# the depth of send queue, receive queue and completion
+# queue, correspondingly.
+# To handle various kinds of completion, RFTP designs three pools of thread,
+# 'send worker thread', 'recv worker thread' and 'write worker thread'.
+# 'wcthreadnum' defines the number of threads for each pool, and 'wceventnum'
+# specifies the maximum number of completion events.
+rdma_qp_sq_depth = 1280
+rdma_qp_rq_depth = 1280
+rdma_cq_depth = 2000
+wceventnum = 600
+wcthreadnum = 4
+
+# disk io parameters
+# 'devzerosiz' setups the /dev/zero size if a task loads data from /dev/zero.
+# 'readernum' and 'writernum' defines the number of disk io threads that
+# load and offload data between memory and disk. If direct IO is supported
+# by file system, 'directio' could enable this io accelaration feature.
+devzerosiz = 10G
+readernum = 1
+writernum = 1
+#ioengine = sync
+ioengine = libaio
+directio = yes
+# If ioengine is `libaio', disk_io_depth is the upper-bound of 
+# outstanding disk I/Os in each reader threads.
+disk_io_depth = 4
+disk_aio_batch_complete = 1
+
+#verify = adler32
+#verifier = 4
+
+encrypt_engine = aes_ecb_128
+encrypt_key = rftp
+encryptor = 16
+decryptor = 16
+
+# 'usesendfile' and 'usesplice' defines how the application performs
+# data transfer over TCP connections.
+#usesendfile = no
+#usesplice = no
+
