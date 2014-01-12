@@ -1,12 +1,5 @@
 #! /bin/bash
 
-mkfs.xfs -f /dev/sdc
-mkfs.xfs -f /dev/sdd
-mkfs.xfs -f /dev/sde
-mkfs.xfs -f /dev/sdf
-mkfs.xfs -f /dev/sdg
-mkfs.xfs -f /dev/sdh
-
 mount /dev/sdc /home/ren/iser/d0
 mount /dev/sdd /home/ren/iser/d1
 mount /dev/sde /home/ren/iser/d2

@@ -17,7 +17,7 @@ do
 	while [ $i -lt $m ]
 	do
 		j=0
-		while [ $j -lt $${#filearr[*]} ]
+		while [ $j -lt ${#filearr[*]} ]
 		do
 			numactl --cpunodebind=0 --membind=0 scp -c $cipher $dir/${filearr[$j]} ren@${dest[0]}:$dir/${filearr[$j]} &
 			numactl --cpunodebind=1 --membind=1 scp -c $cipher $dir/${filearr[$j]} ren@${dest[1]}:$dir/${filearr[$j]} &
