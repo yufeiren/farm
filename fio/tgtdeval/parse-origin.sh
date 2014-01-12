@@ -4,6 +4,9 @@
 
 source ./defination
 
+Logdir=/home/ren/git/paper/tpds-numa-cache/log/fio-throughput/log-tgt-nc-t16-dual
+Parsedir=/home/ren/fio/parse-tgt-nc-t16-all
+
 test -d $Parsedir || mkdir -p $Parsedir
 
 for cli in $nr_initiator
@@ -25,8 +28,10 @@ fi
 
 log=$Logdir/c$cli-$ioengine-$rw-$bs-$iodepth-$numjobs.log
 touch $Parsedir/parse-$cli.txt
-cat $log | grep aggrb | cut -f 2 -d ',' | cut -f 2 -d '=' >> $Parsedir/parse-$cli.txt
+#cat $log | grep aggrb | cut -f 2 -d ',' | cut -f 2 -d '=' >> $Parsedir/parse-$cli.txt
 
+#cat $log | grep -v "clat" | grep "lat (usec):" | cut -d ',' -f 3 | cut -d '=' -f 2 >> $Parsedir/parse-$cli-latency-us.txt
+cat $log | grep "iops=" | cut -d ',' -f 3 | cut -d '=' -f 2 >> $Parsedir/parse-$cli-iops.txt
 					done
 				done
 			done
