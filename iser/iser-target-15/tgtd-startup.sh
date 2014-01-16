@@ -7,8 +7,8 @@ numactl --cpunodebind=1 --membind=1 tgtd -C 2 --iscsi portal=*:3262 --iser port=
 tgtadm -C 1 --op update --mode sys --name State -v offline
 tgtadm -C 2 --op update --mode sys --name State -v offline
 
-tgt-admin -C 1 -e -c /home/ren/tgtd/targets-node0-ib0.conf
-tgt-admin -C 2 -e -c /home/ren/tgtd/targets-node1-ib2.conf
+tgt-admin -C 1 -e -c ./targets-node0-ib0.conf
+tgt-admin -C 2 -e -c ./targets-node1-ib2.conf
 
 tgtadm -C 1 --op update --mode sys --name State -v ready
 tgtadm -C 2 --op update --mode sys --name State -v ready
