@@ -15,7 +15,7 @@ pendinglistnum = 10
 # Communication configuration
 # 'srvcomport' specifies the listening port for incoming connection.
 # Note: the number of data transfer streams is determined by client side.
-srvcomport = 19987
+srvcomport = 49987
 
 # RDMA related configuration
 # 'rdma_qp_sq_depth', 'rdma_qp_sq_depth' and 'rdma_cq_depth' setup

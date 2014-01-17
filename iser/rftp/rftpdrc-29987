@@ -39,8 +39,8 @@ wcthreadnum = 4
 devzerosiz = 10G
 readernum = 1
 writernum = 1
-#ioengine = sync
-ioengine = libaio
+ioengine = sync
+#ioengine = libaio
 directio = yes
 # If ioengine is `libaio', disk_io_depth is the upper-bound of 
 # outstanding disk I/Os in each reader threads.
