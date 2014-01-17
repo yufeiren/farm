@@ -1,4 +1,4 @@
-open 192.168.1.9 19987
+open 192.168.13.11 39987
 user ftp ftp
 prompt
 lcd /home/ren/rftp/data/source-tmpfs
