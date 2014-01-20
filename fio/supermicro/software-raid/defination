@@ -6,9 +6,10 @@ TestSuite=software-raid
 # http://tldp.org/LDP/abs/html/arrays.html
 # echo ${#array[*]} #  Number of elements in array.
 RAIDarr=( /dev/md/md-raid0-b-l /dev/md/md-raid0-m-w /dev/md/md-raid0-x-aj /dev/md/md-raid0-ak-av )
+FILEarr=( /mnt/sft-r0/f /mnt/sft-r1/f /mnt/sft-r2/f /mnt/sft-r3/f )
 NUMAnodearr=( 0 0 1 1 )
 
-DataSize=11000g
+DataSize=10000g
 Logdir=/home/ren/fio/log
 Taskdir=/home/ren/fio/task/$TestSuite
 Runtime=60

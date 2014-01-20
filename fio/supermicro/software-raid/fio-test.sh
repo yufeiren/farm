@@ -44,10 +44,11 @@ else
 fi
 
 i=0
-while [ $i -lt ${#RAIDarr[*]} ]
+while [ $i -lt ${#FILEarr[*]} ]
 do
 	echo "" >> $task
-	echo "["${RAIDarr[$i]}"]" >> $task
+	echo "["$i"]" >> $task
+	echo "filename="${FILEarr[$i]} >> $task
 	echo "numa_cpu_nodes="${NUMAnodearr[$i]} >> $task
 	echo "numa_mem_policy=bind:"${NUMAnodearr[$i]} >> $task
 	(( i++ ))
