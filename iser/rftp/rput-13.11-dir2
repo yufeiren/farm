@@ -1,0 +1,7 @@
+open 192.168.13.11 39987
+user ftp ftp
+prompt
+lcd /home/ren/rftp/data/source-tmpfs
+cd /home/ren/rftp/data/sink-2
+rmput d d2 d d2 d d2 d d2 d d2 d d2 d d2 d d2 d d2 d d2 d d2 d d2 d d2
+bye
