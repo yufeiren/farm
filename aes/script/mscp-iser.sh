@@ -1,10 +1,9 @@
 #! /bin/bash
 
 # result is in ganglia
-# memdisk to /dev/null
+# memdisk to memdisk
 
-#ms="1 2 4 8 16 32"
-ms="1 2 4 8"
+ms="1 2 4 8 16 32"
 cipher=aes128-cbc
 dir=/home/ren/iser
 filearr=( d0/f00 d0/f01 d1/f00 d1/f01 d2/f00 d2/f01 d3/f00 d3/f01 d4/f00 d4/f01 d5/f00 d5/f01 )
