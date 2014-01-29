@@ -2,15 +2,15 @@
 
 for node in 0 1 2 3
 do
-	rm -rf /home/ren/rftp/data/source-i$node/d/*
-	rm -rf /home/ren/rftp/data/source-i$node/d2/*
-	rm -rf /home/ren/rftp/data/sink-i$node/d/*
-	rm -rf /home/ren/rftp/data/sink-i$node/d2/*
+	rm -rf /home/ren/rftp/data/source-$node/d/*
+	rm -rf /home/ren/rftp/data/source-$node/d2/*
+	rm -rf /home/ren/rftp/data/sink-$node/d/*
+	rm -rf /home/ren/rftp/data/sink-$node/d2/*
 
-	mkdir -p /home/ren/rftp/data/source-i$node/d
-	mkdir -p /home/ren/rftp/data/source-i$node/d
-	mkdir -p /home/ren/rftp/data/sink-i$node/d
-	mkdir -p /home/ren/rftp/data/sink-i$node/d2
+	mkdir -p /home/ren/rftp/data/source-$node/d
+	mkdir -p /home/ren/rftp/data/source-$node/d
+	mkdir -p /home/ren/rftp/data/sink-$node/d
+	mkdir -p /home/ren/rftp/data/sink-$node/d2
 done
 
 for dir in source sink
