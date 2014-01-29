@@ -8,7 +8,7 @@ do
 	rm -rf /home/ren/rftp/data/sink-$node/d2/*
 
 	mkdir -p /home/ren/rftp/data/source-$node/d
-	mkdir -p /home/ren/rftp/data/source-$node/d
+	mkdir -p /home/ren/rftp/data/source-$node/d2
 	mkdir -p /home/ren/rftp/data/sink-$node/d
 	mkdir -p /home/ren/rftp/data/sink-$node/d2
 done
