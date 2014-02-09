@@ -15,20 +15,20 @@ do
 	for srv in "07 09 13"
 	do
 		task=$Taskdir/srv365-$srv-fio-$nj
-echo > $task
-echo "[global]" >> $task
-echo "time_based" >> $task
-echo "runtime="$Runtime >> $task
-echo "thread" >> $task
-echo "direct=1" >> $task
-echo "ioengine=sync"$ioengine >> $task
-echo "rw=randread" >> $task
-echo "group_reporting" >> $task
-echo "randrepeat=0" >> $task
-echo "size="$DataSize >> $task
-echo "bs="$bs >> $task
-echo "numjobs="$nj >> $task
-echo "rate_iops="$iops >> $task
+echo > "$task"
+echo "[global]" >> "$task"
+echo "time_based" >> "$task"
+echo "runtime="$Runtime >> "$task"
+echo "thread" >> "$task"
+echo "direct=1" >> "$task"
+echo "ioengine=sync"$ioengine >> "$task"
+echo "rw=randread" >> "$task"
+echo "group_reporting" >> "$task"
+echo "randrepeat=0" >> "$task"
+echo "size="$DataSize >> "$task"
+echo "bs="$bs >> "$task"
+echo "numjobs="$nj >> "$task"
+echo "rate_iops="$iops >> "$task"
 	done
 echo "[/dev/sdi]" >> $Taskdir/srv365-07-fio-$nj
 echo "[/dev/sdj]" >> $Taskdir/srv365-07-fio-$nj
