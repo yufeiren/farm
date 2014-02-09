@@ -12,7 +12,7 @@ test -d $Taskdir || mkdir -p $Taskdir
 
 for nj in $njs
 do
-	for srv in "07 09 13"
+	for srv in 07 09 13
 	do
 		task=$Taskdir/srv365-$srv-fio-$nj
 echo > "$task"
