@@ -12,5 +12,5 @@ bs=512
 iops=1000
 
 # increase iops by adding numjobs
-njs="1 2 4 8 16 32 64"
+njs="4 8 12 16 20 24 28 32 36"
 
