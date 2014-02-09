@@ -10,7 +10,7 @@ fi
 test -d $Logdir || mkdir -p $Logdir
 test -d $Taskdir || mkdir -p $Taskdir
 
-for nj in njs
+for nj in $njs
 do
 	for srv in "07 09 13"
 	do
