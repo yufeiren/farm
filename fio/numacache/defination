@@ -1,0 +1,16 @@
+#! /bin/bash
+Fio=/usr/local/bin/fio
+
+TestSuite=nc-512b
+
+DataSize=30g
+Logdir=/home/ren/fio/log/$TestSuite
+Taskdir=/home/ren/fio/task/$TestSuite
+Runtime=60
+
+bs=512
+iops=1000
+
+# increase iops by adding numjobs
+njs="1 2 4 8 16 32 64"
+

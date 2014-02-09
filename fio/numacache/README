@@ -1,0 +1,30 @@
+queuing delay evaluation
+
+
+small blocks
+============
+numa-aware cache
+/home/ren/sync/tgt/usr/tgtd --foreground -C 1 -t 16 -s 240g -c 64k -w 96 -g 1 --iscsi portal=*:13261 --iser port=13261,pool_sz_mb=256 > /home/ren/queuing.log 2>&1 &
+
+large blocks
+============
+NUMA-aware cache server:
+/home/ren/sync/tgt/usr/tgtd --foreground -C 1 -t 16 -s 240g -c 512k -w 12 -g 4 --iscsi portal=*:13261 --iser port=13261,pool_sz_mb=256 > /home/ren/queuing.log 2>&1 &
+
+Page cache server:
+/home/ren/sync/tgt/usr/tgtd --foreground -C 1 -t 16 --iscsi portal=*:13261 --iser port=13261,pool_sz_mb=256 > /home/ren/queuing.log 2>&1 &
+
+
+fio server in srv365-07/09/13 with root
+
+# nohup fio --server > /home/ren/fio/fio.log 2>&1 &
+
+
+generate data
+=============
+fio --client=srv365-07.cewit.stonybrook.edu srv365-07-fio-gen --client=srv365-09.cewit.stonybrook.edu srv365-09-fio-gen --client=srv365-13.cewit.stonybrook.edu srv365-13-fio-gen
+
+test
+====
+fio --client=srv365-07.cewit.stonybrook.edu srv365-07-fio --client=srv365-09.cewit.stonybrook.edu srv365-09-fio --client=srv365-13.cewit.stonybrook.edu srv365-13-fio
+
