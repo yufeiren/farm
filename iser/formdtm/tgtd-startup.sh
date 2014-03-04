@@ -5,7 +5,7 @@ tgtd -C 1 --iscsi portal=*:13261 --iser port=13261
 
 tgtadm -C 1 --op update --mode sys --name State -v offline
 
-tgt-admin -C 1 -e -c ./targets.conf
+tgt-admin -C 1 -e -c ./target.conf
 
 tgtadm -C 1 --op update --mode sys --name State -v ready
 
