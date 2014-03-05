@@ -4,15 +4,23 @@ queuing delay evaluation
 small blocks
 ============
 numa-aware cache
-/home/ren/sync/tgt/usr/tgtd --foreground -C 1 -t 16 -s 240g -c 64k -w 96 -g 1 --iscsi portal=*:13261 --iser port=13261,pool_sz_mb=256 > /home/ren/queuing.log 2>&1 &
+nohup /home/ren/sync/tgt/usr/tgtd --foreground -C 1 -t 16 -s 240g -c 64k -w 96 -g 1 --iscsi portal=*:13261 --iser port=13261,pool_sz_mb=256 > /home/ren/queuing.log 2>&1 &
+
+page cache
+nohup numactl --interleave=all /home/ren/sync/tgt/usr/tgtd --foreground -C 1 -t 16 --iscsi portal=*:13261 --iser port=13261,pool_sz_mb=256 > /home/ren/queuing.log 2>&1 &
 
 large blocks
 ============
 NUMA-aware cache server:
-/home/ren/sync/tgt/usr/tgtd --foreground -C 1 -t 16 -s 240g -c 512k -w 12 -g 4 --iscsi portal=*:13261 --iser port=13261,pool_sz_mb=256 > /home/ren/queuing.log 2>&1 &
+nohup /home/ren/sync/tgt/usr/tgtd --foreground -C 1 -t 16 -s 240g -c 512k -w 24 -g 4 --iscsi portal=*:13261 --iser port=13261,pool_sz_mb=256 > /home/ren/queuing.log 2>&1 &
 
 Page cache server:
-/home/ren/sync/tgt/usr/tgtd --foreground -C 1 -t 16 --iscsi portal=*:13261 --iser port=13261,pool_sz_mb=256 > /home/ren/queuing.log 2>&1 &
+nohup numactl --interleave=all /home/ren/sync/tgt/usr/tgtd --foreground -C 1 -t 16 --iscsi portal=*:13261 --iser port=13261,pool_sz_mb=256 > /home/ren/queuing.log 2>&1 &
+
+
+tgt-admin -C 1 -e -c ./targets.conf
+tgt-admin -C 1 -s
+
 
 
 fio server in srv365-07/09/13 with root
@@ -22,9 +30,28 @@ fio server in srv365-07/09/13 with root
 
 generate data
 =============
+cd /home/ren/git/farm/fio/numacache
+
 fio --client=srv365-07.cewit.stonybrook.edu srv365-07-fio-gen --client=srv365-09.cewit.stonybrook.edu srv365-09-fio-gen --client=srv365-13.cewit.stonybrook.edu srv365-13-fio-gen
 
 test
 ====
 fio --client=srv365-07.cewit.stonybrook.edu srv365-07-fio --client=srv365-09.cewit.stonybrook.edu srv365-09-fio --client=srv365-13.cewit.stonybrook.edu srv365-13-fio
 
+unlimited iops
+==============
+
+fio --client=srv365-07.cewit.stonybrook.edu srv365-07-fio --client=srv365-09.cewit.stonybrook.edu srv365-09-fio --client=srv365-13.cewit.stonybrook.edu srv365-13-fio > /home/ren/fio/log/nc-512b/unlimited-iops.log
+
+
+
+parse
+=====
+
+for i in 4 8 12 16 20 24 28 32 36; do grep read fio-$i.log | grep iops | cut -f 3 -d ',' | cut -f 2 -d '='; done
+
+for i in 4 8 12 16 20 24 28 32 36; do grep clat fio-$i.log | grep avg | cut -f 3 -d ',' | cut -f 2 -d '='; done
+
+for i in 1 2 3 4 5 6 7 8; do grep read fio-$i.log | grep iops | cut -f 3 -d ',' | cut -f 2 -d '='; done
+
+for i in 1 2 3 4 5 6 7 8; do grep clat fio-$i.log | grep avg | cut -f 3 -d ',' | cut -f 2 -d '='; done
