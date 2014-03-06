@@ -1,0 +1,20 @@
+#! /bin/bash
+Fio=/usr/local/bin/fio
+
+TestSuite=ib-lat
+IP=192.168.150.9
+
+Numanode=0
+
+DataSize=500g
+Logdir=/home/ren/fio/log
+Taskdir=/home/ren/fio/task
+Runtime=60
+
+LogFile=$Logdir/$TestSuite-test.log
+
+# rw
+rws="RDMA_WRIT RDMA_READ"
+# block size of direct I/O must be larger than 512 bytes
+bss="512 1k 2k 4k 8k 16k 32k 64k 128k 256k 512k 1m 2m 4m 8m"
+
