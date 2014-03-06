@@ -1,10 +1,11 @@
 #! /bin/bash
 
+source ./defination
 # version 2.0.6
 
-logfile=/home/ren/fio/log/rdma-test.log
+logfile=$LogFile
 
-Tersedir=/home/ren/fio/terse
+Tersedir=/home/ren/fio/terse/$Testsuite
 test -d $Tersedir || mkdir -p $Tersedir
 
 
