@@ -29,7 +29,7 @@ echo "" >> $script
 job=[sender]
 echo $job >> $script
 echo "thread" >> $script
-echo "hostname="$ServIP >> $script
+#echo "hostname="$ServIP >> $script
 echo "rw=read" >> $script
 echo "listen" >> $script
 if [ $bs = "512" ] || [ $bs = "1k" ] || [ $bs = "2k" ]; then
