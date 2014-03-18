@@ -18,7 +18,7 @@ echo "while [ 1 ]; do" >> ${dstarr[$i]}.sh
 echo "globus-url-copy -vb -nodcau file:///home/ren/iser/${srcarr[$i]} ftp://${iparr[$i]}:${portarr[$i]}/mnt/sd${dstarr[$i]}/hg" >> ${dstarr[$i]}.sh
 echo "done" >> ${dstarr[$i]}.sh
 
-echo ${dstarr[$i]}.sh >> all.sh
+echo "./"${dstarr[$i]}.sh >> all.sh
 (( i++ ))
 done
 
