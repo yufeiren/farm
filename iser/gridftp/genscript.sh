@@ -19,5 +19,6 @@ echo "globus-url-copy -vb -nodcau file:///home/ren/iser/${srcarr[$i]} ftp://${ip
 echo "done" >> ${dstarr[$i]}.sh
 
 echo ${dstarr[$i]}.sh >> all.sh
+(( i++ ))
 done
 
