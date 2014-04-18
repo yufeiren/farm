@@ -1,0 +1,59 @@
+
+13 (target) -> 11 (initiator)
+15 (target) -> 09 (initiator)
+
+
+13
+
+wget https://github.com/fujita/tgt/archive/v1.0.36.tar.gz
+
+  $ make ISCSI_RDMA=1           # as yourself
+  # make install                # as root
+  # cp scripts/initd.sample /etc/init.d/tgtd  # as root
+
+
+13
+
+mkdir -p /mnt/tmp0
+
+mount -t tmpfs -o size=310g tmpfs /mnt/tmp0
+
+fio --thread --bs=512k --rw=write --ioengine=sync --iodepth=1 --size=300g --name=f0 --filename=/mnt/tmp0/iser-tmpfs
+
+
+start tgtd process
+
+cd /home/ren/git/farm/iser/formdtm
+./tgtd-startup.sh
+
+11
+
+iscsiadm -m discovery -t sendtargets -p 192.168.151.13:13261 -I iser
+
+service iscsi restart
+
+fio --thread --bs=512k --rw=read --ioengine=sync --iodepth=1 --size=300g --name=/dev/sday --numjobs=1
+
+
+
+15
+
+mount -t tmpfs -o size=310g tmpfs /mnt/tmp0
+
+fio --thread --bs=512k --rw=write --ioengine=sync --iodepth=1 --size=300g --name=f0 --filename=/mnt/tmp0/iser-tmpfs
+
+
+09
+
+iscsiadm -m discoverydb -t sendtargets -o delete -p 192.168.150.13:3261
+iscsiadm -m discoverydb -t sendtargets -o delete -p 192.168.151.13:3262
+
+iscsiadm -m discovery -t sendtargets -p 192.168.151.15:13261 -I iser
+
+iscsiadm -m node --loginall=all
+
+disconnect:
+iscsiadm -m node --logoutall=all
+
+fio --thread --bs=512k --rw=read --ioengine=sync --iodepth=1 --size=300g --name=/dev/sdc --numjobs=1
+

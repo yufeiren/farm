@@ -1,6 +1,6 @@
 #! /bin/bash
 
-globus-url-copy -vb -nodcau file:///mnt/sdb/hg ftp://192.168.11.7:8011/dev/null
+globus-url-copy -vb -nodcau file:///mnt/sdb/hg ftp://192.168.11.7:8011/home/ren/iser/d0/f00
 
 for dir in source sink
 do
