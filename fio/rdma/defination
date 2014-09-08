@@ -2,13 +2,15 @@
 
 Fio=/usr/local/bin/fio
 
+Testsuite=rocelat
+
 DataSize=100g
-Logdir=/home/ren/fio/log
-Taskdir=/home/ren/fio/task
+Logdir=/home/ren/fio/log/$Testsuite
+Taskdir=/home/ren/fio/task/$Testsuite
 
-LogFile=$Logdir/rdma-test.log
+LogFile=$Logdir/$Testsuite.log
 
-ServIP=192.168.3.5
+ServIP=192.168.2.9
 ServPort=19001
 
 
