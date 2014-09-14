@@ -1,0 +1,11 @@
+#! /bin/bash
+
+
+
+Testcase=mongodb-ssl-localhost
+
+YCSBHOME=~/git/YCSB
+
+Logdir=~/ycsb/log-$Testcase
+Taskdir=~/ycsb/task-$Testcase
+
