@@ -1,6 +1,11 @@
 mongodb on srv365-13
 
-Mongod=~/kv/mongo-r2.6.4/mongod
-Conf=~/git/farm/ycsb/ssl/mongodb-ssl.conf
-$Mongod -f $Conf
+Mongod=/home/ren/kv/mongo-r2.6.4/mongod
+Conf=/home/ren/git/farm/ycsb/ssl/mongodb-ssl.conf
+
+numactl --interleave=all $Mongod -f $Conf
+
+tail -f /var/log/mongodb/mongod.log
+
+
 
