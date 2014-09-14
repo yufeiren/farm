@@ -43,7 +43,7 @@ echo "mongodb.trustStorePassword="$trustStorePassword >> $workload
 				# load ycsb
 				$YCSB load mongodb -P $workload -s -threads $thread >> $Logdir/load.log
 				# run ycsb
-				$YCSB run mongodb -P $workload -s -threads $thread >> $Logdir/load.log
+				$YCSB run mongodb -P $workload -s -threads $thread >> $Logdir/run.log
 			(( i++ ))
 		done
 	done
