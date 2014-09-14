@@ -8,7 +8,8 @@ do
 	for fieldlength in $fieldlengths
 	do
 		for thread in $threads
-		i=0
+		do
+			i=0
 			while [ $i -lt ${#readproportions[*]} ]
 			do
 				workload=$Taskdir/wl-$fieldlength-$fieldcount--${readproportions[$i]}-${updateproportions[$i]}-$thread.workload
@@ -45,6 +46,7 @@ echo "mongodb.trustStorePassword="$trustStorePassword >> $workload
 				# run ycsb
 				$YCSB run mongodb -P $workload -s -threads $thread >> $Logdir/run.log
 			(( i++ ))
+			done
 		done
 	done
 done
