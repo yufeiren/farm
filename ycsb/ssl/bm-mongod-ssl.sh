@@ -3,6 +3,8 @@
 source ./defination
 mkdir -p $Logdir
 mkdir -p $Taskdir
+echo > $Logdir/load.log
+echo > $Logdir/run.log
 
 for fieldcount in $fieldcounts
 do
@@ -13,7 +15,7 @@ do
 			i=0
 			while [ $i -lt ${#readproportions[*]} ]
 			do
-				workload=$Taskdir/wl-$fieldlength-$fieldcount--${readproportions[$i]}-${updateproportions[$i]}-$thread.workload
+				workload=$Taskdir/wl-$fieldlength-$fieldcount-${readproportions[$i]}-${updateproportions[$i]}-$thread.workload
 				touch $workload
 				echo > $workload
 				table=$Testcase-$fieldlength-$fieldcount--${readproportions[$i]}-${updateproportions[$i]}-$thread
@@ -30,7 +32,7 @@ echo "scanproportion=0" >> $workload
 echo "insertproportion=0" >> $workload
 echo "requestdistribution=uniform" >> $workload
 echo "mongodb.url=mongodb://localhost:27017" >> $workload
-echo "mongodb.database=ssl" >> $workload
+echo "mongodb.database="$DBname >> $workload
 echo "mongodb.writeConcern=safe" >> $workload
 echo "mongodb.maxconnections=10" >> $workload
 echo "table=$table" >> $workload

@@ -1,6 +1,7 @@
 #! /bin/bash
 
 Testcase=mongodb-ssl-localhost
+DBname=ssl
 SSLenable=true
 keyStore=/home/ren/kv/key/mongoKeystore
 trustStore=/home/ren/kv/key/mongoKeystore
