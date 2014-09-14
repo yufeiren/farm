@@ -1,5 +1,6 @@
 #! /bin/bash
 
+source ./defination
 mkdir -p $Logdir
 mkdir -p $Taskdir
 
