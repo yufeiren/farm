@@ -8,4 +8,6 @@ numactl --interleave=all $Mongod -f $Conf
 tail -f /var/log/mongodb/mongod.log
 
 
+nohup ./bm-mongod-ssl.sh > bm.log 2>&1 &
+
 

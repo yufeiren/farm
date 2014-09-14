@@ -18,7 +18,7 @@ do
 				workload=$Taskdir/wl-$fieldlength-$fieldcount-${readproportions[$i]}-${updateproportions[$i]}-$thread.workload
 				touch $workload
 				echo > $workload
-				table=$Testcase-$fieldlength-$fieldcount--${readproportions[$i]}-${updateproportions[$i]}-$thread
+				table=$Testcase-$fieldlength-$fieldcount-${readproportions[$i]}-${updateproportions[$i]}-$thread
 
 echo "fieldcount="$fieldcount >> $workload
 echo "fieldlength="$fieldlength >> $workload
