@@ -6,11 +6,11 @@ mkdir -p $Taskdir
 echo > $Logdir/load.log
 echo > $Logdir/run.log
 
-for fieldcount in $fieldcounts
+for thread in $threads
 do
-	for fieldlength in $fieldlengths
+	for fieldcount in $fieldcounts
 	do
-		for thread in $threads
+		for fieldlength in $fieldlengths
 		do
 			i=0
 			while [ $i -lt ${#readproportions[*]} ]
@@ -31,7 +31,7 @@ echo "updateproportion="${updateproportions[$i]} >> $workload
 echo "scanproportion=0" >> $workload
 echo "insertproportion=0" >> $workload
 echo "requestdistribution=uniform" >> $workload
-echo "mongodb.url=mongodb://localhost:27017" >> $workload
+echo "mongodb.url="$DBurl >> $workload
 echo "mongodb.database="$DBname >> $workload
 echo "mongodb.writeConcern=safe" >> $workload
 echo "mongodb.maxconnections=10" >> $workload
