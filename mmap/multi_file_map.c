@@ -34,26 +34,40 @@ int main(int argc, char **argv)
 		sprintf(f, "%s.%d", prefix, i);
 
 		/* open file */
-		fd = open(f, O_RDWR | O_CREAT, (mode_t)0600);
+		fd = open(f, O_RDWR, (mode_t)0600);
 		if (fd == -1) {
 			printf("can not open file: %s\n", f);
-			exit(-1);
+			exit(1);
 		}
 
 		addr = mmap(next_addr, size, PROT_READ | PROT_WRITE, \
 			    MAP_SHARED, fd, 0);
 		if (addr == MAP_FAILED) {
 			printf("mmap failed\n");
-			exit(-1);
+			exit(1);
 		}
+
+		printf("-----\n");
+		printf("mmap() file %s with size %d succeed\n", f, size);
+
+		if (addr != next_addr) {
+			printf("warning: next addr is not set as expected\n");
+			printf("expected: 0x%lx, returned: 0x%lx\n", \
+			       next_addr, addr);
+		} else {
+			printf("info: next addr is set as expected, address space is continuous\n");
+			printf("addr: 0x%lx\n", addr);
+		}
+
 		memset(addr, '\0', size);
 		start_addr = addr;
 		next_addr = addr - size;
 		printf("new start_addr is 0x%lx\n", start_addr);
 
-		//		close(fd);
+		close(fd);
 	}
 
+	/*
 	for (i = 0; i < 3; i++) {
 		printf("set addr 0x%lx\n", start_addr + i * size);
 		memset(start_addr + i * size, 'a' + i, size);
@@ -62,7 +76,7 @@ int main(int argc, char **argv)
 			printf("Could not sync the file to disk");
 		}
 	}
-
+	*/
 	return 0;
 }
 
