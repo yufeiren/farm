@@ -7,7 +7,43 @@ numactl --interleave=all $Mongod -f $Conf
 
 tail -f /var/log/mongodb/mongod.log
 
-
 nohup ./bm-mongod-ssl.sh > bm.log 2>&1 &
 
+
+Graceful shutdown
+=================
+
+$Mongod -f $Conf --shutdown
+
+parse
+=====
+
+example
+
+[OVERALL], RunTime(ms), 9595.0
+[OVERALL], Throughput(ops/sec), 10422.094841063054
+[READ], AverageLatency(us), 90.69815
+...
+[UPDATE], AverageLatency(us), 173.6056783894742
+...
+
+
+cat run.log | grep OVERALL | grep Throughput | cut -d , -f 3
+
+cat run.log | grep OVERALL | grep Throughput | cut -d , -f 3
+
+
+cat run.log | grep UPDATE | grep AverageLatency | cut -d , -f 3
+cat run.log | grep READ | grep AverageLatency | cut -d , -f 3
+
+i=0
+while read line           
+do
+	echo $line
+	(( i++ ))
+	if [ $i -eq 3 ]; then
+		i=0
+		echo "0.0"
+	fi
+done < a.txt
 
