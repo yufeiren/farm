@@ -70,6 +70,12 @@
 
 #include <unistd.h>
 
+extern const struct eventop selectops;
+extern const struct eventop pollops;
+extern const struct eventop epollops;
+
+extern struct event_base *current_base;
+
 static int count, writes, fired, failures;
 static evutil_socket_t *pipes;
 static int num_pipes, num_active, num_writes;
