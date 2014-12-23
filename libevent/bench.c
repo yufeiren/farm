@@ -112,7 +112,7 @@ run_once(void)
 		event_add(events[i], NULL);
 	}
 
-	event_base_dispatch(base);
+	event_base_loop(base, EVLOOP_ONCE | EVLOOP_NONBLOCK);
 
 	fired = 0;
 	space = num_pipes / num_active;
@@ -125,7 +125,7 @@ run_once(void)
 	{ int xcount = 0;
 	evutil_gettimeofday(&ts, NULL);
 	do {
-		event_base_dispatch(base);
+		event_base_loop(base, EVLOOP_ONCE | EVLOOP_NONBLOCK);
 		xcount++;
 	} while (count != fired);
 	evutil_gettimeofday(&te, NULL);
