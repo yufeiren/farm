@@ -209,22 +209,25 @@ main(int argc, char **argv)
 	cfg = event_config_new();
 
 	/* setup backend - select/poll/epoll/kqueue/devpoll/evport/win32 */
-	if (strcmp(backend, "select") == 0) {
-		/* do nothing */
-	} else if (strcmp(backend, "poll") == 0) {
-		event_config_avoid_method(cfg, "select");
-	} else if (strcmp(backend, "epoll") == 0) {
-		event_config_avoid_method(cfg, "select");
-		event_config_avoid_method(cfg, "poll");
-	} else {
-		fprintf(stderr, "Backend not supported: %s\n", backend);
-		exit(-1);
+	if (backend != NULL) {
+		if (strcmp(backend, "select") == 0) {
+			/* do nothing */
+		} else if (strcmp(backend, "poll") == 0) {
+			event_config_avoid_method(cfg, "select");
+		} else if (strcmp(backend, "epoll") == 0) {
+			event_config_avoid_method(cfg, "select");
+			event_config_avoid_method(cfg, "poll");
+		} else {
+			fprintf(stderr, "Unrecognized backend: %s\n", \
+				backend);
+			exit(-1);
+		}
 	}
 
 	base = event_base_new_with_config(cfg);
 
 	/* checkout method */
-	fprintf(stdout, "using %s\n", event_base_get_method(base));
+	fprintf(stdout, "backend in use %s\n", event_base_get_method(base));
 
 	for (i = 0; i < 25; i++) {
 		tv = run_once();
