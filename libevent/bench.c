@@ -192,7 +192,7 @@ main(int argc, char **argv)
 	}
 #endif
 
-	*events = calloc(num_pipes, sizeof(struct event *));
+	events = calloc(num_pipes, sizeof(struct event *));
 	pipes = calloc(num_pipes * 2, sizeof(evutil_socket_t));
 	if (*events == NULL || pipes == NULL) {
 		perror("malloc");
