@@ -156,8 +156,7 @@ main(int argc, char **argv)
 	int i, c;
 	struct timeval *tv;
 	evutil_socket_t *cp;
-	struct event_base *base;
-
+	char *backend;
 #ifdef _WIN32
 	WSADATA WSAData;
 	WSAStartup(0x101, &WSAData);
