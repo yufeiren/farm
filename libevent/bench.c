@@ -74,6 +74,7 @@ static int count, writes, fired, failures;
 static evutil_socket_t *pipes;
 static int num_pipes, num_active, num_writes;
 static struct event **events;
+struct event_config *cfg;
 static struct event_base *base;
 
 static void
@@ -135,14 +136,6 @@ run_once(void)
 	evutil_timersub(&te, &ts, &te);
 
 	return (&te);
-}
-
-void
-set_backend(char *backend)
-{
-	/* setup backend - select/poll/epoll/kqueue/devpoll/evport/win32 */
-
-	return;
 }
 
 int
@@ -208,7 +201,13 @@ main(int argc, char **argv)
 		}
 	}
 
-	set_backend(backend);
+	cfg = event_config_new();
+
+	/* setup backend - select/poll/epoll/kqueue/devpoll/evport/win32 */
+
+	event_config_avoid_method(cfg, "select");
+
+	base = event_base_new_with_config(cfg);
 
 	for (i = 0; i < 25; i++) {
 		tv = run_once();
