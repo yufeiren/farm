@@ -70,17 +70,11 @@
 
 #include <unistd.h>
 
-extern const struct eventop selectops;
-extern const struct eventop pollops;
-extern const struct eventop epollops;
-
-extern struct event_base *current_base;
-
 static int count, writes, fired, failures;
 static evutil_socket_t *pipes;
 static int num_pipes, num_active, num_writes;
-static struct event *events;
-
+static struct event **events;
+static struct event_base *base;
 
 static void
 read_cb(evutil_socket_t fd, short which, void *arg)
@@ -113,13 +107,13 @@ run_once(void)
 	static struct timeval ts, te;
 
 	for (cp = pipes, i = 0; i < num_pipes; i++, cp += 2) {
-		if (event_initialized(&events[i]))
-			event_del(&events[i]);
-		event_set(&events[i], cp[0], EV_READ | EV_PERSIST, read_cb, (void *)(ev_intptr_t) i);
-		event_add(&events[i], NULL);
+		if (event_initialized(events[i]))
+			event_del(events[i]);
+		events[i] = event_new(base, cp[0], EV_READ | EV_PERSIST, read_cb, (void *)(ev_intptr_t) i);
+		event_add(events[i], NULL);
 	}
 
-	event_loop(EVLOOP_ONCE | EVLOOP_NONBLOCK);
+	event_base_dispatch(base);
 
 	fired = 0;
 	space = num_pipes / num_active;
@@ -132,7 +126,7 @@ run_once(void)
 	{ int xcount = 0;
 	evutil_gettimeofday(&ts, NULL);
 	do {
-		event_loop(EVLOOP_ONCE | EVLOOP_NONBLOCK);
+		event_base_dispatch(base);
 		xcount++;
 	} while (count != fired);
 	evutil_gettimeofday(&te, NULL);
@@ -149,17 +143,7 @@ void
 set_backend(char *backend)
 {
 	/* setup backend - select/poll/epoll/kqueue/devpoll/evport/win32 */
-	struct event_base *base = current_base;
 
-	if (strcmp(backend, "select") == 0) {
-		base->evsel = &selectops;
-	} else if (strcmp(backend, "poll") == 0) {
-		base->evsel = &pollops;
-	} else if (strcmp(backend, "epoll") == 0){
-		base->evsel = &epollops;
-	}
-
-	base->evbase = base->evsel->init(base);
 	return;
 }
 
@@ -172,7 +156,7 @@ main(int argc, char **argv)
 	int i, c;
 	struct timeval *tv;
 	evutil_socket_t *cp;
-	char *backend;
+	struct event_base *base;
 
 #ifdef _WIN32
 	WSADATA WSAData;
@@ -209,14 +193,12 @@ main(int argc, char **argv)
 	}
 #endif
 
-	events = calloc(num_pipes, sizeof(struct event));
+	*events = calloc(num_pipes, sizeof(struct event *));
 	pipes = calloc(num_pipes * 2, sizeof(evutil_socket_t));
-	if (events == NULL || pipes == NULL) {
+	if (*events == NULL || pipes == NULL) {
 		perror("malloc");
 		exit(1);
 	}
-
-	event_init();
 
 	for (cp = pipes, i = 0; i < num_pipes; i++, cp += 2) {
 #ifdef USE_PIPES
