@@ -107,8 +107,6 @@ run_once(void)
 	static struct timeval ts, te;
 
 	for (cp = pipes, i = 0; i < num_pipes; i++, cp += 2) {
-		if (event_initialized(events[i]))
-			event_del(events[i]);
 		events[i] = event_new(base, cp[0], EV_READ | EV_PERSIST, read_cb, (void *)(ev_intptr_t) i);
 		event_add(events[i], NULL);
 	}
@@ -194,7 +192,7 @@ main(int argc, char **argv)
 
 	events = calloc(num_pipes, sizeof(struct event *));
 	pipes = calloc(num_pipes * 2, sizeof(evutil_socket_t));
-	if (*events == NULL || pipes == NULL) {
+	if (events == NULL || pipes == NULL) {
 		perror("malloc");
 		exit(1);
 	}
