@@ -68,6 +68,8 @@
 #include <event.h>
 #include <evutil.h>
 
+#include <unistd.h>
+
 static int count, writes, fired, failures;
 static evutil_socket_t *pipes;
 static int num_pipes, num_active, num_writes;
@@ -137,6 +139,24 @@ run_once(void)
 	return (&te);
 }
 
+void
+set_backend(char *backend)
+{
+	/* setup backend - select/poll/epoll/kqueue/devpoll/evport/win32 */
+	struct event_base *base = current_base;
+
+	if (strcmp(backend, "select") == 0) {
+		base->evsel = &selectops;
+	} else if (strcmp(backend, "poll") == 0) {
+		base->evsel = &pollops;
+	} else if (strcmp(backend, "epoll") == 0){
+		base->evsel = &epollops;
+	}
+
+	base->evbase = base->evsel->init(base);
+	return;
+}
+
 int
 main(int argc, char **argv)
 {
@@ -202,6 +222,8 @@ main(int argc, char **argv)
 			exit(1);
 		}
 	}
+
+	set_backend(backend);
 
 	for (i = 0; i < 25; i++) {
 		tv = run_once();
