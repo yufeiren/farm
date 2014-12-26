@@ -227,7 +227,7 @@ main(int argc, char **argv)
 	base = event_base_new_with_config(cfg);
 
 	/* checkout method */
-	fprintf(stdout, "backend in use %s\n", event_base_get_method(base));
+	fprintf(stdout, "backend in use: %s\n", event_base_get_method(base));
 
 	for (i = 0; i < 25; i++) {
 		tv = run_once();
