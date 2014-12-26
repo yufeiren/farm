@@ -211,9 +211,11 @@ main(int argc, char **argv)
 	/* setup backend - select/poll/epoll/kqueue/devpoll/evport/win32 */
 	if (backend != NULL) {
 		if (strcmp(backend, "select") == 0) {
-			/* do nothing */
+			event_config_avoid_method(cfg, "poll");
+			event_config_avoid_method(cfg, "epoll");
 		} else if (strcmp(backend, "poll") == 0) {
 			event_config_avoid_method(cfg, "select");
+			event_config_avoid_method(cfg, "epoll");
 		} else if (strcmp(backend, "epoll") == 0) {
 			event_config_avoid_method(cfg, "select");
 			event_config_avoid_method(cfg, "poll");
