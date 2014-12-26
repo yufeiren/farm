@@ -12,7 +12,7 @@ for b in $Backend
 do
 	for n in $Pipes
 	do
-		$Bench -b $b -n $n > $Logdir/$b-$n.log 2&>1
+		$Bench -b $b -n $n > $Logdir/$b-$n.log 2>&1
 	done
 done
 
