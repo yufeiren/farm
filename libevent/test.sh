@@ -7,12 +7,13 @@ Logdir=./
 
 Pipes="100 1000 10000 100000"
 Backend="select poll epoll"
+NUMAsetup="numactl --cpunodebind 0 --membind 0"
 
 for b in $Backend
 do
 	for n in $Pipes
 	do
-		$Bench -b $b -n $n > $Logdir/$b-$n.log 2>&1
+		$NUMAsetup $Bench -b $b -n $n > $Logdir/$b-$n.log 2>&1
 	done
 done
 
