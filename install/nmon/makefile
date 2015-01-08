@@ -1,3 +1,5 @@
+all: nmon_x86_rhel52
+
 # NOTE: link the curent working copy of the code to lmon.c for compiling
 CFLAGS=-g -O2 -D JFS -D GETUSER -Wall -D LARGEMEM
 # CFLAGS=-g -O2 -D JFS -D GETUSER -Wall -D POWER

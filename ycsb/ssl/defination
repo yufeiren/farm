@@ -1,0 +1,29 @@
+#! /bin/bash
+
+Testcase=mongodb-ssl-localhost
+
+DBurl=mongodb://localhost:27017
+DBname=ssl
+SSLenable=true
+keyStore=/home/ren/git/farm/ycsb/ssl/mongoKeystore
+trustStore=/home/ren/git/farm/ycsb/ssl/mongoKeystore
+keyStorePassword=abc123
+trustStorePassword=abc123
+
+YCSBHOME=~/git/YCSB
+YCSB=$YCSBHOME/bin/ycsb
+
+Logdir=~/ycsb/log-$Testcase
+Taskdir=~/ycsb/task-$Testcase
+
+fieldcounts="1"
+fieldlengths="8 64 256 1024 16384"
+
+recordcount="100000"
+operationcount="100000"
+
+readproportions=( 1 0.8 0.5 0 )
+updateproportions=( 0 0.2 0.5 1 )
+
+threads="1 8 16 64"
+

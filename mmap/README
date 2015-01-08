@@ -1,0 +1,15 @@
+
+gcc main.c -o multi_map -lc
+
+gcc multi_file_map.c -o multi_file_map -lc
+
+
+for i in `seq 0 15`
+do
+	dd if=/dev/zero of=./f-8k.$i bs=8192 count=1
+done
+
+./multi_file_map f-8k 16 8192
+
+
+
