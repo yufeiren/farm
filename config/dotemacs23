@@ -48,3 +48,4 @@
 (set-background-color "#000000")
 (set-cursor-color "#ff0000")
 
+(menu-bar-mode -1)
