@@ -1,0 +1,4 @@
+xterm*faceName: Bitstream Vera Serif Mono
+xterm*faceSize: 16
+
+xrdb -merge ~/.Xresources
