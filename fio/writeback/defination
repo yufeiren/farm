@@ -1,0 +1,13 @@
+#! /bin/bash
+
+TestSuite=tgt-wb
+
+Fio=/usr/local/bin/fio
+
+Logdir=/home/ren/fio/tgt/log-$TestSuite
+Parsedir=/home/ren/fio/tgt/parse-$TestSuite
+LogFile=$Logdir/$TestSuite-test.log
+
+sizes="10g 100g"
+rws="write randwrite"
+bss="512k"
