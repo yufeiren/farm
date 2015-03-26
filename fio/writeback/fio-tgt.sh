@@ -16,16 +16,33 @@ test -d $Logdir || mkdir -p $Logdir
 test -d $Taskdir || mkdir -p $Taskdir
 test -e $LogFile || touch $LogFile
 
+echo > $LogFile
+
 # throughput
 
-# 07 logout
-iscsiadm -m node --logoutall=all
-# 11 restart tgtd
-ssh root@srv365-11.cewit.stonybrook.edu "echo 3 > /proc/sys/vm/drop_caches"
-ssh root@srv365-11.cewit.stonybrook.edu "bash /home/ren/iser/tgtd-startup-multiproc.sh"
-# 07 login
-iscsiadm -m node --loginall=all
+setup_pagecache_default() {
+	# 07 logout
+	iscsiadm -m node --logoutall=all
+	# 11 restart tgtd
+	ssh root@srv365-11.cewit.stonybrook.edu "echo 3 > /proc/sys/vm/drop_caches"
+	ssh root@srv365-11.cewit.stonybrook.edu "bash /home/ren/iser/tgtd-default.sh"
+	ssh root@srv365-11.cewit.stonybrook.edu "bash /home/ren/iser/tgtd-startup-multiproc.sh"
+	# 07 login
+	iscsiadm -m node --loginall=all
+}
 
+setup_pagecache_numa() {
+	# 07 logout
+	iscsiadm -m node --logoutall=all
+	# 11 restart tgtd
+	ssh root@srv365-11.cewit.stonybrook.edu "echo 3 > /proc/sys/vm/drop_caches"
+	ssh root@srv365-11.cewit.stonybrook.edu "bash /home/ren/iser/tgtd-numa.sh"
+	ssh root@srv365-11.cewit.stonybrook.edu "bash /home/ren/iser/tgtd-startup-multiproc.sh"
+	# 07 login
+	iscsiadm -m node --loginall=all
+}
+
+run_test() {
 for size in $sizes
 do
 	for rw in $rws
@@ -34,8 +51,22 @@ do
 		do
 ssh root@srv365-11.cewit.stonybrook.edu "echo 3 > /proc/sys/vm/drop_caches"
 
+sleep 3
+
 fio --minimal --rw=$rw --size=$size --ioengine=libaio --iodepth=8 --direct=1 --bs=$bs --name=w1 --filename=/dev/sdd --name=w2 --filename=/dev/sde --name=w3 --filename=/dev/sdf --name=w4 --filename=/dev/sdc >> $LogFile
+
+sleep 3
 		done
 	done
 done
+}
+
+setup_pagecache_default
+run_test
+
+sleep 3
+
+setup_pagecache_numa
+run_test
+
 
