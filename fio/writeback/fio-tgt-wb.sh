@@ -27,13 +27,11 @@ do
 	do
 		for bs in $bss
 		do
-ssh root@srv365-11.cewit.stonybrook.edu "echo 3 > /proc/sys/vm/drop_caches"
-sleep 3
 # throughput eval
 fio --minimal --rw=$rw --size=$size --ioengine=libaio --iodepth=8 --direct=1 --bs=$bs --name=w1 --filename=/dev/sdd --name=w2 --filename=/dev/sde --name=w3 --filename=/dev/sdf --name=w4 --filename=/dev/sdc >> $Logdir/$TestSuite-thr.log
 
-ssh root@srv365-11.cewit.stonybrook.edu "echo 3 > /proc/sys/vm/drop_caches"
-sleep 3
+# wait for write back finished
+sleep 100
 # latency eval
 fio --minimal --rw=$rw --size=$size --ioengine=sync --iodepth=1 --direct=1 --bs=$bs --name=w1 --filename=/dev/sdd --name=w2 --filename=/dev/sde --name=w3 --filename=/dev/sdf --name=w4 --filename=/dev/sdc >> $Logdir/$TestSuite-lat.log
 		done
