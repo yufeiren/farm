@@ -28,7 +28,7 @@ setup_pagecache_default() {
 	ssh root@srv365-11.cewit.stonybrook.edu "echo 3 > /proc/sys/vm/drop_caches"
 	ssh root@srv365-11.cewit.stonybrook.edu "killall -s 9 tgtd"
 	ssh root@srv365-11.cewit.stonybrook.edu "bash /home/ren/iser/tgtd-default.sh"
-	ssh root@srv365-11.cewit.stonybrook.edu "bash /home/ren/iser/tgtd-startup-multiproc.sh"
+	ssh root@srv365-11.cewit.stonybrook.edu "cd /home/ren/iser/ && bash /home/ren/iser/tgtd-startup-multiproc.sh"
 	# 07 login
 	iscsiadm -m node --loginall=all
 }
