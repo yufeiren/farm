@@ -1,6 +1,6 @@
 #! /bin/bash
 
-TestSuite=tgt-wb
+TestSuite=tgt-wb-nc-async
 
 Fio=/usr/local/bin/fio
 
