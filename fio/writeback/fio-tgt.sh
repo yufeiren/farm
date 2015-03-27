@@ -26,6 +26,7 @@ setup_pagecache_default() {
 	iscsiadm -m node --logoutall=all
 	# 11 restart tgtd
 	ssh root@srv365-11.cewit.stonybrook.edu "echo 3 > /proc/sys/vm/drop_caches"
+	ssh root@srv365-11.cewit.stonybrook.edu "killall -s 9 tgtd"
 	ssh root@srv365-11.cewit.stonybrook.edu "bash /home/ren/iser/tgtd-default.sh"
 	ssh root@srv365-11.cewit.stonybrook.edu "bash /home/ren/iser/tgtd-startup-multiproc.sh"
 	# 07 login
@@ -37,6 +38,7 @@ setup_pagecache_numa() {
 	iscsiadm -m node --logoutall=all
 	# 11 restart tgtd
 	ssh root@srv365-11.cewit.stonybrook.edu "echo 3 > /proc/sys/vm/drop_caches"
+	ssh root@srv365-11.cewit.stonybrook.edu "killall -s 9 tgtd"
 	ssh root@srv365-11.cewit.stonybrook.edu "bash /home/ren/iser/tgtd-numa.sh"
 	ssh root@srv365-11.cewit.stonybrook.edu "bash /home/ren/iser/tgtd-startup-multiproc.sh"
 	# 07 login
