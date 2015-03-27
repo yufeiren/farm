@@ -16,7 +16,8 @@ test -d $Logdir || mkdir -p $Logdir
 test -d $Taskdir || mkdir -p $Taskdir
 test -e $LogFile || touch $LogFile
 
-echo > $LogFile
+cat /dev/null > $Logdir/$TestSuite-thr.log
+cat /dev/null > $Logdir/$TestSuite-lat.log
 
 # throughput
 
@@ -50,12 +51,14 @@ do
 		for bs in $bss
 		do
 ssh root@srv365-11.cewit.stonybrook.edu "echo 3 > /proc/sys/vm/drop_caches"
-
 sleep 3
+# throughput eval
+fio --minimal --rw=$rw --size=$size --ioengine=libaio --iodepth=8 --direct=1 --bs=$bs --name=w1 --filename=/dev/sdd --name=w2 --filename=/dev/sde --name=w3 --filename=/dev/sdf --name=w4 --filename=/dev/sdc >> $Logdir/$TestSuite-thr.log
 
-fio --minimal --rw=$rw --size=$size --ioengine=libaio --iodepth=8 --direct=1 --bs=$bs --name=w1 --filename=/dev/sdd --name=w2 --filename=/dev/sde --name=w3 --filename=/dev/sdf --name=w4 --filename=/dev/sdc >> $LogFile
-
+ssh root@srv365-11.cewit.stonybrook.edu "echo 3 > /proc/sys/vm/drop_caches"
 sleep 3
+# latency eval
+fio --minimal --rw=$rw --size=$size --ioengine=sync --iodepth=1 --direct=1 --bs=$bs --name=w1 --filename=/dev/sdd --name=w2 --filename=/dev/sde --name=w3 --filename=/dev/sdf --name=w4 --filename=/dev/sdc >> $Logdir/$TestSuite-lat.log
 		done
 	done
 done
@@ -68,5 +71,3 @@ sleep 3
 
 setup_pagecache_numa
 run_test
-
-
