@@ -18,8 +18,7 @@ test -d $Taskdir || mkdir -p $Taskdir
 test -d $JobDir || mkdir -p $JobDir
 test -e $LogFile || touch $LogFile
 
-cat /dev/null > $Logdir/$TestSuite-thr.log
-cat /dev/null > $Logdir/$TestSuite-lat.log
+cat /dev/null > $LogFile
 
 # throughput
 clean_pagecache() {
@@ -50,7 +49,7 @@ do
 	do
 		for bs in $bss
 		do
-clean_pagecache()
+clean_pagecache
 
 sleep 3
 # throughput eval
@@ -63,12 +62,14 @@ echo "bs="$bs >> $jobfile
 echo "ioengine=libaio" >> $jobfile
 echo "iodepth=8" >> $jobfile
 echo "direct=1" >> $jobfile
-echo "name=w1" >> $jobfile
+echo "[mywrite]" >> $jobfile
 echo "filename=/dev/sdc" >> $jobfile
 
 # fio --minimal --rw=$rw --size=$size --ioengine=libaio --iodepth=8 --direct=1 --bs=$bs --name=w1 --filename=/dev/sdd --name=w2 --filename=/dev/sde --name=w3 --filename=/dev/sdf --name=w4 --filename=/dev/sdc >> $Logdir/$TestSuite-thr.log
 
-fio --minimal --client=srv365-13.cewit.stonybrook.edu:1399 --client=srv365-15.cewit.stonybrook.edu:1399 $jobfile
+fio --minimal --client=srv365-13.cewit.stonybrook.edu $jobfile --client=srv365-15.cewit.stonybrook.edu $jobfile >> $LogFile
+
+sleep 2
 		done
 	done
 done
