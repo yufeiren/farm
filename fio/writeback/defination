@@ -1,13 +1,14 @@
 #! /bin/bash
 
-TestSuite=tgt-wb-nc-async
+TestSuite=sc15-tgt-wb-pgcache
 
 Fio=/usr/local/bin/fio
 
 Logdir=/home/ren/fio/tgt/log-$TestSuite
 Parsedir=/home/ren/fio/tgt/parse-$TestSuite
 LogFile=$Logdir/$TestSuite-test.log
+JobDir=/home/ren/fio/tgt/job-$TestSuite
 
-sizes="10g 100g"
+sizes="10g 500g"
 rws="write randwrite"
-bss="512k"
+bss="4k 16k 64k 256k 512k"
