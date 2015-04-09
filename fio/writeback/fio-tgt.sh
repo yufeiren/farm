@@ -26,10 +26,6 @@ clean_pagecache() {
 	ssh root@srv365-11.cewit.stonybrook.edu "echo 3 > /proc/sys/vm/drop_caches"
 }
 
-
-setup_pagecache_default() {
-}
-
 setup_pagecache_numa() {
 	# 07 logout
 	iscsiadm -m node --logoutall=all
