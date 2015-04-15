@@ -44,6 +44,13 @@
 (tool-bar-mode -1)
 (tooltip-mode -1)
 
+;; for xterm enable clipboard
+;; reference: http://emacswiki.org/emacs/CopyAndPaste
+;; PRIMARY and CLIPBOARD
+(setq x-select-enable-primary t)
+
 (set-foreground-color "#dbdbdb")
 (set-background-color "#000000")
 (set-cursor-color "#ff0000")
+
+(menu-bar-mode -1)
